@@ -1,0 +1,14 @@
+.formsegment{
+    margin: 0 auto;
+    width : 600px;
+    padding: 50px 70px 50px 70px;
+}
+
+.searchsegment{
+    background-image: url("/assets/images/tree_bark.png") !important;
+    padding: 30px 50px 30px 50px;
+}
+
+.resultsegment{
+    padding: 30px;
+}

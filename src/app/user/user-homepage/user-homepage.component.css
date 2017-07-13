@@ -1,0 +1,13 @@
+.accordian{
+   margin: 0 auto !important;
+}
+
+.full-circle{
+  line-height: 100%;
+  padding: 55px;
+}
+
+.device-segment{
+     background-image: url('/assets/images/ep_naturalwhite.png') !important;
+     padding: 60px 150px 60px 150px;
+}

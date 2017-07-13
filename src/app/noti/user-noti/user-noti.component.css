@@ -1,0 +1,11 @@
+read{
+     background-color: red;
+}
+unread{
+    background-color: blue;
+}
+.inline{
+    display:  inline-block;
+    padding-right: 10px;
+    padding-bottom : 4px;
+}

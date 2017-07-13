@@ -1,0 +1,58 @@
+<br><br>
+<div class="imgsegment">
+
+<div class="ui page center aligned grid">
+  <div class="ui small image">
+    <img  src="{{imgurl}}">
+  </div>
+</div>
+<h2 class="ui center aligned header">{{spname}}</h2>
+</div>
+
+<br><br>
+
+<div class="spinner" *ngIf="loading">
+  <div class="double-bounce1"></div>
+  <div class="double-bounce2"></div>
+</div>
+       
+<div *ngIf="!loading">
+
+<div class="ui centered grid">
+  <div class="eight wide computer twelve wide mobile column ">
+  <form class="ui large form" (ngSubmit)="onSubmit(userprofileForm.value)" #userprofileForm="ngForm">
+  
+  <div class="field">
+    <label>Logo</label>
+    <input type="file" name="logo" placeholder="Logo" (change)="fileChangeEvent($event)" >
+    <div class="ui small image">
+      <img id="preview" src="" alt="Preview">
+    </div>
+  </div>
+  
+
+  <div class="field">
+    <label>Phone Number</label>
+    <input type="text" name="ph" placeholder="Phone Number" [(ngModel)]="ph" >
+  </div>
+
+  <div class="field">
+    <label>Email</label>
+     <input type="text" name="email" placeholder="Email" [(ngModel)]="email" >
+  </div>
+
+  <div class="field">
+    <label></label>
+    <input type="text" name="hotline" placeholder="Hotline" [(ngModel)]="hotline">
+  </div>
+ 
+  <button class="ui secondary centered button" type="submit">
+  Update
+  </button>
+  </form>
+  </div>
+</div>
+
+</div>
+<br>
+

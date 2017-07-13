@@ -1,0 +1,118 @@
+<!--<div *ngIf = "spuser">-->
+<div *ngIf = "spname">
+<div class="ui grid">
+  <div class="computer only row">
+    <div class="ui inverted fixed menu navbar page grid">
+      <div href="#" class="header item">
+        <img class="logo" src="assets/images/logo.png"> Repair Service
+      </div>
+
+      <!-- right menu -->
+      <div class="right menu">
+        <a [routerLink]="['Sp_Homepage']" class="active item"><i class="home icon"></i>Home</a>
+
+        <a class="ui simple dropdown item" >
+          <i class="configure icon"></i>Requests
+          <i class="dropdown icon"></i>
+          <div class="menu">
+              <a class="item" [routerLink]="['ApprovedRequest']">Approved Request</a>
+              <a class="item" [routerLink]="['QueuingRequest']">Queuing Request</a>
+          </div>
+        </a>
+        
+
+        <!--<a class="item" [routerLink]="['ApprovedRequest']">
+          <div class="ui mini image">
+            <svg width="25" height="25">
+              <image xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="./assets/icons/gears.svg" x="0" y="0" width="100%" height="100%"></image>
+            </svg>
+          </div>
+          Approved Request</a>
+        <a class="item" [routerLink]="['QueuingRequest']"><i class="configure icon"></i>Queuing Request</a>-->
+        <!-- Notification -->
+        <a class="spcustom item"><i class="alarm outline icon"></i>Notification
+        <a class="ui red circular label">{{spNoti.length}}</a></a>
+         <app-sp-noti [spNoti] = "spNoti"></app-sp-noti>
+
+        <!-- Notification -->
+        <a class="ui simple dropdown item wordwrap" >
+          <div class="ui mini image">
+            <img src="{{spimg}}">
+          </div><span class="wordwrap">{{spname}}</span>
+          <i class="dropdown icon"></i>
+          <div class="menu">
+            <div class="item" [routerLink]="['Sp_Profile']">Profile</div>
+            <div class="item" (click)="spLogout()">Logout</div>
+          </div>
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="mobile only tablet only row">
+    <div class="ui fixed inverted navbar menu">
+      <a class="menu item" (click)="side()">
+          <i class="content icon"></i>
+      </a>
+      <div class="header item">
+
+        <img class="logo" src="assets/images/logo.png"> Repair Service
+
+      </div>
+
+      <div class="right menu open">
+        <!--<a class="item">
+          <div class="ui mini image">
+            <img src="">
+          </div>{{spname}}
+        </a>-->
+       
+        <a class="item" [routerLink]="['SpNotifications']">
+          <a class="ui red circular label">{{spNoti.length}}</a>
+          <i class="alarm outline icon"></i>
+        </a>
+        
+      </div>
+    </div>
+
+    <div class="ui left spsidebar sidebar inverted labeled icon vertical menu">
+      <a class="header item">
+
+         <i class="ui mini image">
+              <img src="{{spimg}}">
+         </i><br>{{spname}}
+       
+      </a>
+      <a class="item" [routerLink]="['Sp_Homepage']">
+          <i class="home icon"></i>Home
+      </a>
+      <a class="item" [routerLink]="['ApprovedRequest']">
+          <i class="icon"><div class="ui  mini image"> 
+              <svg width="25" height="25">
+              <image xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="./assets/icons/gears.svg" x="0" y="0" width="100%" height="100%"></image>
+              </svg>
+          </div></i>
+          Approved Request
+      </a>
+      <a class="item" [routerLink]="['QueuingRequest']">
+          <i class="configure icon"></i>
+            Queuing Request
+      </a>
+      <a class="item" [routerLink]="['Sp_Profile']">
+          <i class="user icon"></i>
+            Profile
+      </a>
+      <a class="item" (click)="spLogout()">
+            <i class="sign out icon"></i>
+            Logout
+        </a>
+    </div>
+    <!--</div>-->
+
+  </div>
+  </div>
+</div>
+<!--</div>-->
+
+

@@ -1,0 +1,58 @@
+<!--<div class="ui modal">-->
+<!--<div> {{ (user | async)?.uid }} </div>
+  <button class="ui left icon labeled blue button" (click) = "login()">Login with Facebook<i class="ui facebook icon"></i></button>
+  <button class="ui blue button" (click)="logout()">Logout</button>
+  <button class="ui blue button" (click)="currentUser()">Current User</button>-->
+<!--</div>-->
+
+<div class="ui small loginmodal modal">
+
+  <i class="close icon"></i>
+
+  <div class="ui  top tiny attached steps">
+    <div class="step">
+      <i class="info circle icon"></i>
+      <div class="content">
+        <div class="title">Contact Information</div>
+        <div class="description">Fill in Ph Number and Address </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Login Attached Segment -->
+  <!--<div *ngIf="!currentUser()">
+    <div class="ui center aligned attached segment">
+      <button class="ui left icon labeled blue button" (click) = "login()" [ngClass]="currentUser() ? 'disabled':'active'">{{fbText}}<i class="ui facebook icon"></i></button>
+    </div>
+    </div>-->
+  <!-- Login Attached Segment -->
+
+
+  <div>
+    <div class="ui attached segment">
+      <form class="ui form">
+        <h4 class="ui dividing header">Contact Information</h4>
+        <div class="field">
+          <label>Phone Number</label>
+
+          <div class="field">
+            <input type="text" name="phone" placeholder="Ph Number" #ph>
+          </div>
+
+        </div>
+
+        <div class="field">
+          <label>Address</label>
+
+          <div class="field">
+            <textarea #address></textarea>
+          </div>
+
+        </div>
+        <div class="ui button" tabindex="0" (click)="userRegister(ph.value,address.value)">Submit</div>
+      </form>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,61 @@
+<!--<app-user-get-appointment></app-user-get-appointment>-->
+<br><br><br><br>
+  
+    <!-- Search Form -->
+    <div class="ui page grid searchsegment">
+    <div class="html ui compact segment formsegment">
+
+      <form class="ui centered form" (ngSubmit)="onSubmit(searchForm.value)" #searchForm="ngForm">
+
+        <div class="field">
+          <label>Service Provider</label>
+          <input type="text" name="name" placeholder="Name" [(ngModel)] = "name">
+        </div>
+        
+        <div class="field">
+          <label>State</label>
+          <select class="ui dropdown" name="township" [(ngModel)] = "township" >
+            <option *ngFor="let township of townships" [value]="township" >{{township}}</option>
+          </select>
+        </div>
+        <button class="ui blue button" type="submit">Search</button>
+      </form>
+    </div>
+    </div>
+      <!-- Search Form -->
+
+      <!-- Search Result -->
+      <div class="page grid resultsegment">
+
+        <div class="spinner" *ngIf="loading">
+          <div class="double-bounce1"></div>
+          <div class="double-bounce2"></div>
+        </div>
+        <!--<div *ngIf="!loading">-->
+          <div *ngIf="!loading">
+          <div *ngIf="filteredItems">
+              <app-user-search-card 
+                  [result] = "filteredItems">
+              </app-user-search-card>
+           
+          </div>
+          </div>
+          <div *ngIf="filteredItems.length <= 0">
+            <div class="ui centered container">
+                <div class="ui page stackable column grid">
+                    <div class="row"></div>
+                    <div class="row"></div>
+                    <div class="row"></div>
+                    <div class="row">
+                        <div class="column">
+                        <div class="ui center aligned floating message">
+                            <p>No Service Providers</p>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+</div>
+      <!--</div>-->
+      </div>
+      <!-- Search Result -->

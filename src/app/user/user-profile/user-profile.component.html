@@ -1,0 +1,45 @@
+<br><br><br>
+
+<div class="imgsegment">
+  <h2 class="ui center aligned header">Phway Thant Chae</h2>
+  <br>
+<div class="ui page center aligned grid">
+  <div class="ui small image">
+    <img  src="{{imgurl}}">
+  </div>
+   
+</div>
+</div>
+
+<br><br>
+
+<div class="spinner" *ngIf="loading">
+  <div class="double-bounce1"></div>
+  <div class="double-bounce2"></div>
+</div>
+       
+<div *ngIf="!loading">
+
+<div class="ui centered grid">
+  <div class="eight wide computer twelve wide mobile column ">
+  <form class="ui large form" (ngSubmit)="onSubmit(userprofileForm.value)" #userprofileForm="ngForm">
+  
+  <div class="field">
+    <label>Phone Number</label>
+    <input type="text" name="ph" placeholder="Phone Number" [(ngModel)]="ph" >
+  </div>
+
+  <div class="field">
+    <label>Address</label>
+    <textarea name="address" placeholder="Address" [(ngModel)]="address"></textarea>
+  </div>
+ 
+  <button class="ui secondary centered button" type="submit">
+  Update
+  </button>
+  </form>
+  </div>
+</div>
+
+</div>
+

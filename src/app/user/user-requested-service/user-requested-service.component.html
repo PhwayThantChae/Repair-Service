@@ -1,0 +1,151 @@
+<br>
+<div class="cont">
+<div class="spinner" *ngIf="loading">
+    <div class="double-bounce1"></div>
+    <div class="double-bounce2"></div>
+</div>
+
+<div *ngIf="!loading">
+    <!--<div *ngFor="let item of appointments">
+        <div class="ui stacked segment">
+            <span *ngIf="item.emergency == 'yes'">
+                <a class="ui red  ribbon label" >emergency</a>
+            </span> 
+            <div class="ui header">{{item.company}}
+                <small>({{item.branch}})  </small>
+                <span *ngIf="item.state == 'pending'">
+                    <span style="margin-left:15px;" class="ui blue tag label">{{item.state}}</span>  
+                </span>
+                <span *ngIf="item.state == 'completed'">
+                    <span style="margin-left:15px;" class="ui green tag label">{{item.state}}</span>  
+                </span>
+                <span *ngIf="item.state == 'rescheduled'">
+                    <span style="margin-left:15px;" class="ui purple tag label">{{item.state}}</span>  
+                </span>
+             </div>
+            
+           
+           
+            
+            <div class="ui horizontal divider">
+                <i class="star icon"></i>
+            </div>
+            <div class="ui grid">
+                <div class="column">
+                    <div class="row">
+                        <h4><pre>Device     -     {{item.device}}</pre></h4>
+                    </div>
+                    <div class="row">
+                        <h4><pre>Date       -     {{item.date}}</pre></h4>
+                    </div>
+                    <div class="row">
+                        <h4><pre>Time       -     {{item.time}}</pre></h4>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div *ngIf="item.state == 'pending' || item.state == 'completed'">
+                <div class="ui button" (click)="cancelAppointment(item.$key,item.time,item.date,item.state)">Cancel Appointment</div>
+            </div>
+            <div *ngIf="item.state == 'rescheduled'">
+                <div class="ui positive button" (click)="rescheduledAppointment(item.$key,item.date,item.time,item.device,item.spid,
+                                                         item.state,item.username,item.uid,'accept')">Accept</div>
+                <div class="ui button" (click)="rescheduledAppointment(item.$key,item.date,item.time,item.device,item.spid,
+                                                item.state,item.username,item.uid,'cancel')">Cancel</div>
+                                               
+            </div>
+        </div>
+    </div>-->
+
+    <div *ngIf="appointments">
+        <div class="ui page stackable two column grid">
+            <div class="column" *ngFor="let item of appointments">
+                <div class="ui raised segment">
+                    
+
+                    <div class="content">
+                        <img class="right floated ui tiny image" src="{{item.spimg}}">
+                        <div class="header">
+                            <span *ngIf="item.emergency == 'yes'">
+                                <a class="ui small red ribbon label">emergency</a>
+                            </span>
+                            <h3>{{item.company}}<small>({{item.branch}})</small></h3>
+                        </div>
+                        <span *ngIf="item.state == 'pending'">
+                            <span style="margin:10px;" class="ui blue tag label">{{item.state}}</span>
+                        </span>
+                        <span *ngIf="item.state == 'completed'">
+                            <span style="margin:10px;" class="ui green tag label">{{item.state}}</span>
+                        </span>
+                        <span *ngIf="item.state == 'rescheduled'">
+                            <span style="margin:10px;" class="ui purple tag label">{{item.state}}</span>
+                        </span>
+                    </div>
+
+                    <div class="description">
+                        <table class="ui small definition unstackable table">
+                            <tr>
+                                <td class="active"><b>Device</b></td>
+                                <td>{{item.device}}</td>
+                            </tr>
+                            <tr>
+                                <td class="active"><b>Date</b></td>
+                                <td>{{item.date}}</td>
+                            </tr>
+                            <tr>
+                                <td class="active"><b>Time</b></td>
+                                <td>{{item.time}}</td>
+                            </tr>
+                        </table>
+                        <div *ngIf="item.state == 'pending' || item.state == 'completed'">
+                            <div class="ui button" (click)="cancelAppointment(item.$key,item.time,item.date,item.state,item.spid,
+                                                            item.device,item.username,item.uid,item.imgurl)">Cancel Appointment</div>
+                        </div>
+                        <div *ngIf="item.state == 'rescheduled'">
+                            <div class="ui positive button" (click)="rescheduledAppointment(item.$key,item.date,item.time,item.device,item.spid,
+                                                         item.state,item.username,item.uid,item.imgurl,'accept')">Accept</div>
+                            <div class="ui button" (click)="rescheduledAppointment(item.$key,item.date,item.time,item.device,item.spid,
+                                                item.state,item.username,item.uid,item.imgurl,'cancel')">Cancel</div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="appointments.length <= 0">
+    <div class="ui centered container">
+        <div class="ui page stackable column grid">
+            <div class="row"></div>
+            <div class="row"></div>
+            <div class="row"></div>
+            <div class="row">
+                <div class="column">
+                <div class="ui center aligned floating message">
+                    <p>No Requested Appointments</p>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+
+<div class="ui small cancel-modal modal">
+ 
+    <div class="ui center aligned grid">
+      <div class="column">
+        <i class="info huge circle icon"></i>
+        <h4 class="ui center aligned header">You will be charged extra charges for cancelling appointments now. Do you
+            still want to cancel?
+        </h4>
+      </div>
+      
+    </div>
+  <div class="actions">
+      <div class="ui approve button" (click)="deleteConfirm(apID,time,date,state,spid,device,username,uid,imgurl)">Okay</div>
+      <div class="ui deny button">Cancel</div>
+  </div>
+</div>

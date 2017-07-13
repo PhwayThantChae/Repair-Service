@@ -1,0 +1,93 @@
+<br>
+<div class="ui container">
+  <h2 class="ui center aligned block header">Notifications</h2>
+
+  <div class="spinner" *ngIf="loading">
+    <div class="double-bounce1"></div>
+    <div class="double-bounce2"></div>
+  </div>
+
+  <div *ngIf="!loading">
+    <div *ngIf="userNoti">
+      <div class="ui middle aligned celled selection list">
+
+        <div *ngFor="let noti of userNoti" class="item" (click)="MarkAsRead(noti.$key)">
+          <!--<div *ngIf="noti.read == false">
+      <i class="right floated black circle icon"  id="{{noti.$key}}"></i>
+    </div>
+    <div *ngIf="noti.read == true">
+      <i class="right floated circle thin icon"  id="{{noti.$key}}"></i>
+    </div>-->
+          <img class="ui avatar image" src="{{noti.spimg}}">
+          <div class="content">
+
+            <div *ngIf="noti.state == 'rescheduled'">
+              <div class="header">Your appointment is
+                <a class="ui purple label">
+            rescheduled 
+          </a> by {{noti.spname}}.</div>
+              <div class="description">
+                <div>
+                  <span>Date</span>
+                  <span>{{noti.date}}</span>
+                </div>
+                <div>
+                  <span>Time</span>
+                  <span>{{noti.time}}</span>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="noti.state == 'completed'">
+              <div class="header">Your appointment for {{noti.device}} service is
+                <a class="ui green label">
+            approved 
+          </a> by {{noti.spname}}.</div>
+              <div class="description">
+                <div>
+                  <span>Date</span>
+                  <span>{{noti.date}}</span>
+                </div>
+                <div>
+                  <span>Time</span>
+                  <span>{{noti.time}}</span>
+                </div>
+
+              </div>
+            </div>
+
+            <div *ngIf="noti.state == 'cancel'">
+              <div class="header">Your appointment for {{noti.device}} service is
+                <a class="ui orange label">
+            cancelled 
+          </a> by {{noti.spname}}.</div>
+            </div>
+            <!--<div class="extra content">-->
+
+            <!--</div>-->
+          </div>
+          <span class="right floated">
+      <!--<span *ngIf="timestampToNoti(noti.timestamp)">{{return_string}}<span>-->
+        {{noti.timestamp}}
+    </span>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="userNoti.length <= 0">
+      <div class="ui centered container">
+        <div class="ui page stackable column grid">
+          <div class="row"></div>
+          <div class="row"></div>
+          <div class="row"></div>
+          <div class="row">
+            <div class="column">
+              <div class="ui center aligned floating message">
+                <p>No Notifications</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

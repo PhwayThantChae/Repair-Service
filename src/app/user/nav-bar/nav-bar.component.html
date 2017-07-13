@@ -1,0 +1,189 @@
+
+<div *ngIf="currentURL == 1">
+<div *ngIf="!currentUser()">
+<div class="ui fixed inverted menu">
+    <div class="ui text container">
+       
+        <div href="#" class="header item">
+          <img class="logo" src="assets/images/logo.png">
+          Repair Service
+        </div>
+        
+          <div class="ui right floated item" >
+            <button class="ui blue button"  (click)="login()">Login
+            <app-user-login-modal> </app-user-login-modal>
+            </button>   
+          </div>
+          
+  </div>
+  </div>
+</div>
+
+<div *ngIf="currentUser()">
+  <!--  TEST   -->
+
+  <!-- Following Menu -->
+
+  <div class="ui grid">
+  <div class="computer only row">
+    <div class="ui inverted fixed menu navbar page grid">
+      <div href="#" class="header item">
+          <img class="logo" src="assets/images/logo.png">
+          Repair Service
+      </div>
+      <!-- right menu -->
+      <div class="right menu">
+        <a [routerLink] = "['User_Homepage']" class="active item"><i class="home icon"></i>Home</a>
+        <a  class="item" [routerLink] = "['Requested_Service']"><i class="configure icon"></i>Requested Service</a>
+
+        <!-- Notification -->
+        <a  class="custom item" id="noti" (click) = "showNoti()"><i class="alarm outline icon"></i>Notification</a>
+        <app-user-noti></app-user-noti>
+        <!-- End Notification -->
+        
+        <a class="ui simple dropdown item" *ngIf="setProfile()">
+          <div class="ui mini image">
+            <img  src="{{userimg}}">
+          </div>{{username}}
+        <i class="dropdown icon"></i>
+          <div class="menu">
+            <div class="item" [routerLink] = "['Profile']">Profile</div>
+            <div class="item"  (click)="logout()">Logout</div>
+          </div>
+        </a>
+      </div>
+
+    </div>
+  </div>
+  <div class="mobile tablet only row">
+    <div class="ui fixed inverted navbar menu">
+       <div class="header item">
+        
+          <img class="logo" src="assets/images/logo.png">
+          Repair Service
+         
+      </div>
+     
+      <div class="right menu open" >
+        <a class="item">
+        <div class="ui mini image">
+            <img  src="{{userimg}}">
+          </div>{{username}}
+        </a>
+        <a class="item">
+          <i class="alarm outline icon"></i>Notification
+        </a>
+        <a class="menu item" (click)="side()">
+            <i class="content icon"></i>
+        </a>
+      </div>
+    </div>
+
+    <div class="ui right sidebar inverted labeled icon vertical menu">
+      <a class="item" [routerLink] = "['User_Homepage']">
+         <i class="home icon"></i>Home
+        </a>
+      <a  class="item" [routerLink] = "['Requested_Service']">
+        <i class="configure icon"></i>
+          Requested Service
+        </a>
+      <a class="item" (click)="logout()">
+          <i class="sign out icon"></i>
+          Logout
+      </a>
+    </div>
+
+  </div>
+  </div>
+
+</div>
+</div>
+
+<!-- This is the nav bar for Service Provider -->
+<div *ngIf="currentURL == 2">
+ 
+  <div class="ui grid">
+    <div class="computer only row">
+      <div class="ui inverted fixed menu navbar page grid">
+        <div href="#" class="header item">
+            <img class="logo" src="assets/images/logo.png">
+            Repair Service
+        </div>
+
+        <!-- right menu -->
+        <div class="right menu">
+          <a [routerLink] = "['Sp_Homepage']" class="active item"><i class="home icon"></i>Home</a>
+          <a  class="item" [routerLink] = "['ApprovedRequest']">
+            <div class="ui mini image"> 
+              <svg width="25" height="25">
+              <image xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="./assets/icons/gears.svg" x="0" y="0" width="100%" height="100%"></image>
+              </svg>
+            </div>
+          Approved Request</a>
+          <a  class="item" [routerLink] = "['QueuingRequest']"><i class="configure icon"></i>Queuing Request</a>
+          <a  class="item"><i class="alarm outline icon"></i>Notification</a>
+          <a class="ui simple dropdown item" *ngIf="setSpProfile()">
+            <div class="ui mini image">
+              <img  src="">
+            </div>{{spname}}
+          <i class="dropdown icon"></i>
+            <div class="menu">
+              <div class="item" [routerLink] = "['']">Profile</div>
+              <div class="item"  (click)="spLogout()">Logout</div>
+            </div>
+          </a>
+        </div>
+
+      </div>
+    </div>
+    <div class="mobile tablet only row">
+      <div class="ui fixed inverted navbar menu">
+        <div class="header item">
+          
+            <img class="logo" src="assets/images/logo.png">
+            Repair Service
+          
+        </div>
+      
+        <div class="right menu open" >
+          <a class="item">
+          <div class="ui mini image">
+              <img  src="">
+            </div>{{spname}}
+          </a>
+          <a class="item">
+            <i class="alarm outline icon"></i>Notification
+          </a>
+          <a class="menu item" (click)="side()">
+              <i class="content icon"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="ui right sidebar inverted labeled icon vertical menu">
+        <a class="item" [routerLink] = "['Sp_Homepage']">
+          <i class="home icon"></i>Home
+        </a>
+        <a  class="item" [routerLink] = "['ApprovedRequest']">
+          <i class="icon"><div class="ui  mini image"> 
+              <svg width="25" height="25">
+              <image xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="./assets/icons/gears.svg" x="0" y="0" width="100%" height="100%"></image>
+              </svg>
+          </div></i>
+          Approved Request
+        </a>
+        <a  class="item" [routerLink] = "['QueuingRequest']">
+          <i class="configure icon"></i>
+            Queuing Request
+        </a>
+        <a class="item" (click)="spLogOut()">
+            <i class="sign out icon"></i>
+            Logout
+        </a>
+      </div>
+
+    </div>
+  </div>
+ 
+
+</div>

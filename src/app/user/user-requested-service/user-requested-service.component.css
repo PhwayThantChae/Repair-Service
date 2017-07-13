@@ -1,0 +1,8 @@
+.card{
+    /*margin: 40px;*/
+    display: flex;
+}
+.cont{
+    padding-top : 50px;
+    padding-bottom : 40px;
+}

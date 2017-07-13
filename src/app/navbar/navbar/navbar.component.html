@@ -1,0 +1,14 @@
+<div *ngIf="currentURL == 1" class="setMargin">
+    <div *ngIf="user == null">
+        <app-user-login-navbar></app-user-login-navbar>
+    </div>
+    <div *ngIf="user">
+        <app-user-navbar></app-user-navbar>
+    </div>
+</div>
+
+<div *ngIf="currentURL == 2" class="setMargin">
+    <div *ngIf="user">
+    <app-sp-navbar></app-sp-navbar>
+    </div>
+ </div>

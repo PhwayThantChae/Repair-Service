@@ -1,0 +1,28 @@
+[debug] [2017-06-05T09:01:40.805Z] ----------------------------------------------------------------------
+[debug] [2017-06-05T09:01:40.805Z] Command:      C:\Program Files (x86)\nodejs\node.exe C:\Users\Phway Thant Chae\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve
+[debug] [2017-06-05T09:01:40.805Z] CLI Version:  3.9.1
+[debug] [2017-06-05T09:01:40.805Z] Platform:     win32
+[debug] [2017-06-05T09:01:40.805Z] Node Version: v6.9.5
+[debug] [2017-06-05T09:01:40.805Z] Time:         Mon Jun 05 2017 15:31:40 GMT+0630 (Myanmar Standard Time)
+[debug] [2017-06-05T09:01:40.805Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2017-06-05T09:01:40.821Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2017-06-05T09:01:40.821Z] > authorizing via signed-in user
+[debug] [2017-06-05T09:01:40.821Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/repair-service-5139d  
+ Mon Jun 05 2017 15:31:40 GMT+0630 (Myanmar Standard Time)
+[debug] [2017-06-05T09:01:42.337Z] <<< HTTP RESPONSE 200
+[debug] [2017-06-05T09:01:42.338Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/repair-service-5139d/tokens  
+ Mon Jun 05 2017 15:31:42 GMT+0630 (Myanmar Standard Time)
+[debug] [2017-06-05T09:01:43.400Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from 'C:\MEAN Stack Practice\Angular JS\Repair Service\RepairServiceProject'...
+[info] 
+[debug] [2017-06-05T09:01:43.415Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/repair-service-5139d  
+ Mon Jun 05 2017 15:31:43 GMT+0630 (Myanmar Standard Time)
+[debug] [2017-06-05T09:01:44.815Z] <<< HTTP RESPONSE 200
+[debug] [2017-06-05T09:01:44.816Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/1054720295522/clients/_:getWebAppConfig  
+ Mon Jun 05 2017 15:31:44 GMT+0630 (Myanmar Standard Time)
+[debug] [2017-06-05T09:01:45.630Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: dist
+[info] +  hosting: Local server: http://localhost:5000
+

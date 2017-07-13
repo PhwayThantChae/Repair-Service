@@ -1,0 +1,88 @@
+<div class="ui grid">
+  <div class="computer only row">
+    <div class="ui inverted fixed menu navbar page grid">
+      <div href="#" class="header item">
+        <img class="logo" src="assets/images/logo.png"> Repair Service
+      </div>
+      <!-- right menu -->
+      <div class="right menu">
+        <a [routerLink]="['User_Homepage']" class="active item"><i class="home icon"></i>Home</a>
+        <a class="item" [routerLink]="['Requested_Service']"><i class="configure icon"></i>Requested Service</a>
+
+        <!-- Notification -->
+        <a class="custom item">
+          <i class="alarm outline icon"></i>Notification
+          <a class="ui red circular label">{{userNoti.length}}</a>
+        </a>
+
+        <!-- End Notification -->
+
+        <a class="ui simple dropdown item">
+          <div class="ui mini image">
+            <img src="{{userimg}}">
+          </div>{{username}}
+          <i class="dropdown icon"></i>
+          <div class="menu">
+            <div class="item" [routerLink]="['Profile']">Profile</div>
+            <div class="item" (click)="logout()">Logout</div>
+          </div>
+        </a>
+      </div>
+
+    </div>
+  </div>
+  <!-- Mobile Navbar -->
+  <div class="mobile only tablet only row">
+    <div class="ui fixed inverted navbar menu">
+      <a class="menu item" (click)="side()">
+            <i class="content icon"></i>
+        </a>
+      <div class="header item">
+        <img class="logo" src="assets/images/logo.png"> Repair Service
+      </div>
+
+      <div class="right menu open">
+
+        <a class="item" [routerLink]="['Notifications']">
+          <a class="ui red circular label">{{notiLength}}</a>
+          <i class="alarm outline icon"></i>
+        </a>
+
+      </div>
+    </div>
+
+    <div class="ui left usersidebar sidebar inverted labeled icon vertical menu">
+      <a class="item">
+            <i class="ui mini image">
+              <img src="{{userimg}}">
+            </i><br>{{username}}
+          </a>
+      <a class="item" [routerLink]="['User_Homepage']">
+         <i class="home icon"></i>Home
+        </a>
+      <a class="item" [routerLink]="['Requested_Service']">
+        <i class="configure icon"></i>
+          Requested Service
+        </a>
+      <a class="item" [routerLink]="['Profile']">
+          <i class="user icon"></i>
+            Profile
+      </a>
+      <a class="item" (click)="logout()">
+          <i class="sign out icon"></i>
+          Logout
+      </a>
+    </div>
+
+    <!-- Right Notification sidebar -->
+
+    <!--<div class="ui right usernotisidebar wide sidebar inverted vertical menu">
+      <app-notifications></app-notifications>
+    </div>-->
+
+    <!-- Right Notification sidebar -->
+
+  </div>
+</div>
+<app-user-noti [userNoti]="userNoti"></app-user-noti>
+<!-- Notification Popup -->

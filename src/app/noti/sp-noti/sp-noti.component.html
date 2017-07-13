@@ -1,0 +1,111 @@
+<!--<div *ngIf="spNoti">
+ 
+  <div class="ui flowing custom popup bottom center transition hidden">
+    <h2 class="ui top attached center aligned block header">Notifications</h2>
+    
+    <div class="ui middle aligned selection list">
+
+      <div *ngFor="let noti of spNoti" class="item">
+        <img class="ui avatar image" src="/images/avatar2/small/rachel.png">
+        <div class="content">
+          
+    
+          <div *ngIf="noti.state == 'completed'">
+            <div class="header">{{noti.username}} has accepted your resheduled time.</div>
+            <div class="description">
+              <div>
+                <span>Date</span>
+                <span>{{noti.date}}</span>
+              </div>
+              <div>
+                <span>Time</span>
+                <span>{{noti.time}}</span>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="noti.state == 'cancel'">
+            <div class="header">{{noti.username}} has cancelled the appointment.</div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+    <div *ngIf="spNoti.length >=1">
+      <button class="ui bottom attached center aligned fluid button" [routerLink]="['Notifications']">See All Notifications</button>
+    </div>
+
+     
+  </div>
+
+</div>
+<div *ngIf="spNoti.length == 0">
+  <div class="ui flowing custom popup bottom center transition hidden">
+    <h2 class="ui top attached center aligned block header">Notifications</h2>
+    <div class="ui middle aligned selection list">
+      <div class="item">
+        <div class="content">
+          <div class="header">No New Notifications</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>-->
+<!-- -->
+<div *ngIf="spNoti">
+
+  <div class="ui flowing spcustom popup bottom center transition hidden">
+    <h2 class="ui top attached center aligned block header">Notifications</h2>
+
+    <div class="ui middle aligned selection list">
+
+      <div *ngFor="let noti of spNoti" class="item">
+        <!--[ngClass] = "{read : noti.read == 'true' , unread : noti.read == 'false'}"-->
+        <img class="ui avatar image" src="{{noti.userimg}}">
+        <div class="content">
+
+          <div *ngIf="noti.state == 'completed'">
+            <div class="header">{{noti.username}} has <a class="ui green label"> accepted </a> your rescheduled time.</div>
+            <div class="description">
+              <div class="inline">
+                <span>Date</span>
+                <span>{{noti.date}}</span>
+              </div>
+              <div class="inline">
+                <span>Time</span>
+                <span>{{noti.time}}</span>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="noti.state == 'cancel'">
+             <div class="header">{{noti.username}} has <a class="ui orange label">cancelled</a> the appointment.</div>
+          </div>
+          <div class="extra content">
+          <a>
+            <i class="time icon"></i>
+            {{noti.timestamp}}
+          </a>
+        </div>
+        </div>
+
+        
+      </div>
+    </div>
+    <div *ngIf="spNoti.length >= 1">
+      <button class="ui bottom attached center aligned fluid button" [routerLink]="['SpNotifications']">See All Notifications</button>
+    </div>
+  </div>
+
+</div>
+<div *ngIf="spNoti.length == 0">
+  <div class="ui flowing custom popup bottom center transition hidden">
+    <h2 class="ui top attached center aligned block header">Notifications</h2>
+    <div class="ui middle aligned selection list">
+      <div class="item">
+        <div class="header">No New Notifications</div>
+      </div>
+    </div>
+  </div>
+</div>
