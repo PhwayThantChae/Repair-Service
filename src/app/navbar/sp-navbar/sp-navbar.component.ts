@@ -19,6 +19,7 @@ export class SpNavbarComponent implements OnInit {
   spname: string;
   spimg: string;
   spNoti = [];
+  notiLength = [];
   spid: string;
   notificationsObservable: FirebaseListObservable<any[]>;
   return_string: string;
@@ -56,31 +57,133 @@ export class SpNavbarComponent implements OnInit {
             this.spimg = data.logo;
           }
 
-          this.spNoti = [];
-          // this.spid = x.uid;
-          this.notificationsObservable = this.spFirebase.getSpNotifications();
+          this.spFirebase.getSpNotifications(x.uid).$ref.on("child_changed", snapshot => {
+            if (snapshot) {
+              this.notiLength = [];
+            }
+          });
+
+          this.spFirebase.getSpNotifications(x.uid).$ref.on("child_added", snapshot => {
+            if (snapshot) {
+              this.notiLength = [];
+            }
+          });
+
+          this.spFirebase.getSpNotifications(x.uid).$ref.on("child_removed", snapshot => {
+            if (snapshot) {
+              this.notiLength = [];
+            }
+          });
+
+          // this.spNoti = [];
+
+          //for notification count
+          this.spFirebase.getSpNotifications(x.uid).map(y => {
+
+            y.filter(y => {
+              if (y.read == false) {
+                this.notiLength.push(y);
+              }
+            })
+          }).subscribe(data => {
+            if (data) {
+              this.notiLength = [];
+              this.notiLength.push(data);
+              this.notiLength.reverse();
+            }
+          })
+
+          // for notification list
+          this.notificationsObservable = this.spFirebase.getSpUnreadNotifications();
 
           this.notificationsObservable.map(y => {
 
+
+
             y.filter(y => {
+
+
+              // this.spFirebase.getSpInfo(y.spid).$ref.on("child_changed", snapshot => {
+              //   console.log("SNAPSHOT", snapshot.val());
+              //   if (snapshot) {
+              //     this.spNoti = [];
+              //   }
+              // });
+
+
               if (y.spid == x.uid) {
-                this.spNoti.push(y);
-                y.timestamp = this.timestampToNoti(y.timestamp);
+                this.spFirebase.getUserInfo(y.uid).map(z => {
+                   this.spFirebase.getUserInfo(y.uid).$ref.on("child_changed", snapshot => {
+                      if (snapshot) {
+                        this.spNoti = [];
+                      }
+                    });
+                    this.spFirebase.getSpNotifications(y.spid).$ref.on("child_changed", snapshot => {
+                      if (snapshot) {
+                        this.spNoti = [];
+                      }
+                    });
+                    this.spFirebase.getSpNotifications(y.spid).$ref.on("child_removed", snapshot => {
+                      if (snapshot) {
+                        this.spNoti = [];
+                      }
+                    });
+                  if (z) {
+                    let noti = {
+                      "notiID": y.$key,
+                      "timestamp": this.timestampToNoti(y.timestamp),
+                      "username": z["username"],
+                      "userimg": z["imageUrl"],
+                      "read": y.read,
+                      "date": y.date,
+                      "time": y.time,
+                      "device": y.device,
+                      "state": y.state
+                    }
+                    this.spNoti.push(noti);
+                    console.log("SPNOITI", this.spNoti);
+                    return this.spNoti;
+                  }
+
+                }).subscribe(data => {
+                  if (data) {
+                    this.spFirebase.getSpNotifications(y.spid).$ref.on("child_added", snapshot => {
+                      if (snapshot) {
+                        this.spNoti = [];
+                      }
+                    });
+
+                    this.spFirebase.getUserInfo(y.uid).$ref.on("child_changed", snapshot => {
+                      if (snapshot) {
+                        this.spNoti = [];
+                      }
+                    });
+                    this.spFirebase.getSpNotifications(y.spid).$ref.on("child_changed", snapshot => {
+                      if (snapshot) {
+                        this.spNoti = [];
+                      }
+                    });
+                    this.spFirebase.getSpNotifications(y.spid).$ref.on("child_removed", snapshot => {
+                      if (snapshot) {
+                        this.spNoti = [];
+                      }
+                    });
+                    this.spNoti = [];
+                    this.spNoti = data;
+                    this.spNoti.reverse();
+                  }
+                });
               }
+
             })
-            this.spNoti.reverse();
           }).subscribe(data => {
-            if (data) {
-              console.log(this.spNoti);
-            }
-            else {
-              // this.loading = true;
-            }
+            if (data) { }
           });
 
         });
       }
     });
+
   }
 
   side() {

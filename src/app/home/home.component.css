@@ -1,7 +1,16 @@
-
+@font-face {
+  font-family: 'mon3';
+  src: url('/assets/fonts/mon3.ttf');
+  font-weight: 400;
+  font-style: normal;
+}
+body{
+      font-family: 'mon3' !important;
+    }
     
     .masthead {
         background-image: url('/assets/images/index_bg1.jpg') !important;
+        /*background-image: url('/assets/images/bg.jpg') !important;*/
         background-size: cover !important;
     }
 

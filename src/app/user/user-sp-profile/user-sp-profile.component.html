@@ -1,0 +1,175 @@
+<br><br>
+<div *ngIf="sp">
+  <div class="imgsegment">
+    <br>
+    <div class="ui page center aligned grid">
+      <div class="ui image">
+        <img width="300" height="200" src="{{sp.logo}}">
+      </div>
+
+    </div>
+  </div>
+ 
+  <div class="ui container">
+    
+    
+    <div class="ui stacked fluid card">
+
+      <div class="content">
+        <h2 class="ui center aligned header">{{sp.company}}({{sp.branch}})</h2>
+        <div class="ui grid">
+          <div class="four column row">
+            <div class="sixteen wide column">
+              <h4 class="ui dividing header">Email</h4>
+            </div>
+          </div>
+          <div class="four column row">
+            <div class="one wide column">
+              <i class="mail icon"></i>
+            </div>
+            <div class="fourteen wide column">
+              <span>{{sp.email}}</span>
+            </div>
+          </div>
+
+          <div class="four column row">
+            <div class="sixteen wide column">
+              <h4 class="ui dividing header">Branch</h4>
+            </div>
+          </div>
+          <div class="four column row">
+            <div class="one wide column">
+              <i class="map icon"></i>
+            </div>
+            <div class="fourteen wide column">
+              <span>{{sp.branch}} branch</span>
+            </div>
+          </div>
+
+
+          <div class="four column row">
+            <div class="sixteen wide column">
+              <h4 class="ui dividing header">Township</h4>
+            </div>
+          </div>
+          <div class="four column row">
+            <div class="one wide column">
+              <i class="map pin icon"></i>
+            </div>
+            <div class="fourteen wide column">
+              <span>{{sp.township}}</span>
+            </div>
+          </div>
+       
+
+        <div class="four column row">
+          <div class="sixteen wide column">
+            <h4 class="ui dividing header">Phone</h4>
+          </div>
+        </div>
+        <div class="four column row">
+          <div class="one wide column">
+            <i class="call icon"></i>
+          </div>
+          <div class="fourteen wide column">
+            <span>{{sp.ph}}</span>
+          </div>
+        </div>
+
+         <div class="four column row" *ngIf="sp.hotline">
+          <div class="sixteen wide column">
+            <h4 class="ui dividing header">Hotline</h4>
+          </div>
+        </div>
+        <div class="four column row">
+          <div class="one wide column">
+            <i class="call icon"></i>
+          </div>
+          <div class="fourteen wide column">
+            <span>{{sp.hotline}}</span>
+          </div>
+        </div>
+
+         <div class="four column row">
+          <div class="sixteen wide column">
+            <h4 class="ui dividing header">Services</h4>
+          </div>
+        </div>
+        <div class="four column row">
+          <div class="one wide column">
+            <i class="heart icon"></i>
+          </div>
+          <div class="fourteen wide column">
+            <span *ngFor="let service of sp.services">
+              <span class="ui olive tag label">{{service}}</span>
+            </span>
+          </div>
+        </div>
+
+        <div class="four column row">
+          <div class="sixteen wide column">
+            <h4 class="ui dividing header">Address</h4>
+          </div>
+        </div>
+        <div class="four column row">
+          <div class="one wide column">
+            <i class="address book icon"></i>
+          </div>
+          <div class="fourteen wide column">
+            <span>{{sp.address}}</span>
+          </div>
+        </div>
+
+      </div>
+      
+    
+
+            <!--  <div class="field">
+                <label for="ph">Phone</label>
+                <div class="ui icon input">
+                  <i class="call icon"></i>
+                  <input type="text" name="ph" readonly="" [formControl]="ph" id="mon3">
+                </div>
+              </div>
+
+              <div class="field" *ngIf="sp.hotline">
+                <label for="ph">Hotline</label>
+                <div class="ui icon input">
+                  <i class="call icon"></i>
+                  <input type="text" name="hotline" readonly="" [formControl]="hotline" id="mon3">
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="ph">Services</label>
+                <div class="ui icon input">
+                  <i class="lock icon"></i>
+                  <input type="text" name="services" readonly="" [formControl]="services" id="mon3">
+                </div>
+              </div>
+              
+              <div class="field">
+                <label for="ph">Address</label>
+                <div class="ui icon input">
+                  <i class="address outline icon"></i>
+                  <textarea rows="2" name="address" readonly="" [formControl]="address" id="mon3"></textarea>
+                </div>
+              </div>
+            </form>-->
+
+    </div>
+  </div>
+
+  <h2 class="ui center aligned header">Social Media</h2>
+  <div class="ui horizontal divider">
+    <i class="star icon"></i>
+  </div>
+  <h3 class="ui centered aligned header"><i class="blue circular facebook f icon"></i></h3>
+  <!--</div>
+    </div>-->
+
+</div>
+</div>
+
+
+<br><br>

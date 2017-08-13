@@ -6,25 +6,25 @@
       </div>
       <!-- right menu -->
       <div class="right menu">
-        <a [routerLink]="['User_Homepage']" class="active item"><i class="home icon"></i>Home</a>
-        <a class="item" [routerLink]="['Requested_Service']"><i class="configure icon"></i>Requested Service</a>
+        <a [routerLink]="['User_Homepage']" class="active item" id="mon3"><i class="home icon"></i>Home</a>
+        <a class="item" [routerLink]="['Requested_Service']" id="mon3"><i class="configure icon"></i>Requested Service</a>
 
         <!-- Notification -->
-        <a class="custom item">
+        <a class="custom item" id="mon3">
           <i class="alarm outline icon"></i>Notification
-          <a class="ui red circular label">{{userNoti.length}}</a>
+          <a class="ui red circular label" id="mon3">{{notiLength.length}}</a>
         </a>
 
         <!-- End Notification -->
 
-        <a class="ui simple dropdown item">
+        <a class="ui simple dropdown item" id="mon3">
           <div class="ui mini image">
             <img src="{{userimg}}">
           </div>{{username}}
           <i class="dropdown icon"></i>
           <div class="menu">
-            <div class="item" [routerLink]="['Profile']">Profile</div>
-            <div class="item" (click)="logout()">Logout</div>
+            <div class="item" [routerLink]="['Profile']" id="mon3">Profile</div>
+            <div class="item" (click)="logout()" id="mon3">Logout</div>
           </div>
         </a>
       </div>
@@ -41,34 +41,45 @@
         <img class="logo" src="assets/images/logo.png"> Repair Service
       </div>
 
-      <div class="right menu open">
+      <div class="right floated item">
+        <a class="item" [routerLink]="['Notifications']">
+        <div *ngIf="notiLength.length > 0">
+          <a class="ui red circular label" id="mon3">{{notiLength.length}}</a>
+        </div>
+          <i class="alarm outline icon"></i>
+        </a>
+      </div>
+
+      <!--<div class="right menu">
 
         <a class="item" [routerLink]="['Notifications']">
+        <div *ngIf="notilength>0">
           <a class="ui red circular label">{{notiLength}}</a>
+        </div>
           <i class="alarm outline icon"></i>
         </a>
 
-      </div>
+      </div>-->
     </div>
 
     <div class="ui left usersidebar sidebar inverted labeled icon vertical menu">
-      <a class="item">
+      <a class="item" id="mon3">
             <i class="ui mini image">
               <img src="{{userimg}}">
             </i><br>{{username}}
           </a>
-      <a class="item" [routerLink]="['User_Homepage']">
+      <a class="item" [routerLink]="['User_Homepage']" id="mon3">
          <i class="home icon"></i>Home
-        </a>
-      <a class="item" [routerLink]="['Requested_Service']">
+      </a>
+      <a class="item" [routerLink]="['Requested_Service']" id="mon3">
         <i class="configure icon"></i>
           Requested Service
-        </a>
-      <a class="item" [routerLink]="['Profile']">
+      </a>
+      <a class="item" [routerLink]="['Profile']" id="mon3">
           <i class="user icon"></i>
             Profile
       </a>
-      <a class="item" (click)="logout()">
+      <a class="item" (click)="logout()" id="mon3">
           <i class="sign out icon"></i>
           Logout
       </a>

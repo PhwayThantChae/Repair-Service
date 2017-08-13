@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from '../../services/login.service';
 import { SpFirebaseDatabaseService } from '../../services/sp-firebase-database.service';
-import { Router } from '@angular/router';
+import { Router,ActivatedRoute } from '@angular/router';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase, FirebaseObjectObservable, FirebaseListObservable } from 'angularfire2/database';
@@ -30,16 +30,20 @@ export class NavBarComponent implements OnInit {
 
   constructor(public loginService: LoginService, public router: Router, public afAuth: AngularFireAuth,
     public db: AngularFireDatabase, public firebaseDatabase: FirebaseDatabaseService,
-    public spLoginService: SpLoginServiceService, public spFirebase: SpFirebaseDatabaseService) { 
+    public spLoginService: SpLoginServiceService, public spFirebase: SpFirebaseDatabaseService,
+    public route : ActivatedRoute) { 
 
   }
 
   ngOnInit() {
-    $('#noti')
-      .popup()
-    ;
+    $('#noti').popup();
+      console.log(this.route.snapshot.firstChild.url[0].path);
+      console.log("1111111111",this.route.snapshot.url); // array of states
+      console.log("2222222222222",this.route.snapshot.url[0].path); 
+    console.log("URL",this.router.url);
     this.router.events.subscribe((res) => {
       console.log(this.router.url, "Current URL navbar");
+     
       this.currentURL = 0;
       // this.currentURL = true;
       switch (this.router.url) {
@@ -50,6 +54,7 @@ export class NavBarComponent implements OnInit {
         case "/ApprovedRequest": this.currentURL = 2; break;
         case "/Sp_Profile" : this.currentURL = 2; break;
         case "/User_Homepage": this.currentURL = 1; break;
+        case "/Sp_Appointment_Detail/:id" : this.currentURL = 2; break;
 
       }
 

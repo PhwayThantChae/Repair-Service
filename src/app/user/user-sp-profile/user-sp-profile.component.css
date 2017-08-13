@@ -1,0 +1,14 @@
+.imgsegment{
+    background-image: url("/assets/images/bg-9-full.jpg") !important;
+    padding: 30px 50px 30px 50px;
+}
+
+.container{
+    padding-top : 50px;
+    padding-bottom : 40px;
+}
+
+.wrap{
+    word-wrap : break-word;
+}
+

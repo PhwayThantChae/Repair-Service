@@ -1,5 +1,6 @@
-<div *ngIf="currentURL == 1" class="setMargin">
-    <div *ngIf="user == null">
+
+<!--<div *ngIf="currentURL == 1" class="setMargin">
+    <div *ngIf="user == null || user == 'undefined' || user == ''">
         <app-user-login-navbar></app-user-login-navbar>
     </div>
     <div *ngIf="user">
@@ -11,4 +12,19 @@
     <div *ngIf="user">
     <app-sp-navbar></app-sp-navbar>
     </div>
- </div>
+ </div>-->
+
+ <div *ngIf="user">
+    <div *ngIf="currentURL == 1">
+        <app-user-navbar></app-user-navbar>
+    </div>
+    <div *ngIf="currentURL == 2">
+        <app-sp-navbar></app-sp-navbar>
+    </div>
+</div>
+
+<div *ngIf="user == null || user == 'undefined' || user == ''">
+    <div *ngIf="currentURL == 1">
+        <app-user-login-navbar></app-user-login-navbar>
+    </div>
+</div>

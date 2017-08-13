@@ -9,3 +9,13 @@ unread{
     padding-right: 10px;
     padding-bottom : 4px;
 }
+
+.ui.list{
+    height : 300px;
+    /*width : 500px;*/
+    overflow-y: scroll;
+    word-wrap: break-word;
+    flex: inherit;
+    /*white-space:nowrap;*/
+}
+

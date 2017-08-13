@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
 import { LoginService } from './login.service';
+import { Router } from '@angular/router';
+import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/fromPromise';
 import * as firebase from 'firebase/app';
@@ -15,10 +17,21 @@ export class FirebaseDatabaseService {
   allnotiData: FirebaseListObservable<any[]>;
   profileData: FirebaseObjectObservable<any>;
   sendNotificationData: FirebaseListObservable<any[]>;
+  readSpInfo: FirebaseObjectObservable<any[]>;
+  userNoti: FirebaseListObservable<any[]>;
+  appointmentDetail: FirebaseObjectObservable<any>;
+  notificationDetail: FirebaseObjectObservable<any>;
+  appointmentByUid : FirebaseListObservable<any[]>;
+  getTownshipData : FirebaseListObservable<any[]>;
+  // addTownshipData  : FirebaseListObservable<any[]>;
+  searchSubject: Subject<any>;
+  searchSpData : FirebaseListObservable<any[]>;
   profileInfo = [];
 
-  constructor(public db: AngularFireDatabase, private loginService: LoginService) {
+  constructor(public db: AngularFireDatabase, public loginService: LoginService, public router:Router) {
 
+    this.searchSubject = new Subject();
+    
     this.appointmentData = db.list('/user-appointments');
     this.sendNotificationData = db.list('/sp-notifications');
 
@@ -26,36 +39,35 @@ export class FirebaseDatabaseService {
 
   writeUserData(userId, name, email, ph, address, imageUrl) {
 
-    this.db.object('users/' + userId).set({
+    this.db.object('/users/' + userId).set({
       username: name,
       email: email,
       ph: ph,
       address: address,
       imageUrl: imageUrl
+    }).then(snapshot => {
+      console.log(snapshot,"Snspasfsjflksajflskjsjlkjlsljljsfd");
+     
+        this.router.navigate(['User_Homepage']);
+      
     });
   }
 
-  writeUserAppointmentData(uid, spid, device, email, ph, address, description, brand, time, date, emergency,
-    name, branch, username, imgurl, spimg) {
+  writeUserAppointmentData(uid, spid, device, address, description, brand, time, date, emergency, timestamp) {
+
 
     var appointment_data = {
       'uid': uid,
-      'username': username,
-      'imgurl': imgurl,
       'spid': spid,
       'device': device,
-      'userEmail': email,
-      'userPh': ph,
       'userAddress': address,
       'description': description,
       'brand': brand,
       'time': time,
       'date': date,
       'emergency': emergency,
-      'company': name,
-      'branch': branch,
-      'spimg': spimg,
-      'state': 'pending'
+      'state': 'pending',
+      'timestamp': timestamp
     };
 
     this.appointmentData.push(appointment_data);
@@ -67,18 +79,28 @@ export class FirebaseDatabaseService {
     return this.readAppointmentData;
   }
 
+  getSpInfo(spid) {
 
-  updateUserProfile(ph, address, uid) {
+    this.readSpInfo = this.db.object('/sp/' + spid);
+    return this.readSpInfo;
+  }
+
+
+  updateUserProfile(ph, address,email,township, uid) {
 
     this.db.object('/users/' + uid).update({
       ph: ph,
-      address: address
+      address: address,
+      email : email,
+      township : township
     });
   }
 
   changeAppointmentStatus(apID, state) {
     if (state == "cancel") {
-      this.db.object('/user-appointments/' + apID).remove();
+      this.db.object('/user-appointments/' + apID).update({
+        state: state
+      });
     }
     else {
       this.db.object('/user-appointments/' + apID).update({
@@ -104,42 +126,49 @@ export class FirebaseDatabaseService {
 
     this.notiData = this.db.list('/notifications', {
       query: {
-        orderByChild: 'timestamp',
-        limitToFirst: 5
+        orderByChild: 'read',
+        equalTo: false
+        // limitToLast: 5
       }
     });
+
     return this.notiData;
   }
 
   getAllNotifications() {
     this.allnotiData = this.db.list('/notifications', {
       query: {
-        orderByChild: 'timestamp',
+        orderByChild: 'timestamp'
       }
     });
 
     return this.allnotiData;
   }
 
-  deleteNotification(key) {
-    this.db
+  getUserNotification(uid) {
+    this.userNoti = this.db.list('/notifications', {
+      query: {
+        orderByChild: 'uid',
+        equalTo: uid
+      }
+    });
+
+    return this.userNoti;
   }
 
-  sendNotifications(apid, date, time, device, spid, state, username, uid, currentDate, currentTime, timestamp,imgurl) {
+
+
+  sendNotifications(apid, date, time, device, spid, state, uid, timestamp) {
 
     var noti = {
       'uid': uid,
-      'username': username,
       'spid': spid,
       'apid': apid,
       'time': time,
       'date': date,
       'device': device,
-      'currentDate': currentDate,
-      'currentTime': currentTime,
       'timestamp': timestamp,
       'state': state,
-      'userimg' : imgurl,
       'read': false
     };
     this.sendNotificationData.push(noti);
@@ -186,6 +215,93 @@ export class FirebaseDatabaseService {
     }
     return return_string;
   }
+
+  getNotificationDetail(notiID) {
+
+    this.notificationDetail = this.db.object('/notifications/' + notiID);
+    return this.notificationDetail;
+
+  }
+
+  getAppointmentDetail(apid) {
+
+    this.appointmentDetail = this.db.object('/user-appointments/' + apid);
+    return this.appointmentDetail;
+
+  }
+
+  getAppointmentByUid(uid){
+
+    this.appointmentByUid = this.db.list('/user-appointments',{
+      query: {
+        orderByChild: 'uid',
+        equalTo: uid
+      }
+    });
+
+    return this.appointmentByUid;
+  }
+
+  getTownship(){
+    this.getTownshipData = this.db.list('/township',{
+      query: {
+        orderByChild : 'name'
+      }
+    });
+
+    return this.getTownshipData;
+  }
+
+  SearchSpByTownship(township){
+
+    this.searchSpData = this.db.list('/sp', {
+      query: {
+        orderByChild: 'township',
+        equalTo: township
+      }
+    });
+    // this.searchSubject.next(township);
+    return this.searchSpData;
+
+  }
+
+  SearchSpByAllTownships(){
+    this.searchSpData = this.db.list('/sp', {
+      query: {
+          orderByChild: 'township'
+      }
+        });
+    return this.searchSpData;
+  }
+
+    getNextSevenDays(): string[] {
+    var date2 = [];
+    var d = new Date();
+    var tmp = d.getDate() + '/' + (d.getMonth() + 1) + '/' + (d.getFullYear());
+    date2.push(tmp);
+
+    for (var i = 1; i <= 7; i++) {
+      var currentDate = new Date();
+      currentDate.setDate(d.getDate() + i);
+      tmp = (currentDate.getDate()) + '/' + (currentDate.getMonth() + 1) + '/' + (currentDate.getFullYear());
+      date2.push(tmp.toString());
+    }
+
+    return date2;
+  }
+
+
+// addTownship(){
+//   let township = 
+//     {
+//      "name": "Yankin",
+//       "name_mm": "ရန်ကင်း",
+//       "state_id": "Yangon"
+//   }
+
+// this.addTownshipData.push(township);
+
+// }
 
 
 

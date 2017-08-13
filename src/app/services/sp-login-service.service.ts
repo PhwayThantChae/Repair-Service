@@ -14,20 +14,30 @@ export class SpLoginServiceService {
   spData: FirebaseListObservable<any[]>;
   searchSubject: Subject<any>;
 
-  constructor(public afAuth: AngularFireAuth, public route: Router, public db: AngularFireDatabase, public spFirebase: SpFirebaseDatabaseService) {
+  constructor(public afAuth: AngularFireAuth, public route: Router, public db: AngularFireDatabase, public spFirebase: SpFirebaseDatabaseService,public router:Router) {
     this.spuser = afAuth.authState;
     console.log("ID TOken",this.afAuth.idToken);
   }
 
   spLogin(email, password) {
 
-    this.afAuth.auth.signInWithEmailAndPassword(email, password).then(function (result) {
-      if (result) {
-        console.log("User Object" + result);
+    this.afAuth.auth.signInWithEmailAndPassword(email, password).
+    then(result => {
+      if(result){
+        this.router.navigate(['Sp_Homepage']);
       }
-
+    })
+    .catch(function(error) {
+  // Handle Errors here.
+      var errorCode = error.name;
+      var errorMessage = error.message;
+      if (errorCode === 'auth/wrong-password') {
+        alert('Wrong password.');
+      } else {
+        alert(errorMessage);
+      }
+      console.log(error);
     });
-
   }
 
   currentSp(): boolean {

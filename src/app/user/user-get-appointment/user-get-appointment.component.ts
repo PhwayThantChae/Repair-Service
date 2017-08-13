@@ -3,6 +3,8 @@ import { LoginService } from '../../services/login.service';
 import { FirebaseObjectObservable } from 'angularfire2/database';
 import { FirebaseDatabaseService } from '../../services/firebase-database.service';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { FormGroup, FormControl, FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import * as knayi from 'knayi-myscript';
 
 declare var $: any;
 
@@ -15,21 +17,26 @@ export class UserGetAppointmentComponent implements OnInit {
 
   @Input() spinfo;
   user:any;
-  time = ["9am - 12pm", "12pm - 3pm", "3pm - 6pm"];
+  
   date2 = [];
   date_tmp: Date;
-  name: string;
   uid: string;
-  address: string;
-  email: string;
-  ph: string;
   imgurl : string;
+
+  date : FormControl;
+  time : FormControl;
+  spForm: FormGroup;
+  address: FormControl;
+  brand: FormControl;
+  description : FormControl;
+
   userProfile: FirebaseObjectObservable<any>;
 
 
   constructor(public loginService: LoginService, public firebaseDatabase: FirebaseDatabaseService,
-              public afAuth: AngularFireAuth) {
+              public afAuth: AngularFireAuth,public formbuilder : FormBuilder) {
 
+    
     this.afAuth.authState.subscribe(x => {
       if (x) {
         this.user = x;
@@ -37,16 +44,16 @@ export class UserGetAppointmentComponent implements OnInit {
         this.userProfile = this.firebaseDatabase.getUserProfile(x.uid);
         this.userProfile.subscribe(snapshot => {
           if(snapshot){
-            this.ph = snapshot.ph;
-            this.address = snapshot.address;
-            this.name = snapshot.username;
-            this.imgurl = snapshot.imageUrl;
-            if(snapshot.email){
-              this.email = snapshot.email;
-            }
-            else{
-              this.email = "";
-            }
+           
+            this.address.setValue(snapshot.address);
+            // this.name.setValue(snapshot.username);
+            // this.imgurl = snapshot.imageUrl;
+            // if(snapshot.email){
+            //   this.email.setValue(snapshot.email);
+            // }
+            // else{
+            //   this.email.setValue("");
+            // }
           }
         })
       }
@@ -62,37 +69,77 @@ export class UserGetAppointmentComponent implements OnInit {
     for (var i = 1; i <= 7; i++) {
       var currentDate = new Date();
       currentDate.setDate(d.getDate() + i);
-      tmp = (currentDate.getDate()) + '/' + (d.getMonth() + 1) + '/' + (d.getFullYear());
+      console.log(currentDate,"currentDate");
+      tmp = (currentDate.getDate()) + '/' + (currentDate.getMonth() + 1) + '/' + (currentDate.getFullYear());
       this.date2.push(tmp.toString());
     }
+
+    console.log(this.date2);
 
   }
 
   ngOnInit() {
     $(".ui.dropdown").dropdown();
+
+    this.address = new FormControl('',[
+      Validators.required,
+      Validators.minLength(5)
+    ]);
+
+    this.time = new FormControl('',[
+      Validators.required
+    ]);
+
+    this.date = new FormControl('',[
+      Validators.required
+    ]);
+
+    this.description = new FormControl('');
+    this.brand = new FormControl('');
+
+    this.buildForm();
+  }
+
+  buildForm():void{
+    this.spForm = this.formbuilder.group({
+      address : this.address,
+      description : this.description,
+      time : this.time,
+      date : this.date,
+      brand : this.brand
+    });
   }
 
  
 
-  onSubmit(form) {
-
-    console.log("on submit form " + this.spinfo);
-    console.log(form);
-    if (form.brand == null) {
-      form.brand = "";
-    }
-    if (form.description == null) {
-      form.description = "";
-    }
-    if (form.email == null) {
-      form.email = "";
-    }
-    this.firebaseDatabase.writeUserAppointmentData(this.uid, this.spinfo[2], this.spinfo[0], form.email,
-      form.ph, form.address, form.description, form.brand, form.time, form.date, this.spinfo[1], this.spinfo[4], this.spinfo[3],
-      this.name,this.imgurl,this.spinfo[5]);
+  onSubmit() {
     
-    var modal_id = this.spinfo[2] + this.spinfo[3];
-    $('#'+modal_id).modal('hide');
+    if (this.brand.value == null || this.brand.value == "") {
+      this.brand.setValue("");
+    }
+    else{
+      if(knayi.fontDetect(this.brand.value) == "zawgyi"){
+        this.brand.setValue(knayi.fontConvert(this.brand.value, 'unicode'));
+      }
+      
+    }
+    if (this.description.value == null || this.description.value == "") {
+      this.description.setValue("");
+    }
+    else{
+      if(knayi.fontDetect(this.description.value) == "zawgyi"){
+        this.description.setValue(knayi.fontConvert(this.description.value, 'unicode'));
+      }
+      
+    }
+   
+    var timestamp = Date.now();
+    this.firebaseDatabase.writeUserAppointmentData(this.uid, this.spinfo[2], this.spinfo[0],knayi.fontConvert(this.address.value, 'unicode'), 
+        this.description.value,  this.brand.value,
+        this.time.value, this.date.value, this.spinfo[1],timestamp);
+    
+    // var modal_id = this.spinfo[2] + this.spinfo[3];
+    $('.ui.modal').modal('hide');
     
   }
 

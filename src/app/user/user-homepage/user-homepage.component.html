@@ -1,214 +1,359 @@
-
+<br>
 <br><br><br><br>
 
-      <!-- User Page Accordian -->
+<!-- User Page Accordian -->
 
-      <div class="ui one column stackable center aligned page grid">
-        <div class="column sixteen wide">
-           
-             
-                <div class="ui styled fluid  accordion">
-                  <div class="title ui header">
-                    <i class="dropdown icon"></i>
-                        How do we start?
-                  </div>
-                  <div class="content">
-                    <!--<p class="transition hidden">A dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be found as a welcome guest in many households across the world.</p>-->
-                    <div class="feature alternate ui stripe vertical segment">
-                      <div class="ui three column center aligned divided relaxed stackable grid container">
-                        <div class="row">
+<div class="ui stackable center aligned page grid">
 
-                          <div class="column">
-                            <h2 class="ui header">Step 1</h2>
-                            <div class="ui icon header">
-                              <img src="./assets/icons/select.png">
-                            </div>
-                            <h4 >Choose Your Device</h4>
-                          </div>
+  <div class="twelve wide computer sixteen wide mobile column">
+    <div class="ui styled inverted fluid accordion">
+      <div class="title ui header">
+        <i class="dropdown icon"></i> How do we start?
+      </div>
+      <div class="content">
+        <!--<p class="transition hidden">A dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be found as a welcome guest in many households across the world.</p>-->
+        <div class="feature alternate ui stripe vertical segment">
+          <div class="ui three column center aligned divided relaxed stackable grid container">
+            <div class="row">
 
-                          <div class="column">
-                            <h2 class="ui  header">Step 2</h2>
-                             <div class="ui icon header">
-                              <img src="./assets/icons/search.png">
-                            </div>
-                            <h4>Search The Service Provider</h4>
-                          </div>
+              <div class="column">
+                <h2 class="ui header">Step 1</h2>
+                <div class="ui icon header">
+                  <img src="./assets/icons/select.png">
+                </div>
+                <h4 id="mon3">Please choose a device first.</h4>
+              </div>
+              <!--မိမိတို့ပြင်မည့်အိမ်သုံးပစ္စည်းကိုရွေးပါ။-->
+              <div class="column">
+                <h2 class="ui  header">Step 2</h2>
+                <div class="ui icon header">
+                  <img src="./assets/icons/search.png">
+                </div>
+                <h4 id="mon3">Search for the Service Provider</h4>
+              </div>
+              <!--Service ပေးသည့်ဆိုင်ကိုရှာပါ။-->
+              <div class="column">
+                <h2 class="ui  header">Step 3</h2>
+                <div class="ui icon header">
+                  <img src="./assets/icons/weekly-calendar.png">
+                </div>
+                <h4 id="mon3">Book the appointment</h4>
+              </div>
+              <!--ဆိုင်ကိုဘိုကင်တင်ပါ။-->
 
-                          <div class="column">
-                            <h2 class="ui  header">Step 3</h2>
-                             <div class="ui icon header">
-                              <img src="./assets/icons/weekly-calendar.png">
-                            </div>
-                            <h4>Book The Service</h4>
-                          </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- User Page Accordian -->
 
 
+  <!-- Choose Device -->
+  <div class="twelve wide computer sixteen wide mobile column">
+    <div class="ui fluid message">
+      <div class="ui center aligned header" id="mon3">Choose the device</div>
+    </div>
+  </div>
+  <!--အိမ်သုံးပစ္စည်းကိုရွေးချယ်ပါ။-->
+
+  <div class="fourteen wide computer only sixteen wide tablet only column">
+    <div class="ui basic segment device segment">
+      <div class="ui vertical feature segment device-segment">
+        <div class="ui centered page grid">
+          <div class="row">
+            <div class="sixteen wide column">
+              <div class="ui three column center aligned stackable divided grid">
+                <div class="column column-feature">
+                  <h3 class="ui centered header" id="mon3">Air-conditioner</h3>
+                  <!--အဲယားကွန်း-->
+                  <!-- Dimmer -->
+                  <div class="ui tiny centered image dimmable dimmerAirConditioner">
+                    <div class="ui dimmer">
+                      <!-- active -->
+                      <div class="content">
+                        <div class="center">
+                          <h2 class="ui inverted icon header">
+                            <div class="ui mini green button" (click)="device_click('air-conditioner')">Choose</div>
+                          </h2>
                         </div>
                       </div>
                     </div>
-
+                    <img class="ui centered tiny image air-conditioner" src="./assets/icons/air-conditioner.png">
                   </div>
-              
+                  <!-- Dimmer -->
+                </div>
+
+                <div class="column column-feature">
+                  <h3 class="ui centered header" id="mon3">Generator</h3>
+                  <!--မီးစက်-->
+                  <!-- Dimmer -->
+                  <div class="ui tiny centered image dimmable dimmerGenerator">
+                    <div class="ui dimmer">
+                      <!-- active -->
+                      <div class="content">
+                        <div class="center">
+                          <h2 class="ui inverted icon header">
+                            <div class="ui mini green button" (click)="device_click('generator')">Choose</div>
+                          </h2>
+                        </div>
+                      </div>
+                    </div>
+                    <img class="ui tiny centered image generator" src="./assets/icons/generator.png">
+                  </div>
+                  <!-- Dimmer -->
+                </div>
+
+                <div class="column column-feature">
+                  <h3 class="ui centered header" id="mon3">Water motor</h3>
+                  <!--ရေမော်တာ-->
+                  <!-- Dimmer -->
+                  <div class="ui tiny centered image dimmable dimmerWaterMotor">
+                    <div class="ui dimmer">
+                      <!-- active -->
+                      <div class="content">
+                        <div class="center">
+                          <h2 class="ui inverted icon header">
+                            <div class="ui mini green button" (click)="device_click('water-motor')">Choose</div>
+                          </h2>
+                        </div>
+                      </div>
+                    </div>
+                    <img class="ui tiny centered image water-motor" src="./assets/icons/engine.png">
+                  </div>
+                  <!-- Dimmer -->
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+
+
+          <div class="row">
+            <div class="sixteen wide column">
+              <div class="ui three column center aligned stackable divided grid">
+
+                <div class="column column-feature">
+                  <h3 class="ui centered header" id="mon3">Refrigerator</h3>
+                  <!--ရေခဲသေတ္တာ-->
+                  <!-- Dimmer -->
+                  <div class="ui tiny centered image dimmable dimmerRefrigerator">
+                    <div class="ui dimmer">
+                      <!-- active -->
+                      <div class="content">
+                        <div class="center">
+                          <h2 class="ui inverted icon header">
+                            <div class="ui mini green button" (click)="device_click('refrigerator')">Choose</div>
+                          </h2>
+                        </div>
+                      </div>
+                    </div>
+                    <img class="ui tiny centered image refrigerator" src="./assets/icons/refrigerator.png">
+                  </div>
+                  <!-- Dimmer -->
+                </div>
+
+                <div class="column column-feature">
+                  <h3 class="ui centered header" id="mon3">Washing machine</h3>
+                  <!--အဝတ်လျှော်စက်-->
+                  <!-- Dimmer -->
+                  <div class="ui tiny centered image dimmable dimmerWashingMachine">
+                    <div class="ui dimmer">
+                      <!-- active -->
+                      <div class="content">
+                        <div class="center">
+                          <h2 class="ui inverted icon header">
+                            <div class="ui mini green button" (click)="device_click('washing-machine')">Choose</div>
+                          </h2>
+                        </div>
+                      </div>
+                    </div>
+                    <img class="ui tiny centered image washing-machine" src="./assets/icons/washing-machine.png">
+                  </div>
+                  <!-- Dimmer -->
+                </div>
+
+                <div class="column column-feature">
+                  <h3 class="ui centered header" id="mon3">Voltage regulator</h3>
+                  <!--မီးအားမြှင့်စက်-->
+                  <!-- Dimmer -->
+                  <div class="ui tiny centered image dimmable dimmerRegulator">
+                    <div class="ui dimmer">
+                      <!-- active -->
+                      <div class="content">
+                        <div class="center">
+                          <h2 class="ui inverted icon header">
+                            <div class="ui mini green button" (click)="device_click('regulator')">Choose</div>
+                          </h2>
+                        </div>
+                      </div>
+                    </div>
+                    <img class="ui tiny centered image regulator" src="./assets/icons/regulator.png">
+                  </div>
+                  <!-- Dimmer -->
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
-    
-      <!-- User Page Accordian -->
+    </div>
+  </div>
 
-     
-      <!-- Choose Device -->
-      <div class="ui fluid message">
-        <div class="ui center aligned header">Choose Your Device</div>
-      </div>
+  <div class="sixteen wide mobile only column">
 
-      <div class="feature alternate ui theming stripe vertical segment device-segment">
-        <div class="ui three column center aligned doubling grid container ">
 
-          <!-- Column for device start -->
-          <div class="column">
-           
-              <h3 class="ui icon header">Air Conditioner</h3>
-
-              <!-- Dimmer -->
-              <div class="ui massive centered image dimmable">
-              <div class="ui dimmer">  <!-- active -->
-                <div class="content">
-                  <div class="center">
-                    <h2 class="ui inverted icon header">
-                      <i class="checkmark icon"></i>
-                    </h2>
-                  </div>
+    <div class="ui basic segment device segment">
+      <div class="ui vertical feature segment">
+        <div class="ui centered page grid">
+          <div class="row">
+            <div class="ui large fluid search selection dropdown">
+              <input type="hidden" name="device">
+              <i class="dropdown icon"></i>
+              <input class="search" tabindex="0">
+              <div class="default text">Select Device</div>
+              <div class="menu transition hidden" tabindex="-1">
+                <div class="item selected" data-value="air-conditioner">
+                  <img class="ui tiny image" src="./assets/icons/air-conditioner.png"> Air-conditioner
+                </div>
+                <div class="item" data-value="generator">
+                  <img class="ui image" src="./assets/icons/generator.png"> Generator
+                </div>
+                <div class="item" data-value="refrigerator">
+                  <img class="ui image" src="./assets/icons/refrigerator.png"> Refrigerator
+                </div>
+                <div class="item" data-value="washing-machine">
+                  <img class="ui image" src="./assets/icons/washing-machine.png"> Washing Machine
+                </div>
+                <div class="item" data-value="water-motor">
+                  <img class="ui image" src="./assets/icons/engine.png"> Water Motor
+                </div>
+                <div class="item" data-value="regulator">
+                  <img class="ui image" src="./assets/icons/regulator.png"> Generator
                 </div>
               </div>
-              <img class="ui centered image air-conditioner" src="./assets/icons/air-conditioner.png" (click)="device_click('air-conditioner')">
             </div>
-              <!-- Dimmer -->
-            
           </div>
-          <!-- Column for device end -->
-
-          <!-- Column for device start -->
-
-          <div class="column">
-            <h3 class="ui icon header">Generator</h3>
-            <!-- Dimmer -->
-              <div class="ui massive centered image dimmable">
-              <div class="ui dimmer">  <!-- active -->
-                <div class="content">
-                  <div class="center">
-                    <h2 class="ui inverted icon header">
-                      <i class="checkmark icon"></i>
-                    </h2>
-                  </div>
-                </div>
-              </div>
-              <img class="ui centered image generator" src="./assets/icons/generator.png" (click)="device_click('generator')">
-            </div>
-              <!-- Dimmer -->
+          <div class="row">
+            <button class="ui right labeled icon teal button" (click)="searchMobile()">Search<i class="right search icon"></i></button>
           </div>
 
-          <!-- Column for device end -->
-
-          <!-- Column for device start -->
-
-          <div class="column">
-            <h3 class="ui icon header">Water Motor</h3>
-            <!-- Dimmer -->
-              <div class="ui massive centered image dimmable">
-              <div class="ui dimmer">  <!-- active -->
-                <div class="content">
-                  <div class="center">
-                    <h2 class="ui inverted icon header">
-                      <i class="checkmark icon"></i>
-                    </h2>
-                  </div>
-                </div>
-              </div>
-              <img class="ui centered image water-motor" src="./assets/icons/engine.png" (click)="device_click('water-motor')">
-            </div>
-              <!-- Dimmer -->
-          </div>
-          <br><br>
-
-          <!-- Column for device end -->
-
-          <!-- Column for device start -->
-
-          <div class="column">
-            <h3 class="ui icon header">Refrigerator</h3>
-            <!-- Dimmer -->
-              <div class="ui massive centered image dimmable">
-              <div class="ui dimmer">  <!-- active -->
-                <div class="content">
-                  <div class="center">
-                    <h2 class="ui inverted icon header">
-                      <i class="checkmark icon"></i>
-                    </h2>
-                  </div>
-                </div>
-              </div>
-              <img class="ui centered image refrigerator" src="./assets/icons/refrigerator.png" (click)="device_click('refrigerator')">
-            </div>
-              <!-- Dimmer -->
-          </div>
-
-          <!-- Column for device end -->
-
-          <!-- Column for device start -->
-
-          <div class="column">
-            <h3 class="ui icon header">Washing Machine</h3>
-            <!-- Dimmer -->
-              <div class="ui massive centered image dimmable">
-              <div class="ui dimmer">  <!-- active -->
-                <div class="content">
-                  <div class="center">
-                    <h2 class="ui inverted icon header">
-                      <i class="checkmark icon"></i>
-                    </h2>
-                  </div>
-                </div>
-              </div>
-              <img class="ui centered image washing-machine" src="./assets/icons/washing-machine.png" (click)="device_click('washing-machine')">
-            </div>
-              <!-- Dimmer -->
-          </div>
-
-          <!-- Column for device end -->
-
-          <!-- Column for device start -->
-
-          <div class="column">
-            <h3 class="ui icon header">Voltage Regulator</h3>
-            <!-- Dimmer -->
-              <div class="ui massive centered image dimmable">
-              <div class="ui dimmer">  <!-- active -->
-                <div class="content">
-                  <div class="center">
-                    <h2 class="ui inverted icon header">
-                      <i class="checkmark icon"></i>
-                    </h2>
-                  </div>
-                </div>
-              </div>
-              <img class="ui centered image regulator" src="./assets/icons/regulator.png" (click)="device_click('regulator')">
-            </div>
-              <!-- Dimmer -->
-          </div>
-
-          <!-- Column for device end -->
-
-          
         </div>
       </div>
-     
-      <!-- Choose Device -->
-      
+    </div>
+  </div>
 
-
-      <div class="ui warning centered message">
-        <h2 class="ui header">Do you require emergency service?</h2>
+  <!-- Upcoming Appointments -->
+  <div class="sixteen wide computer sixteen wide mobile column">
+    <h3 class="ui header">Upcoming Appointments
+      <div class="ui horizontal divider">
+        <i class="star icon"></i>
       </div>
+    </h3>
+  </div>
 
+  <div class="spinner" *ngIf="loading">
+    <div class="double-bounce1"></div>
+    <div class="double-bounce2"></div>
+  </div>
+
+  <div *ngIf="!loading">
+
+    <div *ngIf="appointments">
+      <div class="center aligned four column row">
+        <div class="sixteen wide column">
+          <div class="ui stackable two cards">
+            <div class="card" *ngFor="let item of appointments" [ngClass]="{disabled : item.unavailable == 'true'}">
+
+              <div class="content">
+                <img class="right floated ui tiny image" src="{{item.spimg}}">
+                <div class="header">
+                  <span *ngIf="item.emergency == 'yes'">
+                      <a class="ui small red ribbon label">emergency</a>
+                  </span>
+                  <h3 id="mon3" [routerLink]="['/ServiceProvider_Profile', item.spid]"><a>{{item.company}}<small id="mon3">({{item.branch}})</small></a></h3>
+                  <button class="ui tiny inverted blue button" [routerLink]="['/User_Requested_Appointment_Detail', item.apid]">
+                                <i class="unordered list icon"></i>
+                                View Appointment Details
+                            </button>
+                </div>
+                <div class="meta">
+                  <span *ngIf="item.state == 'pending'">
+                    <span style="margin:10px;" class="ui blue tag label" id="mon3">{{item.state}}</span>
+                  </span>
+                  <span *ngIf="item.state == 'completed'">
+                    <span style="margin:10px;" class="ui green tag label" id="mon3">{{item.state}}</span>
+                  </span>
+                  <span *ngIf="item.state == 'rescheduled'">
+                    <span style="margin:10px;" class="ui purple tag label" id="mon3">{{item.state}}</span>
+                  </span>
+                </div>
+
+                <div class="description">
+                  <table class="ui small definition unstackable table">
+                    <tr>
+                      <td class="active" id="mon3"><b>Device</b></td>
+                      <td id="mon3">{{item.device}}</td>
+                    </tr>
+                    <tr>
+                      <td class="active" id="mon3"><b>Date</b></td>
+                      <td id="mon3">{{item.date}}</td>
+                    </tr>
+                    <tr>
+                      <td class="active" id="mon3"><b>Time</b></td>
+                      <td id="mon3">{{item.time}}</td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+              <div class="extra content">
+                <div *ngIf="item.state == 'pending' || item.state == 'completed'">
+                  <div class="ui button" (click)="cancelAppointment(item.apid,item.time,item.date,item.state,item.spid,
+                                                            item.device,item.uid)" id="mon3">Cancel Appointment</div>
+                </div>
+                <div *ngIf="item.state == 'rescheduled'">
+                  <div class="ui positive button" (click)="rescheduledAppointment(item.apid,item.date,item.time,item.device,item.spid,
+                                                         item.state,item.uid,'accept')" id="mon3">Accept</div>
+                  <div class="ui button" (click)="rescheduledAppointment(item.apid,item.date,item.time,item.device,item.spid,
+                                                item.state,item.uid,'cancel')" id="mon3">Cancel</div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--</div>-->
+    </div>
+    <div *ngIf="appointments.length <= 0">
+      <div class="ui centered container">
+        <div class="ui page stackable column grid">
+          <div class="row"></div>
+          <div class="row"></div>
+          <div class="row"></div>
+          <div class="row">
+            <div class="column">
+              <div class="ui center aligned floating message">
+                <p id="mon3">No Requested Appointments</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-user-device-modal></app-user-device-modal>
+<!--<div class="ui warning centered message">
+        <h3 class="ui header">Do you require emergency service?</h3>
+      </div>-->
+<!--
       <div class="ui two column doubling grid">
         <div class="column">
           <app-user-device-modal></app-user-device-modal>
@@ -220,9 +365,27 @@
           </button>
         </div>
 
+      </div>-->
+
+<!--<div class="ui basic segment device segment">
+  <div class="ui vertical feature segment">
+    <div class="ui centered page grid">
+      <div class="row">
+        <div class="ui warning centered message">
+          <h3 class="ui header" id="mon3">Are you in emergency?</h3>
+        </div>
       </div>
+      <div class="row">
+        <div class="ui large buttons">
+          <button class="ui warning large button" (click)="search('yes')" id="mon3">Yes</button>
+          <div class="or"></div>
+          <button class="ui large positive button" (click)="search('no')" id="mon3">No</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>-->
 
 
-    
 
-  <br><br>
+<br><br><br><br>

@@ -5,6 +5,8 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase, FirebaseObjectObservable, FirebaseListObservable } from 'angularfire2/database';
 import { FirebaseDatabaseService } from '../../services/firebase-database.service';
+import { Observable } from 'rxjs/Observable';
+import * as alertify from 'alertifyjs';
 declare var $: any;
 
 @Component({
@@ -18,42 +20,135 @@ export class UserNavbarComponent implements OnInit {
   userimg: string;
   username: string;
   currentURL: number;
-  notificationsObservable: FirebaseListObservable<any[]>;
+  notificationsFirebaseObservable: FirebaseListObservable<any[]>;
   userNoti = [];
   uid: string;
-  notiLength : number;
-  return_string : string;
+  notiLength = [];
+  return_string: string;
+  notificationsObservable: Observable<any>;
 
 
   constructor(public loginService: LoginService, public router: Router, public afAuth: AngularFireAuth,
     public firebaseDatabase: FirebaseDatabaseService, public db: AngularFireDatabase) {
 
-    
+
     this.afAuth.authState.subscribe(x => {
-     
+
       if (x) {
+         
         this.user = x;
         this.userimg = x.photoURL;
         this.username = x.displayName;
         this.uid = x.uid;
-        this.notificationsObservable = this.firebaseDatabase.getNotifications();
+       
 
-        this.notificationsObservable.map(y => {
-          y.filter(y => {
-            if (y.uid == x.uid) {
-              this.userNoti.push(y);
-              y.timestamp = this.timestampToNoti(y.timestamp);
-            }
-          })
-          this.notiLength = this.userNoti.length;
-          this.userNoti.reverse();
-          console.log("Noti Length ",this.notiLength);
-        }).subscribe(data => {
-          if (data) {
-            console.log(this.userNoti);
+        // for notitication count
+        this.firebaseDatabase.getUserNotification(x.uid).$ref.on("child_changed", snapshot => {
+          if (snapshot) {
+            // alertify.warning('Warning message');
+            this.notiLength = [];
           }
         });
-        
+        this.firebaseDatabase.getUserNotification(x.uid).$ref.on("child_added", snapshot => {
+          if (snapshot) {
+            // alertify.warning('Warning message');
+            this.notiLength = [];
+          }
+        });
+        this.firebaseDatabase.getUserNotification(x.uid).$ref.on("child_removed", snapshot => {
+          if (snapshot) {
+            this.notiLength = [];
+          }
+        })
+
+        this.firebaseDatabase.getUserNotification(x.uid).map(y => {
+
+          y.filter(y => {
+            if (y.read == false) {
+              this.notiLength.push(y);
+            }
+          })
+        }).subscribe(data => {
+
+          if (data) {
+            this.notiLength = [];
+            this.notiLength.push(data);
+            this.notiLength.reverse();
+          }
+        });
+
+        //for notification list
+        this.notificationsObservable = this.firebaseDatabase.getNotifications();
+        this.notificationsObservable.map(y => {
+          // alertify.warning('Warning message');
+
+
+          y.filter(y => {
+
+
+            if (y.uid == x.uid) {
+              this.firebaseDatabase.getSpInfo(y.spid).map(z => {
+
+                if (z) {
+                  let noti = {
+                    "notiID": y.$key,
+                    "read": y.read,
+                    "spimg": z["logo"],
+                    "spname": z["company"],
+                    "date": y.date,
+                    "time": y.time,
+                    "device": y.device,
+                    "state": y.state,
+                    "timestamp": this.timestampToNoti(y.timestamp)
+                  }
+                  this.userNoti.push(noti);
+
+                  return this.userNoti;
+                }
+
+              }).subscribe(data => {
+                if (data) {
+                  this.firebaseDatabase.getUserNotification(y.uid).$ref.on("child_added", snapshot => {
+                    if (snapshot) {
+                      // alertify.warning('Warning message');
+                      this.userNoti = [];
+                    }
+                  });
+                  this.firebaseDatabase.getSpInfo(y.spid).$ref.on("child_changed", snapshot => {
+                    if (snapshot) {
+                      this.userNoti = [];
+                    }
+                  });
+
+                  this.firebaseDatabase.getUserNotification(y.uid).$ref.on("child_changed", snapshot => {
+                    if (snapshot) {
+                      this.userNoti = [];
+                    }
+                  });
+
+                  this.firebaseDatabase.getUserNotification(y.uid).$ref.on("child_removed", snapshot => {
+                    if (snapshot) {
+                      this.userNoti = [];
+                    }
+                  });
+                  this.userNoti = [];
+                  this.userNoti = data;
+                  this.userNoti.reverse();
+                 
+                }
+              });
+
+              // y.timestamp = this.timestampToNoti(y.timestamp);
+            }
+
+          })
+        }).subscribe(data => {
+          if (data) { }
+        })
+
+      }
+      else {
+        this.router.navigate(['Home']);
       }
     });
   }
@@ -61,14 +156,14 @@ export class UserNavbarComponent implements OnInit {
   ngOnInit() {
     this.userNoti = [];
     $('.custom.item')
-        .popup({
-          popup: '.custom.popup',
-          position  : 'bottom center',
-          inline: true,
-          // boundary:   $('body'),
-          on: 'click'
-        });
-   }
+      .popup({
+        popup: '.custom.popup',
+        position: 'bottom center',
+        inline: true,
+        // boundary:   $('body'),
+        on: 'click'
+      });
+  }
 
   logout() {
     this.loginService.logout();
@@ -80,13 +175,13 @@ export class UserNavbarComponent implements OnInit {
       .popup({
         popup: '.custom.popup',
         inline: true,
-        position  : 'bottom center',
+        position: 'bottom center',
         // boundary:   $('body'),
         on: 'click'
       });
   }
 
-  timestampToNoti(timestamp){
+  timestampToNoti(timestamp) {
 
     var todayDate = new Date(Date.now()).getTime();  // convert timestamp to Date and getTime()
     var notiDate = new Date(timestamp).getTime();

@@ -39,6 +39,14 @@ import { SpProfileComponent } from './service-provider/sp-profile/sp-profile.com
 import { NotificationsComponent } from './noti/notifications/notifications.component';
 import { FooterComponent } from './footer/footer.component';
 import { SpNotificationsComponent } from './noti/sp-notifications/sp-notifications.component';
+import { UserNewComponent } from './user/user-new/user-new.component';
+
+import {Knayi} from 'knayi-myscript';
+import { SpAppointmentDetailComponent } from './service-provider/sp-appointment-detail/sp-appointment-detail.component';
+import { UserAppointmentDetailComponent } from './user/user-appointment-detail/user-appointment-detail.component';
+import { UserSpProfileComponent } from './user/user-sp-profile/user-sp-profile.component';
+import { UserRequestedAppointmentDetailsComponent } from './user/user-requested-appointment-details/user-requested-appointment-details.component';
+
 
 
 
@@ -56,6 +64,11 @@ export const routes:Routes = [
   {path : "Sp_Profile", component:SpProfileComponent},
   {path : "Notifications", component:NotificationsComponent},
   {path : "SpNotifications", component:SpNotificationsComponent},
+  {path : "NewUser", component:UserNewComponent},
+  {path : "Sp_Appointment_Detail/:id",component:SpAppointmentDetailComponent},
+  {path : "User_Appointment_Detail/:id",component:UserAppointmentDetailComponent},
+  {path : "User_Requested_Appointment_Detail/:id",component:UserRequestedAppointmentDetailsComponent},
+  {path : "ServiceProvider_Profile/:id",component:UserSpProfileComponent},
   {path : "**", component:HomeComponent}
 ]
 
@@ -86,6 +99,11 @@ export const routes:Routes = [
     NotificationsComponent,
     FooterComponent,
     SpNotificationsComponent,
+    UserNewComponent,
+    SpAppointmentDetailComponent,
+    UserAppointmentDetailComponent,
+    UserSpProfileComponent,
+    UserRequestedAppointmentDetailsComponent,
     
   ],
   imports: [

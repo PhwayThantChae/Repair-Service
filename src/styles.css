@@ -1,7 +1,18 @@
-/* For Sticky Footer */
+
+@font-face {
+  font-family: mon3;
+  src: url('/assets/fonts/mon3.ttf');
+}
 body{
+      font-family: 'mon3' !important;
       background-image: url('/assets/images/white_wall_hash.png') !important;
-    }
+  }
+#mon3{
+  font-family : 'mon3' !important;
+}
+td{
+  font-size : 14px;
+}
 .pusher {
   display: flex;
   min-height: 100vh;

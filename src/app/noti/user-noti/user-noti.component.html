@@ -5,10 +5,16 @@
   <div class="ui flowing custom popup bottom center transition hidden">
     <h2 class="ui top attached center aligned block header">Notifications</h2>
 
-    <div class="ui middle aligned selection list">
+    <div class="ui middle aligned selection scrolling list">
 
-      <div *ngFor="let noti of userNoti" class="item">
+      <div *ngFor="let noti of userNoti" class="item" [routerLink]="['/User_Appointment_Detail', noti.notiID]">
         <!--[ngClass] = "{read : noti.read == 'true' , unread : noti.read == 'false'}"-->
+         <!--<div *ngIf="noti.read == false">
+      <i class="right floated black circle icon"  id="{{noti.$key}}"></i>
+    </div>
+    <div *ngIf="noti.read == true">
+      <i class="right floated circle thin icon"  id="{{noti.$key}}"></i>
+    </div>-->
         <img class="ui avatar image" src="{{noti.spimg}}">
         <div class="content">
 
@@ -60,14 +66,14 @@
         </div>
         </div>
 
-        
-      </div>
+ 
     </div>
-    <div *ngIf="userNoti.length >= 1">
-      <button class="ui bottom attached center aligned fluid button" [routerLink]="['Notifications']">See All Notifications</button>
-    </div>
+    <!--<div *ngIf="userNoti.length >= 1">-->
+      
+    <!--</div>-->
   </div>
-
+  <button class="ui bottom attached center aligned fluid button" [routerLink]="['Notifications']">See All Notifications</button>
+</div>
 </div>
 <div *ngIf="userNoti.length == 0">
   <div class="ui flowing custom popup bottom center transition hidden">

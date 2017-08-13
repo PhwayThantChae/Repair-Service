@@ -9,14 +9,14 @@
 
       <!-- right menu -->
       <div class="right menu">
-        <a [routerLink]="['Sp_Homepage']" class="active item"><i class="home icon"></i>Home</a>
+        <a [routerLink]="['Sp_Homepage']" class="active item" id="mon3"><i class="home icon"></i>Home</a>
 
-        <a class="ui simple dropdown item" >
+        <a class="ui simple dropdown item" id="mon3">
           <i class="configure icon"></i>Requests
           <i class="dropdown icon"></i>
           <div class="menu">
-              <a class="item" [routerLink]="['ApprovedRequest']">Approved Request</a>
-              <a class="item" [routerLink]="['QueuingRequest']">Queuing Request</a>
+              <a class="item" [routerLink]="['ApprovedRequest']" id="mon3">Approved Request</a>
+              <a class="item" [routerLink]="['QueuingRequest']" id="mon3">Queuing Request</a>
           </div>
         </a>
         
@@ -30,19 +30,19 @@
           Approved Request</a>
         <a class="item" [routerLink]="['QueuingRequest']"><i class="configure icon"></i>Queuing Request</a>-->
         <!-- Notification -->
-        <a class="spcustom item"><i class="alarm outline icon"></i>Notification
-        <a class="ui red circular label">{{spNoti.length}}</a></a>
+        <a class="spcustom item" id="mon3"><i class="alarm outline icon"></i>Notification
+        <a class="ui red circular label" id="mon3">{{notiLength.length}}</a></a>
          <app-sp-noti [spNoti] = "spNoti"></app-sp-noti>
 
         <!-- Notification -->
         <a class="ui simple dropdown item wordwrap" >
           <div class="ui mini image">
             <img src="{{spimg}}">
-          </div><span class="wordwrap">{{spname}}</span>
+          </div><span class="wordwrap" id="mon3">{{spname}}</span>
           <i class="dropdown icon"></i>
           <div class="menu">
-            <div class="item" [routerLink]="['Sp_Profile']">Profile</div>
-            <div class="item" (click)="spLogout()">Logout</div>
+            <div class="item" [routerLink]="['Sp_Profile']" id="mon3">Profile</div>
+            <div class="item" (click)="spLogout()" id="mon3">Logout</div>
           </div>
         </a>
       </div>
@@ -69,7 +69,9 @@
         </a>-->
        
         <a class="item" [routerLink]="['SpNotifications']">
-          <a class="ui red circular label">{{spNoti.length}}</a>
+          <div *ngIf="notiLength.length > 0">
+            <a class="ui red circular label" id="mon3">{{notiLength.length}}</a>
+          </div>
           <i class="alarm outline icon"></i>
         </a>
         
@@ -77,17 +79,17 @@
     </div>
 
     <div class="ui left spsidebar sidebar inverted labeled icon vertical menu">
-      <a class="header item">
+      <a class="header item" id="mon3">
 
          <i class="ui mini image">
               <img src="{{spimg}}">
          </i><br>{{spname}}
        
       </a>
-      <a class="item" [routerLink]="['Sp_Homepage']">
+      <a class="item" [routerLink]="['Sp_Homepage']" id="mon3">
           <i class="home icon"></i>Home
       </a>
-      <a class="item" [routerLink]="['ApprovedRequest']">
+      <a class="item" [routerLink]="['ApprovedRequest']" id="mon3">
           <i class="icon"><div class="ui  mini image"> 
               <svg width="25" height="25">
               <image xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="./assets/icons/gears.svg" x="0" y="0" width="100%" height="100%"></image>
@@ -95,15 +97,15 @@
           </div></i>
           Approved Request
       </a>
-      <a class="item" [routerLink]="['QueuingRequest']">
+      <a class="item" [routerLink]="['QueuingRequest']" id="mon3">
           <i class="configure icon"></i>
             Queuing Request
       </a>
-      <a class="item" [routerLink]="['Sp_Profile']">
+      <a class="item" [routerLink]="['Sp_Profile']" id="mon3">
           <i class="user icon"></i>
             Profile
       </a>
-      <a class="item" (click)="spLogout()">
+      <a class="item" (click)="spLogout()" id="mon3">
             <i class="sign out icon"></i>
             Logout
         </a>

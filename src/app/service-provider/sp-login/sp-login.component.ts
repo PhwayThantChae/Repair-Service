@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { SpLoginServiceService } from '../../services/sp-login-service.service';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { FormGroup, FormControl, FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+declare var $:any;
 
 @Component({
   selector: 'app-sp-login',
@@ -10,9 +12,12 @@ import { AngularFireAuth } from 'angularfire2/auth';
 })
 export class SpLoginComponent implements OnInit {
 
-  email:string;
-  password : string;
-  constructor(public login:SpLoginServiceService,public router: Router,public afAuth: AngularFireAuth,public spLoginService:SpLoginServiceService) {
+  email:FormControl;
+  password : FormControl;
+  spLogInForm : FormGroup;
+
+  constructor(public login:SpLoginServiceService,public router: Router,public afAuth: AngularFireAuth,
+              public spLoginService:SpLoginServiceService,public formbuilder : FormBuilder) {
     if(this.spLoginService.currentSp()){
       console.log("Service Provider Automatic Log out");
       this.spLoginService.spLogOut();
@@ -20,18 +25,30 @@ export class SpLoginComponent implements OnInit {
   }
 
   ngOnInit() {
+     
+    this.email = new FormControl('',[
+      Validators.required,
+      Validators.email
+    ]);
+
+    this.password = new FormControl('',[
+      Validators.required
+    ]);
+    this.buildForm();
   }
 
-  onSubmit(form:any){
-    console.log("hey");
-    console.log(form.email);
-    this.login.spLogin(form.email,form.password);
-   
-    this.afAuth.authState.subscribe(auth=>{
-        if(auth){
-          this.router.navigate(['Sp_Homepage']);
-        }
+  buildForm():void{
+
+    this.spLogInForm = this.formbuilder.group({
+      email : this.email,
+      password : this.password
     });
+  }
+
+  onSubmit(){
+    
+    this.login.spLogin(this.email.value,this.password.value);
+  
   }
 
 }

@@ -24,32 +24,101 @@ export class SpQueuingRequestComponent implements OnInit {
   time: string;
   uid: string;
   spimg: string;
-  device:string;
+  device: string;
   appointments: FirebaseListObservable<any[]>;
   dateArray = [];
+  userinfo: any;
 
   constructor(public spLoginService: SpLoginServiceService, public spFirebaseDatabase: SpFirebaseDatabaseService,
     public afAuth: AngularFireAuth) {
 
+    this.userAppointments = [];
     this.afAuth.authState.subscribe(x => {
       if (x) {
+
         this.dateArray = this.spFirebaseDatabase.getNextSevenDays();
         this.uid = x.uid;
         this.appointments = this.spFirebaseDatabase.getUserAppointments();
-        this.appointments.map(y =>
+        this.appointments.map(y => {
           y.filter(y => {
             if (y.spid == this.uid && (y.state == "pending" || y.state == "rescheduled")) {
-              this.userAppointments.push(y);
-            }
-          })).subscribe(data => {
-            if (data) {
-              this.loading = false;
-              console.log(this.userAppointments);
-            }
-            else {
-              this.loading = true;
+              this.spFirebaseDatabase.getUserInfo(y.uid).$ref.on("child_changed", snapshot => {
+                console.log("SNAPSHOT", snapshot.val());
+                if (snapshot) {
+                  console.log(this.userAppointments);
+                  this.userAppointments = [];
+                }
+              });
+
+              this.spFirebaseDatabase.getAppointmentBySpid(y.spid).$ref.on("child_changed",snapshot => {
+                if(snapshot){
+                  this.userAppointments = [];
+                }
+              });
+
+              this.spFirebaseDatabase.getAppointmentBySpid(y.spid).$ref.on("child_added",snapshot => {
+                if(snapshot){
+                  this.userAppointments = [];
+                }
+              })
+
+              this.spFirebaseDatabase.getAppointmentBySpid(y.spid).$ref.on("child_removed",snapshot => {
+                if(snapshot){
+                  this.userAppointments = [];
+                }
+              })
+                //Check availability of the appointment
+              var dateParts = y.date.split('/');
+              var d1 = new Date(dateParts[2],dateParts[1]-1,dateParts[0]);
+              // var apDate = Date.parse(d1.toLocaleDateString());
+              console.log(d1);
+
+              var d2 = new Date(Date.now());
+              var todayDate = Date.parse(d2.toLocaleDateString());
+              console.log(d2);
+              var unavailable = (d1 >= d2) ? "false" : "true";
+
+              this.userinfo = this.spFirebaseDatabase.getUserInfo(y.uid).map(z => {
+
+                if (z) {
+                  console.log(z);
+                  let userinfo = {
+                    "apid": y.$key,
+                    "uid": y.uid,
+                    "spid": y.spid,
+                    "emergency": y.emergency,
+                    "imgurl": z["imageUrl"],
+                    "username": z["username"],
+                    "state": y.state,
+                    "time": y.time,
+                    "date": y.date,
+                    "phone": z["ph"],
+                    "address": z["address"],
+                    "description": y.description,
+                    "device": y.device,
+                    "brand": y.brand,
+                    "unavailable" : unavailable
+                  }
+                  return userinfo;
+                }
+
+              }).subscribe(a => {
+                if (a) {
+                  this.userAppointments.push(a);
+                }
+
+              })
             }
           })
+        }).subscribe(data => {
+          if (data) {
+            this.loading = false;
+            console.log(this.userAppointments);
+          }
+          else {
+            this.loading = false;
+          }
+        })
       }
     });
 
@@ -57,18 +126,18 @@ export class SpQueuingRequestComponent implements OnInit {
 
   ngOnInit() {
     $(".ui.dropdown").dropdown();
+    this.userAppointments = [];
   }
 
-  appointmentAction(apID, userid, spid, company, branch, date, time,device,spimg,action) {
+  appointmentAction(apID, userid, spid, date, time, device, action) {
+    console.log("userid", userid);
     this.apID = apID;
     this.userID = userid;
     this.spID = spid;
-    this.company = company;
-    this.branch = branch;
     this.date = date;
     this.time = time;
     this.device = device;
-    this.spimg = spimg;
+
 
     if (action == "approve") {
       this.userAppointments = [];
@@ -91,6 +160,7 @@ export class SpQueuingRequestComponent implements OnInit {
 
   onSubmit(form) {
     this.userAppointments = [];
+
     this.spFirebaseDatabase.rescheduleAppointment(this.apID, form.date, form.time, "rescheduled");
 
     //Send Notification of Service Provider Rescheduling to Customer 
@@ -101,11 +171,10 @@ export class SpQueuingRequestComponent implements OnInit {
 
   sendNotification(state) {
     //Send Notification of Service Provider Rescheduling to Customer 
-    var currentData = [];
-    currentData = this.spFirebaseDatabase.getCurrentDateTime();
+    // var currentData = [];
+    // currentData = this.spFirebaseDatabase.getCurrentDateTime();
     var currentTimestamp = Date.now();
-    this.spFirebaseDatabase.sendNotification(this.apID, this.userID, this.spID, this.company, this.branch,
-      this.time, this.date, currentData[0], currentData[1],currentTimestamp,this.device,this.spimg,state);
+    this.spFirebaseDatabase.sendNotification(this.apID, this.userID, this.spID, this.time, this.date, currentTimestamp, this.device, state);
   }
 
 }

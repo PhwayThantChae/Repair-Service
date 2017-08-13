@@ -17,7 +17,12 @@ export class SpFirebaseDatabaseService {
   notiData: FirebaseListObservable<any[]>;
   allnotiData: FirebaseListObservable<any[]>;
   appointmentData: FirebaseListObservable<any[]>;
-
+  userInfo : FirebaseObjectObservable<any[]>;
+  spNoti : FirebaseListObservable<any[]>;
+  notificationDetail : FirebaseObjectObservable<any>;
+  appointmentDetail : FirebaseObjectObservable<any>;
+  notiIdDetail : FirebaseObjectObservable<any>;
+  appointmentSpid : FirebaseListObservable<any[]>;
 
 
   constructor(public db: AngularFireDatabase, public firebaseApp: FirebaseApp) {
@@ -31,6 +36,12 @@ export class SpFirebaseDatabaseService {
       }
     });
 
+  }
+
+  getUserInfo(uid){
+
+    this.userInfo = this.db.object('/users/'+uid);
+    return this.userInfo;
   }
 
 
@@ -70,19 +81,19 @@ export class SpFirebaseDatabaseService {
     for (var i = 1; i <= 7; i++) {
       var currentDate = new Date();
       currentDate.setDate(d.getDate() + i);
-      tmp = (currentDate.getDate()) + '/' + (d.getMonth() + 1) + '/' + (d.getFullYear());
+      tmp = (currentDate.getDate()) + '/' + (currentDate.getMonth() + 1) + '/' + (currentDate.getFullYear());
       date2.push(tmp.toString());
     }
 
     return date2;
   }
 
-  getCurrentDateTime(): string[] {
-    var current = [];
-    var currentDate = new Date();
-    current.push(currentDate.toLocaleDateString(), currentDate.toLocaleTimeString());
-    return current;
-  }
+  // getCurrentDateTime(): string[] {
+  //   var current = [];
+  //   var currentDate = new Date();
+  //   current.push(currentDate.toLocaleDateString(), currentDate.toLocaleTimeString());
+  //   return current;
+  // }
 
   rescheduleAppointment(apID, date, time, state) {
     this.db.object('/user-appointments/' + apID).update({
@@ -92,36 +103,62 @@ export class SpFirebaseDatabaseService {
     });
   }
 
-  sendNotification(apID, uID, spID, spname, branch, time, date, currentDate, currentTime, currentTimeStamp, device, spimg, state) {
+  sendNotification(apID, uID, spID, time, date,currentTimeStamp, device, state) {
 
     var noti = {
       'uid': uID,
       'spid': spID,
       'apid': apID,
-      'spname': spname,
-      'branch': branch,
       'time': time,
       'date': date,
       'device': device,
-      'currentDate': currentDate,
-      'currentTime': currentTime,
       'timestamp': currentTimeStamp,
       'state': state,
-      'spimg': spimg
-      // 'read': false
+      'read': false
     };
     this.notificationData.push(noti);
   }
 
-  getSpNotifications(): FirebaseListObservable<any[]> {
+  getSpUnreadNotifications(): FirebaseListObservable<any[]> {
 
     this.notiData = this.db.list('/sp-notifications', {
       query: {
-        orderByChild: 'timestamp',
-        limitToFirst: 5
+         orderByChild: 'read',
+         equalTo : false
       }
     });
     return this.notiData;
+  }
+
+  getSpAllNotifications(){
+    this.notiData = this.db.list('/sp-notifications', {
+      query: {
+         orderByChild: 'timestamp'
+      }
+    });
+    return this.notiData;
+  }
+
+  getSpNotifications(spid){
+    this.spNoti = this.db.list('/sp-notifications',{
+      query: {
+        orderByChild: 'spid',
+        equalTo : spid
+      }
+    });
+
+    return this.spNoti;
+  }
+
+  getAppointmentBySpid(spid){
+    this.appointmentSpid = this.db.list('/user-appointments',{
+      query: {
+        orderByChild: 'spid',
+        equalTo : spid
+      }
+    });
+
+    return this.appointmentSpid;
   }
 
   getAppointmentsSPHome() {
@@ -139,7 +176,6 @@ export class SpFirebaseDatabaseService {
 
   getWeekDay() {
     var date = new Date().getDay();
-    console.log(date);
     var day;
     switch (date) {
       case 0: day = "Sunday"; break;
@@ -153,12 +189,13 @@ export class SpFirebaseDatabaseService {
     return day;
   }
 
-  updateSPProfile(ph, email, hotline, spid) {
+  updateSPProfile(ph, email, hotline,address, spid) {
 
     this.db.object('/sp/' + spid).update({
       ph: ph,
       email: email,
-      hotline: hotline
+      hotline: hotline,
+      address : address
     });
 
   }
@@ -223,6 +260,35 @@ export class SpFirebaseDatabaseService {
     });
 
     return this.allnotiData;
+  }
+
+  changeNotiStatus(id, condition) {
+
+    this.db.object('/sp-notifications/' + id).update({
+      read: condition
+    });
+
+  }
+
+  getNotificationDetail(notiID) {
+
+    this.notificationDetail = this.db.object('/notifications/' + notiID);
+    return this.notificationDetail;
+
+  }
+
+  getAppointmentDetail(apid) {
+
+    this.appointmentDetail = this.db.object('/user-appointments/' + apid);
+    return this.appointmentDetail;
+
+  }
+
+  getSpNotiID(notiID){
+    
+    this.notiIdDetail = this.db.object('/sp-notifications/'+notiID);
+    return this.notiIdDetail;
+
   }
 
 

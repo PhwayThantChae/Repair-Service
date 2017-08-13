@@ -1,34 +1,43 @@
+<br><br><br>
 <div class="container">
 
   <div class="ui centered grid">
     <div class="column ">
 
       <div class="ui fluid raised card">
-        
+
         <div class="content">
-            <h3 class="center aligned">Log In as Service Provider</h3>
-            <div class="ui horizontal divider">
-              <div class="ui mini image"> <img src="./assets/icons/repairman.svg"></div>
+          <h3 class="center aligned">Log In as Service Provider</h3>
+          <div class="ui horizontal divider">
+            <div class="ui mini image"> <img src="./assets/icons/repairman.svg"></div>
+          </div>
+          <form class="ui form" (ngSubmit)="onSubmit()" [formGroup]="spLogInForm">
+            <!--<h4 class="ui dividing header">Contact Information</h4>-->
+
+            <div class="ui red message" *ngIf="email.errors && (email.touched || email.dirty)" id="mon3">
+              Please enter email
             </div>
-            <form class="ui form" (ngSubmit)="onSubmit(spLogInForm.value)" #spLogInForm="ngForm">
-                <!--<h4 class="ui dividing header">Contact Information</h4>-->
-                <div class="field">
-                  <div class="ui left icon input">
-                    <i class="user icon"></i> 
-                  <input type="text" name="email" placeholder="Email Address" [(ngModel)] = "email" >
-                  </div>
-                </div>
 
-                <div class="field">
-                  <div class="ui left icon input">
-                    <i class="lock icon"></i>
-                  <input type="password" name="password" placeholder="Password" [(ngModel)] = "password">
-                  </div>
-                </div>
+            <div class="field">
+              <div class="ui left icon input">
+                <i class="user icon"></i>
+                <input required type="text" name="email" placeholder="Email Address" required [formControl]="email" id="mon3">
+              </div>
+            </div>
 
-                <button class="ui fluid positive button" type="submit" >Log In</button>
-                
-            </form>
+            <div class="ui red message" *ngIf="password.errors && (password.touched || password.dirty)" id="mon3">
+              Please enter password
+            </div>
+            <div class="field">
+              <div class="ui left icon input">
+                <i class="lock icon"></i>
+                <input required type="password" name="password" placeholder="Password" [formControl]="password" id="mon3">
+              </div>
+            </div>
+
+            <button class="ui fluid positive button" type="submit" [ngClass]="{disabled : spLogInForm.invalid}" id="mon3">Log In</button>
+
+          </form>
         </div>
       </div>
     </div>

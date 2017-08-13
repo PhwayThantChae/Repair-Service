@@ -1,55 +1,105 @@
+<div *ngIf="result">
+  <div class="ui stackable centered grid">
+    <div class="four column row">
+      <div class="twelve wide column">
+        <div class="ui stackable two cards">
+          <div class="card" *ngFor="let sp of result">
 
-<div class="ui four doubling stackable cards">
-<div *ngFor="let sp of result">
-<!--<div *ngIf = "sp.services.indexOf(this.device) != -1">-->
+            <div class="content">
+              <img class="left floated tiny ui image" width="150" height="150" src="{{sp.logo}}">
+              <div class="header">
+                <h3 id="mon3">{{sp.company}}<small>({{sp.branch}} Branch)</small></h3>
+              </div>
+            
 
-<div class="card">
+            <div class="description">
 
-  <div class="header">
-    <img class="left floated tiny ui image" src="{{sp.logo}}">
-    <div class="ui header">{{sp.company}}</div>
+              <table class="ui celled padded unstackable green table">
+
+                <tbody>
+                  <tr>
+                    <td class="active" id="mon3">Services</td>
+                    <td id="mon3">{{sp.services}}
+                  </tr>
+
+                  <tr>
+                    <td class="active" id="mon3">Address</td>
+                    <td id="mon3">{{sp.address}}</td>
+                </tbody>
+              </table>
+            </div>
+            </div>
+
+            <app-user-get-appointment [spinfo]="spinfo" id="sp.$key"></app-user-get-appointment>
+          
+            <div class="extra content">
+              <div class="ui small two buttons">
+
+                <!--<div class="ui green button" id="mon3" (click)="getAppointment(sp.$key)">
+                  <h5 class="ui header">
+                    <i class="large icons">
+                    <i class="black calendar icon"></i>
+                    <i class="inverted corner add icon"></i>
+                    </i><br> Appointment
+                  </h5>
+                </div>-->
+                <div class="ui green animated fade button" tabindex="0" (click)="getAppointment(sp.$key)">
+                  <div class="visible content">
+                    <i class="large icons">
+                      <i class="black calendar icon"></i>
+                      <i class="inverted corner add icon"></i>
+                    </i>
+                    </div>
+                  <div class="hidden content">
+                    <h5 class="ui header">Get Appointment</h5>
+                  </div>
+                </div>
+
+                <div class="ui blue animated fade button" tabindex="0" [routerLink]="['/ServiceProvider_Profile', sp.$key]">
+                  <div class="visible content">
+                    <i class="large icons">
+                      <i class="black user icon"></i>
+                    </i>
+                    </div>
+                  <div class="hidden content">
+                    <h5 class="ui header">View Profile</h5>
+                  </div>
+                </div>
+
+                <!--<div class="ui blue button" id="mon3" [routerLink]="['/ServiceProvider_Profile', sp.$key]">
+                  <h5 class="ui header">
+                    <i class="large icons">
+                      <i class="black user icon"></i>
+                    </i>
+                    <br> View Profile
+                  </h5>
+                </div>-->
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-
-  <div class="content">
-    <table class="ui celled padded unstackable green table">
-      <tbody>
-        <tr>
-          <td class="active">Services</td>
-          <td>{{sp.services.join(', ')}}
-        </tr>
-
-        <tr>
-          <td class="active">Address</td>
-          <td>{{sp.address}}</td>
-      </tbody>
-    </table>
-  </div>
- <app-user-get-appointment [spinfo] = "spinfo" id="sp.$key"></app-user-get-appointment>
-  <div class="ui centered positive bottom attached button" (click)="getAppointment(sp.$key,sp.company,sp.branch,sp.logo)"> 
-    <i class="add circle icon"></i> Get The Appointment
-  </div> 
-  
 </div>
 
-<!--</div>-->
-</div>
-</div>
+
+
+<br><br>
 
 
 
 <div class="ui basic not-login-modal modal">
   <div class="ui icon header">
     <i class="info circle icon"></i>
-     <p>Please log in to book the appointment.</p>
+    <p id="mon3">Please log in to book the appointment.</p>
   </div>
 
-    <div class="actions">
-      
-      <div class="ui green ok inverted button">
-        <i class="checkmark icon"></i>
-        Okay
-      </div>
-    </div>
-</div>
+  <div class="actions">
 
-<!-- Modal -->
+    <div class="ui green ok inverted button" id="mon3">
+      <i class="checkmark icon"></i> Okay
+    </div>
+  </div>
+</div>

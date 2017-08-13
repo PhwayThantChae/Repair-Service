@@ -30,6 +30,8 @@ export class UserNotiComponent implements OnInit {
 
   }
 
+  
+
 
 }
 

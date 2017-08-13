@@ -1,6 +1,6 @@
  $(document).ready(function() {
      
-   
+    $('.ui.dropdown').dropdown();
       // $('.masthead')
       //   .visibility({
       //     once: false,

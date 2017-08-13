@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { SpLoginServiceService } from '../../services/sp-login-service.service';
 import { FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
 import { SpFirebaseDatabaseService } from '../../services/sp-firebase-database.service';
+import { FormGroup, FormControl, FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularFireAuth } from 'angularfire2/auth';
+import * as knayi from 'knayi-myscript';
 declare var $:any;
 
 @Component({
@@ -18,19 +20,24 @@ export class SpProfileComponent implements OnInit {
   spuser : any;
   spData: FirebaseObjectObservable<any>;
   spname : string;
-  email : string[];
   oldemail : string[];
-  hotline : string[];
   oldhotline : string[];
-  logo = "";
-  oldlogo = "";
-  ph : string[];
-  oldph : string[];
-  selectedFile : any;
   
+  oldlogo = "";
+  oldph : string[];
+  oldaddress : string;
+  selectedFile : any;
+
+  logo : FormControl;
+  ph : FormControl;
+  email : FormControl;
+  hotline : FormControl;
+  address : FormControl;
+  userprofileForm : FormGroup;
+
 
   constructor(public spLoginService: SpLoginServiceService, public spFirebaseDatabase: SpFirebaseDatabaseService,
-              public afAuth: AngularFireAuth) { }
+              public afAuth: AngularFireAuth,public formbuilder:FormBuilder) { }
 
   ngOnInit() {
 
@@ -43,14 +50,37 @@ export class SpProfileComponent implements OnInit {
           if (data) {
             this.spname = data.company;
             this.imgurl = data.logo;
-            this.email = data.email;
+            this.email.setValue(data.email);
             this.oldemail = data.email;
-            this.hotline = data.hotline;
-            this.ph = data.ph;
+            this.hotline.setValue(data.hotline);
+            this.ph.setValue(data.ph);
+            this.address.setValue(data.address);
+            this.oldaddress = data.address;
             this.oldph = data.ph;
           }
       });
   }
+});
+
+  this.ph = new FormControl('',[
+    Validators.required
+  ]);
+  this.email = new FormControl('');
+  this.hotline = new FormControl('');
+  this.address = new FormControl('',[
+    Validators.required
+  ]);
+  this.logo = new FormControl('');
+this.bulidForm();
+}
+
+bulidForm():void{
+  this.userprofileForm = this.formbuilder.group({
+    ph : this.ph,
+    hotline : this.hotline,
+    email : this.email,
+    address : this.address,
+    logo : this.logo
   });
 }
 
@@ -71,14 +101,25 @@ public fileChangeEvent(fileInput: any){
     }
 }
 
-  onSubmit(form){
-   
+  onSubmit(){
+
     if(this.selectedFile){
       this.spFirebaseDatabase.ImageUpload(this.selectedFile[0].name,this.selectedFile[0],this.spid);
     }
-    if (form.ph !== this.oldph || form.email !== this.oldemail || form.hotline !== this.oldhotline) {
-
-      this.spFirebaseDatabase.updateSPProfile(form.ph, form.email,form.hotline,this.spid);
+    if (this.ph.value !== this.oldph || this.email.value !== this.oldemail || this.hotline.value !== this.oldhotline || this.address.value !== this.oldaddress) {
+      if(knayi.fontDetect(this.ph.value) == "zawgyi"){
+        this.ph.setValue(knayi.fontConvert(this.ph.value, 'unicode'));
+      }
+      if(knayi.fontDetect(this.address.value) == "zawgyi"){
+        this.address.setValue(knayi.fontConvert(this.address.value, 'unicode'));
+      }
+      if(knayi.fontDetect(this.hotline.value) == "zawgyi"){
+        this.hotline.setValue(knayi.fontConvert(this.hotline.value, 'unicode'));
+      }
+      if(knayi.fontDetect(this.email.value) == "zawgyi"){
+        this.email.setValue(knayi.fontConvert(this.email.value, 'unicode'));
+      }
+      this.spFirebaseDatabase.updateSPProfile(this.ph.value, this.email.value,this.hotline.value,this.address.value,this.spid);
     }
   }
 }

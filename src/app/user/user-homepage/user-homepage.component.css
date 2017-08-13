@@ -11,3 +11,21 @@
      background-image: url('/assets/images/ep_naturalwhite.png') !important;
      padding: 60px 150px 60px 150px;
 }
+
+.dimmer{
+  margin : 0 auto;
+}
+
+@font-face {
+  font-family: 'mon3';
+  src: url('/assets/fonts/mon3.ttf');
+  font-weight: 400;
+  font-style: italic;
+}
+.header{
+      font-family: 'mon3' !important;
+    }
+
+#mon3{
+  font-family: 'mon3' !important;
+}

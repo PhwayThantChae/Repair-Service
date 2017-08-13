@@ -1,32 +1,32 @@
-<br><br>
-<div class="ui basic segment">
-    <div class="ui vertical feature segment ">
-        <div class="ui centered page grid">
+<br>
+<div class="ui segment spsegment">
+    <div class="ui vertical feature segment">
+        <div class="ui centered page grid ">
 
             <div class="row">
                 <div class="centered column">
-                    <h1 class="ui center aligned header">Today is {{day}} {{date2[0]}}</h1>
+                    <h1 class="ui center aligned header" id="mon3">Today is {{day}} {{date2[0]}}</h1>
                     <div class="ui horizontal divider"><i class="star icon"></i></div>
                 </div>
             </div>
-            <form class="ui form" (ngSubmit)="onSubmit(spHome.value)" #spHome="ngForm">
+            <form class="ui form" (ngSubmit)="onSubmit()" [formGroup]="spHome">
                 <div class="row">
                     <div class="sixteen wide column">
 
                         <div class="ui two column center aligned stackable divided grid">
                             <div class="column column-feature">
                                 <div class="field">
-                                    <label>Date</label>
-                                    <select class="ui dropdown" [(ngModel)]="date" name="date">
+                                    <label id="mon3">Date</label>
+                                    <select class="ui dropdown" [formControl] = "date" name="date" id="mon3">
                                         <option *ngFor="let d of date3" [value]="d" >{{d}}</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="column column-feature">
                                 <div class="field">
-                                    <label>Time Slot</label>
-                                    <select class="ui dropdown" [(ngModel)]="time" name="time">
-                                        <option></option>
+                                    <label id="mon3">Time Slot</label>
+                                    <select class="ui dropdown" [formControl]="time" name="time" id="mon3">
+                                        <option>none</option>
                                         <option>9am - 12pm</option>
                                         <option>12pm - 3pm</option>
                                         <option>3pm - 6pm</option>
@@ -40,9 +40,9 @@
                 <div class="row" style="margin-top:20px">
                     <div class="center aligned sixteen wide column">
                         <div class="ui buttons">
-                        <div class="ui teal left labeled icon button" (click)="todayAppointments('today')">Today<i class="checked calendar left icon"></i></div>
+                        <div class="ui teal left labeled icon button" id="mon3" (click)="todayAppointments('today')">Today<i class="checked calendar left icon"></i></div>
                         <div class="or"></div>
-                        <button type="submit" class="ui blue right labeled icon button">Search<i class="search right icon"></i></button>
+                        <button id="mon3" type="submit" class="ui blue right labeled icon button">Search<i class="search right icon"></i></button>
                         </div>
                     </div>
                 </div>
@@ -70,9 +70,10 @@
                     
                     <div class="content">
                     <img class="right floated ui mini image" src="{{appointment.imgurl}}">
-                    <div class="header">
+                    <div class="header" id="mon3">
                         <span>{{appointment.username}}</span>
                         <span style="margin-right:10px; margin-bottom: 10px;" class="ui medium right floated olive tag label">{{appointment.time}}</span>
+                        <span style="margin-right:10px; margin-bottom: 10px;" class="ui medium right floated olive tag label">{{appointment.date}}</span>
                     </div>
                     <!--<div class="meta">
                         Friends of Veronika
@@ -80,33 +81,33 @@
                     <div class="description">
                         <table class="ui small definition unstackable table">
                             <tr>
-                                <td class="active"><b>Phone Number</b></td>
-                                <td>{{appointment.userPh}}</td>
+                                <td class="active" id="mon3"><b>Phone Number</b></td>
+                                <td id="mon3">{{appointment.userPh}}</td>
                             </tr>
 
                             <tr>
-                                <td class="active"><b>Device</b></td>
-                                <td>{{appointment.device}}</td>
+                                <td class="active" id="mon3"><b>Device</b></td>
+                                <td id="mon3">{{appointment.device}}</td>
                             </tr>
 
                             <tr>
-                                <td class="active"><b>Address</b></td>
-                                <td>{{appointment.userAddress}}</td>
+                                <td class="active" id="mon3"s><b>Address</b></td>
+                                <td id="mon3">{{appointment.userAddress}}</td>
                             </tr>
 
                             <tr>
-                                <td class="active"><b>Description</b></td>
-                                <td>{{appointment.description}}</td>
+                                <td class="active" id="mon3"><b>Description</b></td>
+                                <td id="mon3">{{appointment.description}}</td>
                             </tr>
 
                             <tr>
-                                <td class="active"><b>Brand</b></td>
-                                <td>{{appointment.brand}}</td>
+                                <td class="active" id="mon3"><b>Brand</b></td>
+                                <td id="mon3">{{appointment.brand}}</td>
                             </tr>
 
                             <tr>
-                                <td class="active"><b>Email</b></td>
-                                <td>{{appointment.userEmail}}</td>
+                                <td class="active" id="mon3"><b>Email</b></td>
+                                <td id="mon3">{{appointment.userEmail}}</td>
                             </tr>
                         </table>
                     </div>
@@ -130,7 +131,7 @@
             <div class="row">
                 <div class="column">
                 <div class="ui center aligned floating message">
-                    <p>No Appointments</p>
+                    <p id="mon3">No Appointments</p>
                 </div>
                 </div>
             </div>

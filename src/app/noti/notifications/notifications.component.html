@@ -1,7 +1,9 @@
 <br>
 <div class="ui container">
-  <h2 class="ui center aligned block header">Notifications</h2>
-
+  <h2 class="ui center aligned block header" id="mon3"  (click)="deleteAllNoti_Modal()">
+    Notifications
+    <a><i style ="float : right; margin-bottom: 3px;" class="small circular inverted trash icon"></i></a>
+  </h2>
   <div class="spinner" *ngIf="loading">
     <div class="double-bounce1"></div>
     <div class="double-bounce2"></div>
@@ -11,54 +13,57 @@
     <div *ngIf="userNoti">
       <div class="ui middle aligned celled selection list">
 
-        <div *ngFor="let noti of userNoti" class="item" (click)="MarkAsRead(noti.$key)">
-          <!--<div *ngIf="noti.read == false">
-      <i class="right floated black circle icon"  id="{{noti.$key}}"></i>
-    </div>
-    <div *ngIf="noti.read == true">
-      <i class="right floated circle thin icon"  id="{{noti.$key}}"></i>
-    </div>-->
+        <!--(click)="showNotiDetail(noti.notiID)"-->
+        <div *ngFor="let noti of userNoti" class="item"  [routerLink]="['/User_Appointment_Detail', noti.notiID]">
+          <div *ngIf="noti.read == false" (click)="MarkAsRead(noti.notiID)" data-tooltip="Mark as unread" data-position="top right"
+          data-inverted="">
+            <i class="right floated black circle icon" id="{{noti.notiID}}"></i>
+          </div>
+          <div *ngIf="noti.read == true" (click)="MarkAsRead(noti.notiID)" data-tooltip="Mark as read" data-position="top right"
+          data-inverted="">
+            <i class="right floated circle thin icon" id="{{noti.notiID}}"></i>
+          </div>
           <img class="ui avatar image" src="{{noti.spimg}}">
           <div class="content">
 
             <div *ngIf="noti.state == 'rescheduled'">
-              <div class="header">Your appointment is
-                <a class="ui purple label">
+              <div class="header" id="mon3">Your appointment is
+                <a class="ui purple label" id="mon3">
             rescheduled 
           </a> by {{noti.spname}}.</div>
               <div class="description">
                 <div>
-                  <span>Date</span>
-                  <span>{{noti.date}}</span>
+                  <span id="mon3">Date</span>
+                  <span id="mon3">{{noti.date}}</span>
                 </div>
                 <div>
-                  <span>Time</span>
-                  <span>{{noti.time}}</span>
+                  <span id="mon3">Time</span>
+                  <span id="mon3">{{noti.time}}</span>
                 </div>
               </div>
             </div>
 
             <div *ngIf="noti.state == 'completed'">
-              <div class="header">Your appointment for {{noti.device}} service is
-                <a class="ui green label">
+              <div class="header" id="mon3">Your appointment for {{noti.device}} service is
+                <a class="ui green label" id="mon3">
             approved 
           </a> by {{noti.spname}}.</div>
               <div class="description">
                 <div>
-                  <span>Date</span>
-                  <span>{{noti.date}}</span>
+                  <span id="mon3">Date</span>
+                  <span id="mon3">{{noti.date}}</span>
                 </div>
                 <div>
-                  <span>Time</span>
-                  <span>{{noti.time}}</span>
+                  <span id="mon3">Time</span>
+                  <span id="mon3">{{noti.time}}</span>
                 </div>
 
               </div>
             </div>
 
             <div *ngIf="noti.state == 'cancel'">
-              <div class="header">Your appointment for {{noti.device}} service is
-                <a class="ui orange label">
+              <div class="header" id="mon3">Your appointment for {{noti.device}} service is
+                <a class="ui orange label" id="mon3">
             cancelled 
           </a> by {{noti.spname}}.</div>
             </div>
@@ -66,7 +71,7 @@
 
             <!--</div>-->
           </div>
-          <span class="right floated">
+          <span class="right floated" id="mon3">
       <!--<span *ngIf="timestampToNoti(noti.timestamp)">{{return_string}}<span>-->
         {{noti.timestamp}}
     </span>
@@ -82,7 +87,7 @@
           <div class="row">
             <div class="column">
               <div class="ui center aligned floating message">
-                <p>No Notifications</p>
+                <p id="mon3">No Notifications</p>
               </div>
             </div>
           </div>
@@ -90,4 +95,26 @@
       </div>
     </div>
   </div>
+</div>
+
+<div class="ui basic deleteNoti-modal modal">
+  <div class="ui icon header">
+    <i class="trash circle icon"></i>
+    <p id="mon3">Do you want to delete all Notifications?</p>
+  </div>
+
+  <div class="actions">
+    <div class="ui red basic cancel inverted button" id="mon3">
+      <i class="remove icon"></i> No
+    </div>
+    <div class="ui green ok inverted button" id="mon3" (click)="deleteNoti()">
+      <i class="checkmark icon"></i> Yes
+    </div>
+  </div>
+</div>
+
+<!-- Notification Modal --> 
+
+<div class="ui modal notiModal">
+
 </div>

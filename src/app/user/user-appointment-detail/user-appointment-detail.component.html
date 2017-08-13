@@ -1,0 +1,116 @@
+<br>
+<div class="ui container">
+    <h2 class="ui center aligned block header" id="mon3">Appointment Details</h2>
+</div>
+
+<div class="spinner" *ngIf="loading">
+    <div class="double-bounce1"></div>
+    <div class="double-bounce2"></div>
+</div>
+
+<div *ngIf="!loading">
+    <div *ngIf="sp && appointment">
+        <div class="ui centered grid">
+        <div class="twelve wide column">
+         <!--<div class="column">-->
+           <div class="ui fluid centered card">
+                <div class="content">
+                    <img class="right floated ui small image" src="{{sp.spimg}}">
+                    <div class="header">
+                        <span *ngIf="appointment.emergency == 'yes'">
+                                <a class="ui small red ribbon label">emergency</a>
+                            </span>
+                        <h3 id="mon3">{{sp.company}}<small id="mon3">({{sp.branch}} Branch)</small></h3>
+                    </div>
+                    <div class="meta">
+                        <span *ngIf="appointment.state == 'pending'">
+                                <span style="margin:10px;" class="ui blue tag label" id="mon3">{{appointment.state}}</span>
+                        </span>
+                        <span *ngIf="appointment.state == 'completed'">
+                                <span style="margin:10px;" class="ui green tag label" id="mon3">{{appointment.state}}</span>
+                        </span>
+                        <span *ngIf="appointment.state == 'rescheduled'">
+                                <span style="margin:10px;" class="ui purple tag label" id="mon3">{{appointment.state}}</span>
+                        </span>
+                        <span *ngIf="appointment.state == 'cancel'">
+                                <span style="margin:10px;" class="ui orange tag label" id="mon3">cancelled</span>
+                        </span>
+                    </div>
+                
+               
+               <div class="description">
+                <!--<div class="ui large green label">Appointment Details</div>-->
+                <div class="ui horizontal divider">Appointment Details</div>
+                <table class="ui small definition unstackable table">
+                    <tr>
+                        <td class="active" id="mon3"><b>Device</b></td>
+                        <td id="mon3">{{appointment.device}}</td>
+                    </tr>
+                    <tr>
+                        <td class="active" id="mon3"><b>Date</b></td>
+                        <td id="mon3">{{appointment.date}}</td>
+                    </tr>
+                    <tr>
+                        <td class="active" id="mon3"><b>Time</b></td>
+                        <td id="mon3">{{appointment.time}}</td>
+                    </tr>
+
+                    <tr>
+                        <td class="active" id="mon3"><b>Brand</b></td>
+                        <td id="mon3">{{appointment.brand}}</td>
+                    </tr>
+
+                    <tr>
+                        <td class="active" id="mon3"><b>Description</b></td>
+                        <td id="mon3">{{appointment.description}}</td>
+                    </tr>
+
+                    <tr>
+                        <td class="active" id="mon3"><b>Address</b></td>
+                        <td id="mon3">{{appointment.userAddress}}</td>
+                    </tr>
+                </table>
+                </div>
+                <br>
+                <div class="description">
+                <div class="ui horizontal divider">Service Provider Details</div>
+                <table class="ui small definition unstackable table">
+                    <tr>
+                        <td class="active" id="mon3"><b>Name</b></td>
+                        <td id="mon3">{{sp.company}}</td>
+                    </tr>
+                    <tr>
+                        <td class="active" id="mon3"><b>Branch</b></td>
+                        <td id="mon3">{{sp.branch}}</td>
+                    </tr>
+
+                    <tr *ngIf="sp.hotline">
+                        <td class="active" id="mon3"><b>Hotline</b></td>
+                        <td id="mon3">{{sp.hotline}}</td>
+                    </tr>
+
+                    <tr>
+                        <td class="active" id="mon3"><b>Phone</b></td>
+                        <td id="mon3">{{sp.ph}}</td>
+                    </tr>
+
+                    <tr>
+                        <td class="active" id="mon3"><b>Address</b></td>
+                        <td id="mon3">{{sp.address}}</td>
+                    </tr>
+
+                    <tr>
+                        <td class="active" id="mon3"><b>Services</b></td>
+                        <td id="mon3">{{sp.services}}</td>
+                    </tr>
+
+                </table>
+                </div>
+            </div>
+        </div>
+         <!--</div>-->
+        </div>
+        </div>
+    </div>
+</div>
+<br>

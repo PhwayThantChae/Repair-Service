@@ -22,7 +22,7 @@ export class UserSearchCardComponent implements OnInit {
 
     route.params.subscribe(params => {
       this.device = params.device;
-      this.emergency = params.emergency;
+      this.emergency = "no";
     });
   }
 
@@ -30,7 +30,7 @@ export class UserSearchCardComponent implements OnInit {
 
   }
 
-  getAppointment(key, name, branch,logo) {
+  getAppointment(key) {
 
     this.afAuth.authState.subscribe(x => {
       if (x) {
@@ -38,21 +38,21 @@ export class UserSearchCardComponent implements OnInit {
         this.spinfo.push(this.device);
         this.spinfo.push(this.emergency);
         this.spinfo.push(key);
-        this.spinfo.push(branch);
-        this.spinfo.push(name);
-        this.spinfo.push(logo);
+        // this.spinfo.push(branch);
+        // this.spinfo.push(name);
+        // this.spinfo.push(logo);
 
         console.log("Showing Modal " + this.spinfo);
          
       }
     });
-    console.log(this.afAuth.auth.currentUser);
+    
     if(!this.afAuth.auth.currentUser){
         $('.not-login-modal').modal('show');
     }
 
     if(this.afAuth.auth.currentUser){
-       var modal_id = key+branch;
+       var modal_id = key;
         $('.appointment-modal').attr('id', modal_id);
         $('#'+modal_id)
           .modal('setting', 'transition', "scale")

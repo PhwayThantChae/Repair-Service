@@ -1,61 +1,79 @@
-<!--<app-user-get-appointment></app-user-get-appointment>-->
-<br><br><br><br>
-  
-    <!-- Search Form -->
-    <div class="ui page grid searchsegment">
-    <div class="html ui compact segment formsegment">
+<br><br>
 
-      <form class="ui centered form" (ngSubmit)="onSubmit(searchForm.value)" #searchForm="ngForm">
+<div class="ui basic segment searchsegment">
+  <div class="ui vertical feature segment">
+    <div class="ui centered page grid">
+      <div class="sixteen wide mobile eight wide computer twelve wide tablet column">
+        <form class="ui centered form" [formGroup]="searchFormGroup" (ngSubmit)="onSubmit()">
 
-        <div class="field">
-          <label>Service Provider</label>
-          <input type="text" name="name" placeholder="Name" [(ngModel)] = "name">
-        </div>
-        
-        <div class="field">
-          <label>State</label>
-          <select class="ui dropdown" name="township" [(ngModel)] = "township" >
-            <option *ngFor="let township of townships" [value]="township" >{{township}}</option>
+          <div class="ui red message" *ngIf="name.errors && (name.touched || name.dirty)" id="mon3">
+            Please fill in the Service Provider
+            <!--ဆိုင်နာမည်ကိုအပြည့်အစုံဖြည့်ပါရန်-->
+          </div>
+          <div class="field">
+            <label id="mon3">Service Provider</label>
+            <input [formControl]="name" type="text" name="name" placeholder="Name" id="mon3">
+          </div>
+
+          <div class="ui red message" *ngIf="township.errors && (township.touched || township.dirty)">
+            Please choose the township
+            <!--မြို့နယ်ရွေးပေးပါရန်-->
+          </div>
+          <div class="field">
+            <label id="mon3">Township</label>
+            <select [formControl]="township" required class="ui dropdown" name="township">
+              <option></option>
+              <option value = "all">All Townships</option>
+              <option *ngFor="let township of townships" value="{{township.name}}" id="mon3">{{township.name}}</option>
           </select>
-        </div>
-        <button class="ui blue button" type="submit">Search</button>
-      </form>
-    </div>
-    </div>
-      <!-- Search Form -->
-
-      <!-- Search Result -->
-      <div class="page grid resultsegment">
-
-        <div class="spinner" *ngIf="loading">
-          <div class="double-bounce1"></div>
-          <div class="double-bounce2"></div>
-        </div>
-        <!--<div *ngIf="!loading">-->
-          <div *ngIf="!loading">
-          <div *ngIf="filteredItems">
-              <app-user-search-card 
-                  [result] = "filteredItems">
-              </app-user-search-card>
-           
           </div>
-          </div>
-          <div *ngIf="filteredItems.length <= 0">
-            <div class="ui centered container">
-                <div class="ui page stackable column grid">
-                    <div class="row"></div>
-                    <div class="row"></div>
-                    <div class="row"></div>
-                    <div class="row">
-                        <div class="column">
-                        <div class="ui center aligned floating message">
-                            <p>No Service Providers</p>
-                        </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-</div>
-      <!--</div>-->
+
+          <button id="mon3" class="ui centered blue button" type="submit" [ngClass]="{disabled : searchFormGroup.invalid}">Search</button>
+        </form>
       </div>
-      <!-- Search Result -->
+    </div>
+  </div>
+</div>
+
+<div class="spinner" *ngIf="loading">
+  <div class="double-bounce1"></div>
+  <div class="double-bounce2"></div>
+</div>
+
+<div *ngIf="!loading">
+  <div *ngIf="filteredItems">
+    <div class="ui stackable centered grid">
+      <div class="computer only four column row">
+        <div class="twelve wide column">
+          <div class="ui horizontal divider" *ngIf="nameString == ''">Service Providers in {{townshipString}} Township</div>
+          <div class="ui horizontal divider" *ngIf="nameString">{{nameString}} in {{townshipString}} Township</div>
+        </div>
+      </div>
+
+      <div class="tablet only mobile only four column row">
+        <div class="twelve wide column">
+          <div class="ui horizontal divider" *ngIf="nameString == ''">{{townshipString}}</div>
+          <div class="ui horizontal divider" *ngIf="nameString">{{townshipString}}</div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <app-user-search-card [result]="filteredItems"></app-user-search-card>
+  </div>
+</div>
+<div *ngIf="filteredItems.length <= 0">
+  <div class="ui centered container">
+    <div class="ui page stackable column grid">
+      <div class="row"></div>
+      <div class="row"></div>
+      <div class="row"></div>
+      <div class="row">
+        <div class="column">
+          <div class="ui center aligned floating message">
+            <p id="mon3">No Service Providers</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

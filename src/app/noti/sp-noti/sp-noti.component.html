@@ -58,32 +58,32 @@
   <div class="ui flowing spcustom popup bottom center transition hidden">
     <h2 class="ui top attached center aligned block header">Notifications</h2>
 
-    <div class="ui middle aligned selection list">
+    <div class="ui middle aligned selection list" >
 
-      <div *ngFor="let noti of spNoti" class="item">
+      <div *ngFor="let noti of spNoti" class="item" [routerLink]="['/Sp_Appointment_Detail', noti.notiID]">
         <!--[ngClass] = "{read : noti.read == 'true' , unread : noti.read == 'false'}"-->
         <img class="ui avatar image" src="{{noti.userimg}}">
         <div class="content">
 
           <div *ngIf="noti.state == 'completed'">
-            <div class="header">{{noti.username}} has <a class="ui green label"> accepted </a> your rescheduled time.</div>
+            <div class="header" id="mon3">{{noti.username}} has <a class="ui green label"> accepted </a> your rescheduled time.</div>
             <div class="description">
               <div class="inline">
-                <span>Date</span>
-                <span>{{noti.date}}</span>
+                <span id="mon3">Date</span>
+                <span id="mon3">{{noti.date}}</span>
               </div>
               <div class="inline">
-                <span>Time</span>
-                <span>{{noti.time}}</span>
+                <span id="mon3">Time</span>
+                <span id="mon3">{{noti.time}}</span>
               </div>
             </div>
           </div>
 
           <div *ngIf="noti.state == 'cancel'">
-             <div class="header">{{noti.username}} has <a class="ui orange label">cancelled</a> the appointment.</div>
+             <div class="header" id="mon3">{{noti.username}} has <a class="ui orange label">cancelled</a> the appointment.</div>
           </div>
           <div class="extra content">
-          <a>
+          <a id="mon3">
             <i class="time icon"></i>
             {{noti.timestamp}}
           </a>
@@ -93,18 +93,18 @@
         
       </div>
     </div>
-    <div *ngIf="spNoti.length >= 1">
-      <button class="ui bottom attached center aligned fluid button" [routerLink]="['SpNotifications']">See All Notifications</button>
-    </div>
+    <!--<div *ngIf="spNoti.length >= 1">-->
+      <button class="ui bottom attached center aligned fluid button" [routerLink]="['SpNotifications']" id="mon3">See All Notifications</button>
+    <!--</div>-->
   </div>
 
 </div>
 <div *ngIf="spNoti.length == 0">
   <div class="ui flowing custom popup bottom center transition hidden">
-    <h2 class="ui top attached center aligned block header">Notifications</h2>
+    <h2 class="ui top attached center aligned block header" id="mon3">Notifications</h2>
     <div class="ui middle aligned selection list">
       <div class="item">
-        <div class="header">No New Notifications</div>
+        <div class="header" id="mon3">No New Notifications</div>
       </div>
     </div>
   </div>

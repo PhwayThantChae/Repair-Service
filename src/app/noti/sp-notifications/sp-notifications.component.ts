@@ -3,6 +3,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase, FirebaseObjectObservable, FirebaseListObservable } from 'angularfire2/database';
 import { SpFirebaseDatabaseService } from '../../services/sp-firebase-database.service';
+declare var $:any;
 
 @Component({
   selector: 'app-sp-notifications',
@@ -25,23 +26,84 @@ export class SpNotificationsComponent implements OnInit {
     this.afAuth.authState.subscribe(x => {
       if (x) {
         this.user = x;
-        console.log(x.uid);
-        this.notificationsObservable = this.spFirebaseDatabase.getAllNotifications();
+        this.notificationsObservable = this.spFirebaseDatabase.getSpAllNotifications();
         this.notificationsObservable.map(y => {
-
           y.filter(y => {
+             this.spFirebaseDatabase.getUserInfo(y.uid).$ref.on("child_changed", snapshot => {
+                      if (snapshot) {
+                        this.spNoti = [];
+                      }
+                    });
+                    this.spFirebaseDatabase.getSpNotifications(y.spid).$ref.on("child_changed", snapshot => {
+                      if (snapshot) {
+                        this.spNoti = [];
+                      }
+                    });
+                    this.spFirebaseDatabase.getSpNotifications(y.spid).$ref.on("child_removed", snapshot => {
+                      if (snapshot) {
+                        this.spNoti = [];
+                      }
+                    });
             if (y.spid == x.uid) {
-              this.spNoti.push(y);
-              y.timestamp = this.timestampToNoti(y.timestamp);
+              this.spFirebaseDatabase.getUserInfo(y.uid).map(z => {
+                
+
+                   
+               
+                if(z){
+                  let noti = {
+                    "notiID" : y.$key,
+                    "read" : y.read,
+                    "userimg" : z["imageUrl"],
+                    "spname" : y.company,
+                    "state" : y.state,
+                    "date" : y.date,
+                    "time" : y.time,
+                    "username" : z["username"],
+                    "timestamp" : this.timestampToNoti(y.timestamp)
+                  }
+                   this.spNoti.push(noti);
+                }
+             
+              // y.timestamp = this.timestampToNoti(y.timestamp);
+            }).subscribe(data => {
+                if(data){
+                   this.loading = false;
+                   this.spFirebaseDatabase.getSpNotifications(y.spid).$ref.on("child_added", snapshot => {
+                      if (snapshot) {
+                        this.spNoti = [];
+                      }
+                    });
+
+                    this.spFirebaseDatabase.getUserInfo(y.uid).$ref.on("child_changed", snapshot => {
+                      if (snapshot) {
+                        this.spNoti = [];
+                      }
+                    });
+                    this.spFirebaseDatabase.getSpNotifications(y.spid).$ref.on("child_changed", snapshot => {
+                      if (snapshot) {
+                        this.spNoti = [];
+                      }
+                    });
+                    this.spFirebaseDatabase.getSpNotifications(y.spid).$ref.on("child_removed", snapshot => {
+                      if (snapshot) {
+                        this.spNoti = [];
+                      }
+                    });
+                   this.spNoti = [];
+                   this.spNoti.push(data);
+                   this.spNoti.reverse();
+                }
+            })
             }
 
           })
-          this.spNoti.reverse();
-          console.log(this.spNoti); //count here
+          
         }).subscribe(data => {
           if (data) {
             this.loading = false;
-
+            
+            // this.spNoti.push(data);
           }
           else {
             this.loading = false;
@@ -59,6 +121,37 @@ export class SpNotificationsComponent implements OnInit {
     var diff = Math.round((todayDate - notiDate) / 3600000);
     this.return_string = this.spFirebaseDatabase.convert_Hours_To_NotiTime(diff);  // convert differentiated timestamp to hours
     return this.return_string;
+
+  }
+
+    MarkAsRead(key) {
+
+    if ($("#" + key).hasClass("thin")) {
+      $("#" + key).toggleClass("thin");
+      this.spNoti = [];
+      this.spFirebaseDatabase.changeNotiStatus(key, false);
+    }
+    else {
+      $("#" + key).toggleClass("thin");
+      this.spNoti = [];
+      this.spFirebaseDatabase.changeNotiStatus(key, true);
+    }
+
+  }
+  deleteAllNoti_Modal(){
+    $('.deleteNoti-modal')
+        .modal({
+          onDeny    : function(){
+            return true;
+          },
+          // onApprove : function() {
+          //   window.alert('Approved!');
+          // }
+        })
+        .modal('show');
+  }
+
+  deleteAllNoti(){
 
   }
 

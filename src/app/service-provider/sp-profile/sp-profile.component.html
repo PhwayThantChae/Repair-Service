@@ -1,58 +1,145 @@
-<br><br>
-<div class="imgsegment">
-
-<div class="ui page center aligned grid">
-  <div class="ui small image">
-    <img  src="{{imgurl}}">
+<br><br><br><br>
+  <div class="spinner" *ngIf="loading">
+    <div class="double-bounce1"></div>
+    <div class="double-bounce2"></div>
   </div>
-</div>
-<h2 class="ui center aligned header">{{spname}}</h2>
-</div>
 
-<br><br>
+  <div *ngIf="!loading">
 
-<div class="spinner" *ngIf="loading">
-  <div class="double-bounce1"></div>
-  <div class="double-bounce2"></div>
-</div>
-       
-<div *ngIf="!loading">
+    <div class="ui centered grid">
+      <div class="computer only row">
+        <div class="three wide column computer">
+          <img width="150" height="150" src="{{imgurl}}">
+        </div>
+      
 
-<div class="ui centered grid">
-  <div class="eight wide computer twelve wide mobile column ">
-  <form class="ui large form" (ngSubmit)="onSubmit(userprofileForm.value)" #userprofileForm="ngForm">
-  
-  <div class="field">
-    <label>Logo</label>
-    <input type="file" name="logo" placeholder="Logo" (change)="fileChangeEvent($event)" >
-    <div class="ui small image">
-      <img id="preview" src="" alt="Preview">
+      <div class="ten wide column computer">
+        <h2 class="ui secondary dividing header" id="mon3">{{spname}}</h2>
+        <form class="ui form" (ngSubmit)="onSubmit()" [formGroup]="userprofileForm">
+
+          <div class="field">
+            <label>Logo</label>
+            <div class="ui left icon input">
+              <i class="image icon"></i>
+              <input type="file" name="logo" placeholder="Logo" (change)="fileChangeEvent($event)" [formControl]="logo">
+            </div>
+            <div class="ui small image">
+              <img id="preview" src="" alt="Preview">
+            </div>
+            
+          </div>
+
+          <div class="ui red message" *ngIf="ph.errors && (ph.touched || ph.dirty)" id="mon3">
+            Please fill your phone number
+          </div>
+
+          <div class="field">
+            <label id="mon3">Phone Number</label>
+            <div class="ui left icon input">
+              <i class="phone icon"></i>
+            <input required type="text" required name="ph" placeholder="Phone Number" [formControl]="ph" id="mon3">
+            </div>
+          </div>
+
+          <div class="field">
+            <label id="mon3">Email</label>
+            <div class="ui left icon input">
+              <i class="mail icon"></i>
+            <input type="text" name="email" placeholder="Email" [formControl]="email" id="mon3">
+            </div>
+          </div>
+
+          <div class="field">
+            <label id="mon3">Hotline</label>
+            <div class="ui left icon input">
+              <i class="phone icon"></i>
+            <input type="text" name="hotline" placeholder="Hotline" [formControl]="hotline" id="mon3">
+            </div>
+          </div>
+
+          <div class="ui red message" *ngIf="address.errors && (address.touched || address.dirty)" id="mon3">
+            Please fill your address
+
+          </div>
+
+          <div class="field">
+            <label id="mon3">Address</label>
+            <textarea rows = "3" [formControl]="address" name="address" placeholder="Address" id="mon3" required></textarea>
+          </div>
+
+          <button id="mon3" class="ui secondary centered button" type="submit" [ngClass]="{disabled : userprofileForm.invalid}">
+          Update
+        </button>
+        </form>
+      </div>
+     </div>
+
+      <div class="mobile only tablet only row">
+        <div class="twelve wide centered column">
+          <img width="150" height="150" src="{{imgurl}}" class="ui centered image"> <br>
+        </div>
+
+        <div class="twelve wide column">
+          <h2 class="ui secondary dividing header" id="mon3">{{spname}}</h2>
+
+          <form class="ui form" (ngSubmit)="onSubmit()" [formGroup]="userprofileForm">
+
+              <div class="field">
+                <label>Logo</label>
+                <div class="ui left icon input">
+                <i class="image icon"></i>
+                  <input type="file" name="logo" placeholder="Logo" (change)="fileChangeEvent($event)" [formControl]="logo">
+                </div>
+                <div class="ui small image">
+                  <img id="preview" src="" alt="Preview">
+                </div>
+              </div>
+
+              <div class="ui red message" *ngIf="ph.errors && (ph.touched || ph.dirty)" id="mon3">
+                Please fill your phone number
+              </div>
+
+              <div class="field">
+                <label id="mon3">Phone Number</label>
+                <div class="ui left icon input">
+                <i class="phone icon"></i>
+                  <input required type="text" required name="ph" placeholder="Phone Number" [formControl]="ph" id="mon3">
+                </div>
+              </div>
+
+              <div class="field">
+                <label id="mon3">Email</label>
+                <div class="ui left icon input">
+                <i class="mail icon"></i>
+                  <input type="text" name="email" placeholder="Email" [formControl]="email" id="mon3">
+                </div>
+              </div>
+
+              <div class="field">
+                <label id="mon3">Hotline</label>
+                <div class="ui left icon input">
+                <i class="phone icon"></i>
+                  <input type="text" name="hotline" placeholder="Hotline" [formControl]="hotline" id="mon3">
+                </div>
+              </div>
+
+              <div class="ui red message" *ngIf="address.errors && (address.touched || address.dirty)" id="mon3">
+                Please fill your address
+
+              </div>
+
+              <div class="field">
+                <label id="mon3">Address</label>
+                <textarea rows = "3" [formControl]="address" name="address" placeholder="Address" id="mon3" required></textarea>
+              </div>
+
+              <button id="mon3" class="ui secondary centered button" type="submit" [ngClass]="{disabled : userprofileForm.invalid}">
+              Update
+            </button>
+        </form>
+        </div>
+      </div>
     </div>
-  </div>
-  
 
-  <div class="field">
-    <label>Phone Number</label>
-    <input type="text" name="ph" placeholder="Phone Number" [(ngModel)]="ph" >
   </div>
-
-  <div class="field">
-    <label>Email</label>
-     <input type="text" name="email" placeholder="Email" [(ngModel)]="email" >
-  </div>
-
-  <div class="field">
-    <label></label>
-    <input type="text" name="hotline" placeholder="Hotline" [(ngModel)]="hotline">
-  </div>
- 
-  <button class="ui secondary centered button" type="submit">
-  Update
-  </button>
-  </form>
-  </div>
-</div>
-
-</div>
-<br>
-
+  <br>

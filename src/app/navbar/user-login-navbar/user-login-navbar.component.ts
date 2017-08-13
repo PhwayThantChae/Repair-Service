@@ -16,7 +16,7 @@ export class UserLoginNavbarComponent implements OnInit {
 
   currentURL:string;
   constructor(public loginService: LoginService, public router: Router, public afAuth: AngularFireAuth,
-    public firebaseDatabase: FirebaseDatabaseService, public db: AngularFireDatabase,) {
+    public firebaseDatabase: FirebaseDatabaseService, public db: AngularFireDatabase) {
       this.router.events.subscribe((res) => {
         this.currentURL = this.router.url;
       });
@@ -28,41 +28,38 @@ export class UserLoginNavbarComponent implements OnInit {
   login() {
 
     this.loginService.login();
-    this.afAuth.authState.subscribe(auth => {
-      if (auth) {
-        let user_exist: FirebaseObjectObservable<any> = this.db.object(`/users/${auth.uid}`, { preserveSnapshot: true });
-        user_exist.subscribe(snapshot => {
-          let exist = (snapshot.val() !== null);
-          console.log("exist",exist);
-          if (exist) {
-            this.router.navigate(['User_Homepage']);
-          }
-          if(!exist){
-            // this.redirect_User_Homepage();
-             $('.loginmodal')
-              .modal('setting', 'closable', false)
-              .modal('setting', 'transition', "scale")
-              .modal('show');
-          }
-        });
-      }
-    });
+    // this.afAuth.authState.subscribe(auth => {
+    //   if (auth) {
+    //     let user_exist: FirebaseObjectObservable<any> = this.db.object(`/users/${auth.uid}`);
+    //     user_exist.subscribe(snapshot => {
+    //       console.log(snapshot.$value);
+    //       let exist = (snapshot.$value !== null);
+    //       console.log("exist",exist);
+    //       if (exist) {
+    //         this.router.navigate(['User_Homepage']);
+    //       }
+    //       else{
+    //         this.router.navigate(['NewUser']);
+    //       }
+    //     });
+    //   }
+    // });
   }
 
-  redirect_User_Homepage() {
+  // redirect_User_Homepage() {
 
-      this.loginModal();
+  //     this.loginModal();
     
-  }
+  // }
 
-  loginModal() {
+  // loginModal() {
 
-    $('.loginmodal')
-      .modal('setting', 'closable', false)
-      .modal('setting', 'transition', "scale")
-      .modal('show');
+  //   $('.loginmodal')
+  //     .modal('setting', 'closable', false)
+  //     .modal('setting', 'transition', "scale")
+  //     .modal('show');
 
-  }
+  // }
 
 
 }
