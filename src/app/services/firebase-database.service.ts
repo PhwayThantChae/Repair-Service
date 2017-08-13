@@ -37,17 +37,16 @@ export class FirebaseDatabaseService {
 
   }
 
-  writeUserData(userId, name, email, ph, address, imageUrl) {
+  writeUserData(userId, name, email, ph, address,township, imageUrl) {
 
     this.db.object('/users/' + userId).set({
       username: name,
       email: email,
       ph: ph,
+      township : township,
       address: address,
       imageUrl: imageUrl
     }).then(snapshot => {
-      console.log(snapshot,"Snspasfsjflksajflskjsjlkjlsljljsfd");
-     
         this.router.navigate(['User_Homepage']);
       
     });
@@ -108,6 +107,10 @@ export class FirebaseDatabaseService {
       });
     }
 
+  }
+
+  deleteAppointment(apid){
+    this.db.object('/user-appointments/' + apid).remove();
   }
 
 

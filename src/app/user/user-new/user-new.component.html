@@ -27,6 +27,16 @@
 
         </div>
 
+        <div class="ui red message" *ngIf="township.errors && (township.touched || township.dirty)">
+            Please choose the township
+        </div>
+        <div class="field">
+          <label id="mon3">Township</label>
+          <select [formControl]="township" required class="ui dropdown" name="township">
+            <option *ngFor="let township of townships" value="{{township.name}}" id="mon3">{{township.name}}</option>
+        </select>
+        </div>
+
         <div class="ui red message" *ngIf = "address.errors && (address.touched || address.dirty)" id="mon3">
               Please enter your address
         </div>

@@ -7,7 +7,7 @@
 
 <div *ngIf="!loading">
 
-  <div class="ui center aligned grid">
+  <div class="ui page center aligned grid">
     <div class="computer only centered row">
       <div class="three wide column computer">
         <img width="150" height="150" src="{{imgurl}}">
@@ -121,7 +121,7 @@
       </div>
     </div>
 
-    <div class="center aligned four column row">
+    <div class="center aligned row">
       <div class="twelve wide column">
         <h3 class="ui center aligned header">Past Appointments</h3>
         <div class="ui horizontal divider">
@@ -136,6 +136,7 @@
         <div class="ui centered two stackable cards">
           <div class="card" *ngFor="let item of pastAppointments">
             <div class="content">
+              <!--<div class="ui red large right corner label"  (click)="deleteAppointment(item.apid)"><a data-tooltip="Cancel Appointment" data-position="bottom center"><i class="trash icon"></i></a></div>-->
               <img class="right floated ui tiny image" src="{{item.spimg}}">
               <div class="header">
                 <span *ngIf="item.emergency == 'yes'">
@@ -149,13 +150,16 @@
               </div>
               <div class="meta">
                 <span *ngIf="item.state == 'pending'">
-                              <span style="margin:10px;" class="ui blue tag label" id="mon3">{{item.state}}</span>
+                  <span style="margin:10px;" class="ui blue tag label" id="mon3">{{item.state}}</span>
                 </span>
                 <span *ngIf="item.state == 'completed'">
-                              <span style="margin:10px;" class="ui green tag label" id="mon3">{{item.state}}</span>
+                  <span style="margin:10px;" class="ui green tag label" id="mon3">{{item.state}}</span>
                 </span>
                 <span *ngIf="item.state == 'rescheduled'">
-                              <span style="margin:10px;" class="ui purple tag label" id="mon3">{{item.state}}</span>
+                  <span style="margin:10px;" class="ui purple tag label" id="mon3">{{item.state}}</span>
+                </span>
+                <span *ngIf="item.state == 'cancel'">
+                  <span style="margin:10px;" class="ui orange tag label" id="mon3">cancelled</span>
                 </span>
               </div>
 
@@ -175,6 +179,9 @@
                   </tr>
                 </table>
               </div>
+            </div>
+            <div class="extra content">
+              <button class="ui small button" data-tooltip="Delete Appointment History" data-position="bottom center" (click)="deleteAppointment(item.apid)">Delete History</button>
             </div>
           </div>
         </div>

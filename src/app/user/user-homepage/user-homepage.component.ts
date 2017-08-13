@@ -22,6 +22,14 @@ export class UserHomepageComponent implements OnInit {
   currentUser: any;
   exists: boolean;
   device: string;
+  user:any;
+
+  apID: string;
+  time: string;
+  date: string;
+  state: string;
+  spid: string;
+  ap_device: string;
 
   appointments = [];
   loading : boolean;
@@ -51,9 +59,11 @@ export class UserHomepageComponent implements OnInit {
 
     $('.ui.accordion').accordion();
 
+    
     this.appointments = [];
     this.afAuth.authState.subscribe(x => {
       if (x) {
+        this.user = x;
         this.appointments = [];
         this.loading = true;
         this.uid = x.uid;
@@ -70,8 +80,10 @@ export class UserHomepageComponent implements OnInit {
           if (y) {
             this.loading = false;
             y.filter(y => {
-              if (y.uid == x.uid) {
-         
+              if (y.uid == x.uid && y.state == 'completed') {
+                
+                //Check whether appointment can be cancelled or not
+                var cancel = this.checkAppointmentCancel(y.time,y.date,y.state);
 
                 //Check availability of the appointment within one week
                 var dateParts = y.date.split('/');  // Appointment Date
@@ -128,21 +140,21 @@ export class UserHomepageComponent implements OnInit {
                       'device': y.device,
                       'date': y.date,
                       'time': y.time,
-                      'unavailable': unavailable
+                      'unavailable': unavailable,
+                      'canCancel' : cancel
                     };
                     return requested_service;
                   }
                 }).subscribe(data => {
                   if (data) {
-                    if(data.unavailable == 'false' && data.state !== 'cancel'){
+                    if(data.unavailable == 'false'){
                       this.appointments.push(data);
                     }
                     
                     console.log(this.appointments, 'hey appoitm');
                   }
                 });
-                // }
-
+                
               }
             });
           }
@@ -158,88 +170,6 @@ export class UserHomepageComponent implements OnInit {
 
       }
     });
-
-
-
-    // $('.generator').click(function () {
-    //   if ($(this).hasClass("generator")) {
-
-    //     $('.dimmerRegulator').dimmer('hide');
-    //     $('.dimmerWashingMachine').dimmer('hide');
-    //     $('.dimmerAirConditioner').dimmer('hide');
-    //     $('.dimmerRefrigerator').dimmer('hide');
-    //     $('.dimmerWaterMotor').dimmer('hide');
-    //     this.device = "generator";
-    //     console.log(this.device);
-    //   }
-    // });
-
-    // $('.regulator').click(function () {
-    //   if ($(this).hasClass("regulator")) {
-
-    //     $('.dimmerGenerator').dimmer('hide');
-    //     $('.dimmerWashingMachine').dimmer('hide');
-    //     $('.dimmerAirConditioner').dimmer('hide');
-    //     $('.dimmerRefrigerator').dimmer('hide');
-    //     $('.dimmerWaterMotor').dimmer('hide');
-    //     this.device = "regulator";
-    //     console.log(this.device);
-    //   }
-    // });
-
-    // $('.refrigerator').click(function () {
-    //   if ($(this).hasClass("refrigerator")) {
-
-    //     $('.dimmerRegulator').dimmer('hide');
-    //     $('.dimmerWashingMachine').dimmer('hide');
-    //     $('.dimmerAirConditioner').dimmer('hide');
-    //     $('.dimmerGenerator').dimmer('hide');
-    //     $('.dimmerWaterMotor').dimmer('hide');
-    //     this.device = "refrigerator";
-    //     console.log(this.device);
-    //   }
-    // });
-
-    // $('.washing-machine').click(function () {
-    //   if ($(this).hasClass("washing-machine")) {
-
-    //     $('.dimmerRegulator').dimmer('hide');
-    //     $('.dimmerGenerator').dimmer('hide');
-    //     $('.dimmerAirConditioner').dimmer('hide');
-    //     $('.dimmerRefrigerator').dimmer('hide');
-    //     $('.dimmerWaterMotor').dimmer('hide');
-    //     this.device = "washing-machine";
-    //     console.log(this.device);
-    //   }
-    // });
-
-    // $('.air-conditioner').click(function () {
-    //   if ($(this).hasClass("air-conditioner")) {
-
-    //     $('.dimmerRegulator').dimmer('hide');
-    //     $('.dimmerWashingMachine').dimmer('hide');
-    //     $('.dimmerGenerator').dimmer('hide');
-    //     $('.dimmerRefrigerator').dimmer('hide');
-    //     $('.dimmerWaterMotor').dimmer('hide');
-    //     this.device = "air-conditioner";
-    //     console.log(this.device);
-    //   }
-    // });
-
-    // $('.water-motor').click(function () {
-    //   if ($(this).hasClass("water-motor")) {
-
-    //     $('.dimmerRegulator').dimmer('hide');
-    //     $('.dimmerWashingMachine').dimmer('hide');
-    //     $('.dimmerAirConditioner').dimmer('hide');
-    //     $('.dimmerRefrigerator').dimmer('hide');
-    //     $('.dimmerGenerator').dimmer('hide');
-    //     this.device = "water-motor";
-    //     console.log(this.device);
-    //   }
-    // });
-
-
   }
 
 
@@ -251,20 +181,6 @@ export class UserHomepageComponent implements OnInit {
   }
 
 
-
-
-
-  // search() {
-
-  //   if (this.device == "" || this.device == undefined) {
-  //     $('.device-modal').modal('show');
-  //   }
-  //   else {
-  //       this.router.navigate(['User_Search_Normal', { device: this.device}]);
-        //  this.router.navigate(['User_Search_Normal', { device: this.device, emergency: ans }]);
-  //   }
-
-  // }
 
 searchMobile(){
  
@@ -278,5 +194,90 @@ searchMobile(){
       
     }
 }
+
+  checkAppointmentCancel(time,date,state){
+
+    var cancel;
+    var timestamp = Date.now();
+    if (state == "completed") {
+      var appointedtime = time.substring(0, 2);
+      var parts = date.split('/');
+      var currentDate = new Date();
+      var hoursleft = 0;
+      var diff = 0;
+
+      if (parts[0] >= currentDate.getUTCDate()) {
+        diff = parts[0] - currentDate.getUTCDate();
+        if (diff == 1) {
+          if (appointedtime == 9) {
+            hoursleft = (24 - currentDate.getHours()) + 9;
+            console.log("Hours Left" + hoursleft);
+          }
+          if (appointedtime == 12) {
+            hoursleft = (24 - currentDate.getHours()) + 12;
+            console.log("Hours Left" + hoursleft);
+          }
+          if (appointedtime == 9) {
+            hoursleft = (24 - currentDate.getHours()) + 15;
+            console.log("Hours Left" + hoursleft);
+          }
+
+        }
+      }
+
+      switch (diff) {
+
+        case 0: cancel = false; break;
+
+        case 1: if (hoursleft >= 24) {
+                  cancel = true;
+                }
+                else {
+                  cancel = false;
+                } break;
+
+        default: 
+          cancel = true;
+
+      }
+    }
+    else {
+      console.log("You can cancel for pending state.");
+      cancel = true;
+
+    }
+    
+    return cancel;
+
+  }
+
+cancelAppointment(apID, time, date, state, spid, device, uid) {
+
+    this.apID = apID;
+    this.time = time;
+    this.date = date;
+    this.state = state;
+    this.spid = spid;
+    this.ap_device = device;
+    this.uid = uid;
+
+    $('.home-cancel-modal').modal({
+            closable: false,
+            onDeny: function () {
+              return true;
+            }
+          }).modal('show');
+
+}
+
+  deleteConfirm(apID, time, date, state, spid, ap_device, uid) {
+
+    console.log("Delete Confirmed");
+    var timestamp = Date.now();
+
+    this.appointments = [];
+    this.firebaseDatabase.changeAppointmentStatus(apID, "cancel");
+    this.firebaseDatabase.sendNotifications(apID, date, time, ap_device, spid, "cancel", uid, timestamp);
+  }
 
 }

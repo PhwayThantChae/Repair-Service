@@ -10,16 +10,48 @@
 
 <div *ngIf="!loading">
     <div *ngIf="sp && appointment">
-        <div class="ui centered grid">
-        <div class="twelve wide column">
+        <div class="ui stackable page grid">
+        <div class="column">
          <!--<div class="column">-->
-           <div class="ui fluid centered card">
+           <div class="ui raised segment">
                 <div class="content">
-                    <img class="right floated ui small image" src="{{sp.spimg}}">
-                    <div class="header">
-                        <span *ngIf="appointment.emergency == 'yes'">
+
+
+                <div class="ui items">
+                    <div class="item">
+                        
+                        <div class="ui tiny image">
+                            <img class="image" src = "{{sp.spimg}}">
+                        </div>
+                        
+                        <div class="middle aligned content">
+                            <a class="header" id="mon3">{{sp.company}}<small id="mon3">({{sp.branch}} Branch)</small></a>
+                            <div class="meta">
+                                <span *ngIf="appointment.state == 'pending'">
+                                    <span style="margin:10px;" class="ui blue tag label" id="mon3">{{appointment.state}}</span>
+                                </span>
+                                <span *ngIf="appointment.state == 'completed'">
+                                    <span style="margin:10px;" class="ui green tag label" id="mon3">{{appointment.state}}</span>
+                                </span>
+                                <span *ngIf="appointment.state == 'rescheduled'">
+                                    <span style="margin:10px;" class="ui purple tag label" id="mon3">{{appointment.state}}</span>
+                                </span>
+                                <span *ngIf="appointment.state == 'cancel'">
+                                    <span style="margin:10px;" class="ui orange tag label" id="mon3">cancelled</span>
+                                </span> 
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+
+                    <!--<span *ngIf="appointment.emergency == 'yes'">
                                 <a class="ui small red ribbon label">emergency</a>
-                            </span>
+                        </span>-->
+
+
+                    <!--<img class="right floated ui small image" src="{{sp.spimg}}">
+                    <div class="header">
+                        
                         <h3 id="mon3">{{sp.company}}<small id="mon3">({{sp.branch}} Branch)</small></h3>
                     </div>
                     <div class="meta">
@@ -35,7 +67,7 @@
                         <span *ngIf="appointment.state == 'cancel'">
                                 <span style="margin:10px;" class="ui orange tag label" id="mon3">cancelled</span>
                         </span>
-                    </div>
+                    </div>-->
                 
                
                <div class="description">

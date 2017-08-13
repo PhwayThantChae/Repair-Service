@@ -95,18 +95,18 @@
     </div>
 </div>
 
-<div class="ui small cancel-modal modal">
+<div class="ui basic cancel-modal modal">
 
     <div class="ui center aligned grid">
         <div class="column">
-            <i class="info huge circle icon"></i>
-            <h4 class="ui center aligned header" id="mon3">You will be charged extra charges for cancelling appointments now. Do you still want to cancel?
+            <i class="trash huge circle icon"></i>
+            <h4 class="ui inverted center aligned header" id="mon3">Are you sure you want to cancel the appointment?
             </h4>
         </div>
 
     </div>
     <div class="actions">
-        <div class="ui approve button" (click)="deleteConfirm(apID,time,date,state,spid,device,uid)" id="mon3">Okay</div>
+        <div class="ui negative approve button" (click)="deleteConfirm(apID,time,date,state,spid,device,uid)" id="mon3">Okay</div>
         <div class="ui deny button" id="mon3">Cancel</div>
     </div>
 </div>

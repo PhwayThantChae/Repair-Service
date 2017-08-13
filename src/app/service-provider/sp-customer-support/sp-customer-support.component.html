@@ -1,0 +1,57 @@
+<br><br><br><br>
+<!--<div class="ui centered segment">-->
+<div class="ui centered grid">
+
+  <div class="twelve wide centered column">
+    <div class="row">
+      <h2 class="ui block header">Service Support</h2>
+    </div>
+    <br><br>
+
+    <div class="row">
+      <div class="ui very padded segment">
+      <form class="ui form" (ngSubmit)="onSubmit()" [formGroup]="spSupportForm">
+
+        <div class="field">
+          <label id="mon3">Subject</label>
+          <div class="ui left icon input">
+            <i class="comments icon"></i>
+            <input required type="text" required name="subject" placeholder="Title" [formControl]="subject" id="mon3">
+          </div>
+        </div>
+
+        <div class="field">
+          <label id="mon3">Description</label>
+          <textarea rows="3" [formControl]="description" name="description" placeholder="description" id="mon3" required></textarea>
+        </div>
+
+        
+        <button id="mon3" class="ui secondary centered button" type="submit" [ngClass]="{disabled : spSupportForm.invalid}">
+              Send Feedback
+        </button>
+      </form>
+      </div>
+    </div>
+
+    <br><br>
+
+    <div class="row">
+      <h2 class="ui center aligned header">Contact</h2>
+      <div class="ui horizontal divider">
+        <i class="large talk icon"></i>
+      </div>
+    </div>
+    <!--<button class="ui secondary button" (click)="addContact()">Add</button>-->
+    <div class="mobile only tablet only two column row">
+      <div class="column">
+        <h3 class="ui header"><i href="tel:09" class="green circular call icon"></i></h3>
+      </div>
+      
+      <div class="column">
+        <h3 class="ui header"><i class="green circular mail icon"></i></h3>
+      </div>
+    </div>
+  </div>
+
+<!--</div>-->
+</div>

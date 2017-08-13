@@ -211,69 +211,69 @@ export class UserRequestedServiceComponent implements OnInit {
     this.device = device;
     this.uid = uid;
 
-    var timestamp = Date.now();
-    if (state == "completed") {
-      var appointedtime = time.substring(0, 2);
-      var parts = date.split('/');
-      var currentDate = new Date();
-      var hoursleft = 0;
-      var diff = 0;
+    // var timestamp = Date.now();
+    // if (state == "completed") {
+    //   var appointedtime = time.substring(0, 2);
+    //   var parts = date.split('/');
+    //   var currentDate = new Date();
+    //   var hoursleft = 0;
+    //   var diff = 0;
 
-      if (parts[0] >= currentDate.getUTCDate()) {
-        diff = parts[0] - currentDate.getUTCDate();
-        if (diff == 1) {
-          if (appointedtime == 9) {
-            hoursleft = (24 - currentDate.getHours()) + 9;
-            console.log("Hours Left" + hoursleft);
-          }
-          if (appointedtime == 12) {
-            hoursleft = (24 - currentDate.getHours()) + 12;
-            console.log("Hours Left" + hoursleft);
-          }
-          if (appointedtime == 9) {
-            hoursleft = (24 - currentDate.getHours()) + 15;
-            console.log("Hours Left" + hoursleft);
-          }
+    //   if (parts[0] >= currentDate.getUTCDate()) {
+    //     diff = parts[0] - currentDate.getUTCDate();
+    //     if (diff == 1) {
+    //       if (appointedtime == 9) {
+    //         hoursleft = (24 - currentDate.getHours()) + 9;
+    //         console.log("Hours Left" + hoursleft);
+    //       }
+    //       if (appointedtime == 12) {
+    //         hoursleft = (24 - currentDate.getHours()) + 12;
+    //         console.log("Hours Left" + hoursleft);
+    //       }
+    //       if (appointedtime == 9) {
+    //         hoursleft = (24 - currentDate.getHours()) + 15;
+    //         console.log("Hours Left" + hoursleft);
+    //       }
 
-        }
-      }
+    //     }
+    //   }
 
-      switch (diff) {
+    //   switch (diff) {
 
-        case 0: console.log("Show Dialog");
+    //     case 0: console.log("Show Dialog");
+    //       $('.cancel-modal').modal({
+    //         closable: false,
+    //         onDeny: function () {
+    //           return true;
+    //         }
+    //       }).modal('show'); break;
+
+    //     case 1: if (hoursleft >= 24) {
+    //       this.appointments = [];
+    //       this.firebaseDatabase.changeAppointmentStatus(apID, "cancel");
+    //       this.firebaseDatabase.sendNotifications(apID, date, time, device, spid, "cancel", uid, timestamp);
+    //     }
+    //     else {
           $('.cancel-modal').modal({
             closable: false,
             onDeny: function () {
               return true;
             }
-          }).modal('show'); break;
-
-        case 1: if (hoursleft >= 24) {
-          this.appointments = [];
-          this.firebaseDatabase.changeAppointmentStatus(apID, "cancel");
-          this.firebaseDatabase.sendNotifications(apID, date, time, device, spid, "cancel", uid, timestamp);
-        }
-        else {
-          $('.cancel-modal').modal({
-            closable: false,
-            onDeny: function () {
-              return false;
-            }
           }).modal('show');
-        } break;
+    //     } break;
 
-        default: this.appointments = [];
-          this.firebaseDatabase.changeAppointmentStatus(apID, "cancel");
-          this.firebaseDatabase.sendNotifications(apID, date, time, device, spid, "cancel", uid, timestamp);
+    //     default: this.appointments = [];
+    //       this.firebaseDatabase.changeAppointmentStatus(apID, "cancel");
+    //       this.firebaseDatabase.sendNotifications(apID, date, time, device, spid, "cancel", uid, timestamp);
 
-      }
-    }
-    else {
-      console.log("You can cancel for pending state.");
-      this.appointments = [];
-      this.firebaseDatabase.changeAppointmentStatus(apID, "cancel");
+    //   }
+    // }
+    // else {
+    //   console.log("You can cancel for pending state.");
+    //   this.appointments = [];
+    //   this.firebaseDatabase.changeAppointmentStatus(apID, "cancel");
 
-    }
+    // }
   }
 
 
@@ -281,7 +281,6 @@ export class UserRequestedServiceComponent implements OnInit {
 
   rescheduledAppointment(apid, date, time, device, spid, state, uid, action) {
 
-    // var current = this.firebaseDatabase.getCurrentDateTime();
     var timestamp = Date.now();
     this.appointments = [];
     if (action == "accept") {
@@ -289,14 +288,20 @@ export class UserRequestedServiceComponent implements OnInit {
       this.firebaseDatabase.sendNotifications(apid, date, time, device, spid, "completed", uid, timestamp);
     }
     else {
-      this.firebaseDatabase.changeAppointmentStatus(apid, "cancel");
-      this.firebaseDatabase.sendNotifications(apid, date, time, device, spid, "cancel", uid, timestamp);
+      $('.cancel-modal').modal({
+            closable: false,
+            onDeny: function () {
+              return true;
+            }
+          }).modal('show');
+      // this.firebaseDatabase.changeAppointmentStatus(apid, "cancel");
+      // this.firebaseDatabase.sendNotifications(apid, date, time, device, spid, "cancel", uid, timestamp);
     }
   }
 
-  deleteConfirm(apID, time, date, state, spid, device, username, uid, imgurl) {
+  deleteConfirm(apID, time, date, state, spid, device, uid) {
+
     console.log("Delete Confirmed");
-    // var current = this.firebaseDatabase.getCurrentDateTime();
     var timestamp = Date.now();
 
     this.appointments = [];

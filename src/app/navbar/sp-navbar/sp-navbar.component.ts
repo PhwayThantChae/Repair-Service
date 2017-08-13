@@ -53,7 +53,7 @@ export class SpNavbarComponent implements OnInit {
         this.spData.subscribe(data => {
           this.spuser = data;
           if (data) {
-            this.spname = data.company;
+            this.spname = data.company.toString().split(' ')[0];
             this.spimg = data.logo;
           }
 

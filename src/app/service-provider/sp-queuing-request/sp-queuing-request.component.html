@@ -1,4 +1,48 @@
-<br>
+<br><br><br><br>
+<div *ngIf="userAppointments">
+
+<div class="ui stackable three column centered grid container">
+  <div class="three column row">
+  
+  <div class="five wide computer four wide tablet column">
+    <div class="ui search">
+      <div class="ui fluid input">
+        <input id="txtValue" type="text" placeholder="Search by Name">
+      </div>
+    </div>
+  </div>
+
+  <div class="three wide computer four wide tablet column">
+    <div class="ui fluid floating labeled icon dropdown button">
+    <i class="filter icon"></i>
+    <span class="text">Filter Tags</span>
+    <div class="menu">
+      <div class="header">
+        Filter by tag
+      </div>
+      <div class="divider"></div>
+      <div class="item" data-value="all">
+        <span class="text">All</span>
+      </div>
+      <div class="item" data-value="pending">
+        <span class="text">Pending</span>
+      </div>
+      <div class="item" data-value="rescheduled">
+        <span class="text">Rescheduled</span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="three wide computer four wide tablet column">
+  <button class="ui fluid positive right labeled icon button" (click)="filterRequests()">
+    Search
+    <i class="right search icon"></i>
+  </button>
+</div>
+</div>
+</div>
+</div>
+
 <div class="cont">
   <div class="spinner" *ngIf="loading">
     <div class="double-bounce1"></div>
@@ -8,70 +52,104 @@
   <div *ngIf="!loading">
 
     <div *ngIf="userAppointments">
-      
-      <div class="ui centered grid">
+
+      <div class="ui centered grid container">
+       
         <div class="four column row">
-      <div class="twelve wide column">
-        <div class="ui stackable two cards">
-          <div class="ui fluid raised card" *ngFor="let item of userAppointments" [ngClass]="{disabled : item.unavailable == 'true'}">
-            
+          <div class="sixteen wide computer sixteen wide tablet column">
+            <div class="ui stackable three cards">
+              <div class="ui fluid raised card" *ngFor="let item of userAppointments" [ngClass]="{disabled : item.unavailable == 'true'}">
 
-            <div class="content">
-              <span *ngIf="item.emergency == 'yes'">
-              <a class="ui red ribbon label" id="mon3">emergency</a>
-            </span>
-              <img class="right floated ui tiny image" src="{{item.imgurl}}">
-              <div class="header">
-                <span id="mon3">{{item.username}}</span>
-              </div>
-              <!--<div class="meta">-->
-                <span *ngIf="item.state == 'rescheduled'">
+
+                <div class="middle aligned content">
+
+                  <!--<div class="ui items">
+                    <div class="item">
+
+                      <div class="ui tiny image">
+                        <img class="image" src="{{item.imgurl}}">
+                      </div>
+
+                      <div class="middle aligned content">
+                        <a data-tooltip="Cancel Appointment" data-position="bottom center" (click)="appointmentAction(item.apid,item.uid,item.spid,item.date,item.time,item.device,'cancel')"><i class="large right floated red trash icon"></i></a>
+                        <a class="header">{{item.username}}</a>
+                        <div class="meta">
+                          <span *ngIf="item.state == 'rescheduled'">
+                            <span style="margin:10px;" class="ui medium purple tag label" id="mon3">{{item.state}}</span>
+                          </span>
+                          <span *ngIf="item.state == 'pending'">
+                            <span style="margin:10px;" class="ui medium blue tag label" id="mon3">{{item.state}}</span>
+                          </span>
+                          <span style="margin:10px;" class="ui small olive tag label" id="mon3">{{item.time}}</span>
+                          <span style="margin:10px;" class="ui small teal tag label" id="mon3">{{item.date}}</span>
+                        </div>
+                        <div class="extra">
+                          <button class="ui tiny inverted blue button" [routerLink]="['/User_Requested_Appointment_Detail', item.apid]">
+                      <i class="unordered list icon"></i>
+                      View Appointment Details
+                    </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>-->
+
+                  <a><i (click)="cancelAppointment(item.apid,item.uid,item.spid,item.date,item.time,item.device,'cancel')" 
+                  class="large right floated red trash icon"></i></a>
+                  <span *ngIf="item.emergency == 'yes'">
+                    <a class="ui red ribbon label" id="mon3">emergency</a>
+                  </span>
+                  <img class="right floated ui tiny image" src="{{item.imgurl}}">
+                  <div class="header">
+                    <h3 id="mon3">{{item.username}}</h3>
+                    <button class="ui tiny inverted blue button" [routerLink]="['/User_Requested_Appointment_Detail', item.apid]">
+                      <i class="unordered list icon"></i>
+                      Appointment Details
+              </button>
+                  </div>
+
+                  <span *ngIf="item.state == 'rescheduled'">
                 <span style="margin:10px;" class="ui medium purple tag label" id="mon3">{{item.state}}</span>
-                </span>
-                <span *ngIf="item.state == 'pending'">
+                  </span>
+                  <span *ngIf="item.state == 'pending'">
                 <span style="margin:10px;" class="ui medium blue tag label" id="mon3">{{item.state}}</span>
-                </span>
-                <span style="margin:10px;" class="ui small olive tag label" id="mon3">{{item.time}}</span>
-                <span style="margin:10px;" class="ui small teal tag label" id="mon3">{{item.date}}</span>
-              <!--</div>-->
-              <div class="description">
-                <table class="ui small definition unstackable table">
-                  <tr>
-                    <td class="active" id="mon3"><b>Phone</b></td>
-                    <td id="mon3">{{item.phone}}</td>
-                  </tr>
+                  </span>
+                  <span style="margin:10px;" class="ui small olive tag label" id="mon3">{{item.time}}</span>
+                  <span style="margin:10px;" class="ui small teal tag label" id="mon3">{{item.date}}</span>
 
-                  <tr>
-                    <td class="active" id="mon3"><b>Address</b></td>
-                    <td id="mon3">{{item.address}}</td>
-                  </tr>
+                  <div class="description">
+                    <table class="ui small definition unstackable table">
+                      <tr>
+                        <td class="active" id="mon3"><b>Phone</b></td>
+                        <td id="mon3">{{item.phone}}</td>
+                      </tr>
 
-                  <tr>
-                    <td class="active" id="mon3"><b>Device</b></td>
-                    <td id="mon3">{{item.device}}</td>
-                  </tr>
+                      <tr>
+                        <td class="active" id="mon3"><b>Address</b></td>
+                        <td id="mon3">{{item.address}}</td>
+                      </tr>
 
-                  <tr>
-                    <td class="active" id="mon3"><b>Description</b></td>
-                    <td id="mon3">{{item.description}}</td>
-                  </tr>
+                      <tr>
+                        <td class="active" id="mon3"><b>Device</b></td>
+                        <td id="mon3">{{item.device}}</td>
+                      </tr>
 
-                  <tr>
-                    <td class="active" id="mon3"><b>Brand</b></td>
-                    <td id="mon3">{{item.brand}}</td>
-                  </tr>
-                </table>
+                    </table>
+
+
+
+                  </div>
+                </div>
 
                 <div class="extra content">
-                  <button class="ui tiny positive button" id="mon3" (click)="appointmentAction(item.apid,item.uid,item.spid,item.date,item.time,item.device,'approve')">Approve</button>
-                  <button class="ui tiny blue button" (click)="appointmentAction(item.apid,item.uid,item.spid,item.date,item.time,item.device,'reschedule')">Reschedule</button>
-                  <button class="ui tiny button" (click)="appointmentAction(item.apid,item.uid,item.spid,item.date,item.time,item.device,'cancel')">Call to Cancel</button>
+                  <button class="ui left floated tiny positive button" id="mon3" (click)="appointmentAction(item.apid,item.uid,item.spid,item.date,item.time,item.device,'approve')">Approve</button>
+                  <button class="ui left floated tiny blue button" (click)="appointmentAction(item.apid,item.uid,item.spid,item.date,item.time,item.device,'reschedule')">Reschedule</button>
+                  <button class="ui left floated tiny teal button" id="mon3"><i class="phone icon"></i><a href="tel:{{item.phone}}">Call to cancel</a></button>
                 </div>
+
+
               </div>
             </div>
           </div>
-          </div>
-        </div>
         </div>
       </div>
     </div>
@@ -123,5 +201,21 @@
       </form>
     </div>
 
+  </div>
+</div>
+
+<div class="ui basic sp-queuing-cancel-modal modal">
+
+  <div class="ui center aligned grid">
+    <div class="column">
+      <i class="trash huge circle icon"></i>
+      <h4 class="ui inverted center aligned header" id="mon3">Are you sure you want to cancel the appointment?
+      </h4>
+    </div>
+
+  </div>
+  <div class="actions">
+    <div class="ui negative approve button" (click)="deleteConfirm(apID, userID, spID, date, time, device, 'cancel')" id="mon3">Okay</div>
+    <div class="ui deny button" id="mon3" (click)="cancelModal()">Cancel</div>
   </div>
 </div>

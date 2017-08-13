@@ -48,7 +48,9 @@ export class UserSearchCardComponent implements OnInit {
     });
     
     if(!this.afAuth.auth.currentUser){
-        $('.not-login-modal').modal('show');
+      var login_modal_id = key+"_login";
+      $('.not-login-modal').attr('id',login_modal_id);
+      $('#'+login_modal_id).modal('show');
     }
 
     if(this.afAuth.auth.currentUser){
@@ -79,6 +81,10 @@ export class UserSearchCardComponent implements OnInit {
     //   $('.not-login-modal').modal('show');
     // }
 
+  }
+
+  closeModal(){
+    $('.ui.modal').modal('hide');
   }
 
 }

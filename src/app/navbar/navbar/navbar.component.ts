@@ -57,6 +57,7 @@ export class NavbarComponent implements OnInit {
         case "Sp_Profile": this.currentURL = 2; break;
         case "SpNotifications": this.currentURL = 2; break;
         case "Sp_Appointment_Detail" : this.currentURL = 2; break;
+        case "Sp_Support" : this.currentURL = 2 ; break;
         default: this.currentURL = 1; break;
       }
     });

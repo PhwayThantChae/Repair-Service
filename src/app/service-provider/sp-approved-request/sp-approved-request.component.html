@@ -1,5 +1,39 @@
-<br>
+<br><br><br><br>
+<div *ngIf="userAppointments">
+
+<div class="ui stackable three column centered grid container">
+  <div class="row">
+  
+  <div class="five wide computer four wide tablet column">
+  <div class="ui fluid icon input">
+    <input id="txtValue" type="text" placeholder="Search by Name" (keyup)="filterRequests()">
+    <i class="search icon"></i>
+    <!--<button class="ui positive button" (click)="filterRequests()" >Search</button>-->
+  </div>
+  </div>
+  
+  <!--<div class="five wide computer four wide tablet column">
+    <div class="ui search">
+      <div class="ui fluid input">
+        <input id="txtValue" type="text" placeholder="Search by Name">
+      </div>
+    </div>
+  </div>
+
+<div class="three wide computer four wide tablet column">
+  <button class="ui fluid positive right labeled icon button" (click)="filterRequests()">
+    Search
+    <i class="right search icon"></i>
+  </button>
+</div>-->
+</div>
+</div>
+</div>
+
+
 <div class="cont">
+
+
 <div class="spinner" *ngIf="loading">
   <div class="double-bounce1"></div>
   <div class="double-bounce2"></div>
@@ -7,14 +41,51 @@
 
 <div *ngIf="!loading">
   <div *ngIf = "userAppointments">
-    <div class="ui page stackable two column grid">
-      <div class="sixteen wide column" >
-        <div class="ui stackable two cards">
+    <!--<div class="ui page stackable two column grid">
+      <div class="sixteen wide column" >-->
+
+        <div class="ui centered grid container">
+        <div class="four column row">
+          <div class="fourteen wide column">
+        <div class="ui stackable three cards">
           <div class="card" *ngFor="let item of userAppointments" [ngClass]="{disabled : item.unavailable == 'true'}">
           
+          <div class="middle aligned content">
 
-          <div class="content">
-            <img class="right floated ui tiny image" src = "{{item.imgurl}}">
+            <!--<div class="ui items">
+              <div class="item">
+                
+                <div class="ui tiny image">
+                    <img class="image" src = "{{item.imgurl}}">
+                </div>
+                
+                <div class="middle aligned content">
+                   
+                  <a data-tooltip="Cancel Appointment" data-position="bottom center" 
+                  (click)="appointmentAction(item.apid,item.uid,item.spid,item.date,item.time,item.device,'cancel')"><i class="large right floated red trash icon"></i></a>
+                  <a class="header">{{item.username}}</a>
+                  <div class="meta">
+                    <span *ngIf="item.state == 'completed'">
+                        <span style="margin:10px;" class="ui small green tag label" id="mon3">{{item.state}}</span>
+                    </span>
+                    <span style="margin:10px;" class="ui small olive tag label" id="mon3">{{item.time}}</span>
+                    <span style="margin:10px;" class="ui small teal tag label" id="mon3">{{item.date}}</span>
+                    
+                  </div>
+                  <div class="extra">
+                    <button class="ui tiny inverted blue button" [routerLink]="['/User_Requested_Appointment_Detail', item.apid]">
+                      <i class="unordered list icon"></i>
+                      View Appointment Details
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>-->
+        
+            <a><i (click)="appointmentAction(item.apid,item.uid,item.spid,item.date,item.time,item.device,'cancel')" 
+            class="large right floated red trash icon"></i></a>
+
+            <img class="ui right floated tiny image" src = "{{item.imgurl}}">
             <div class="header">
               <span *ngIf="item.emergency == 'yes'">
                 <a class="ui red ribbon label" id="mon3">emergency</a>
@@ -22,16 +93,17 @@
               <h3 id="mon3">{{item.username}}</h3>
               <button class="ui tiny inverted blue button" [routerLink]="['/User_Requested_Appointment_Detail', item.apid]">
                   <i class="unordered list icon"></i>
-                  View Appointment Details
+                  Appointment Details
               </button>
             </div>
             <div class="meta">
-              <span style="margin:10px;" class="ui small right floated olive tag label" id="mon3">{{item.time}}</span>
-              <span style="margin:10px;" class="ui small right floated teal tag label" id="mon3">{{item.date}}</span>
+              <span style="margin:10px;" class="ui small olive tag label" id="mon3">{{item.time}}</span>
+              <span style="margin:10px;" class="ui small teal tag label" id="mon3">{{item.date}}</span>
               <span *ngIf="item.state == 'completed'">
-                <span style="margin:10px;" class="ui small right floated green tag label" id="mon3">{{item.state}}</span>
+                <span style="margin:10px;" class="ui small green tag label" id="mon3">{{item.state}}</span>
               </span>
             </div>
+
             <div class="description">
               <table class="ui small definition unstackable table">
                 <tr>
@@ -53,13 +125,13 @@
             </div>
           </div>
           <div class="extra content">
-            <div class="ui teal small button" id="mon3"><a href="tel:{{item.phone}}">Call to cancel</a></div>
-            <div class="ui red small button" id="mon3" data-tooltip="Please make a phone call first for cancelling appointment." (click)="appointmentAction(item.apid,item.uid,item.spid,item.date,item.time,item.device,'cancel')">Cancel</div>
+            <div class="ui teal small button" id="mon3"><i class="phone icon"></i><a href="tel:{{item.phone}}">Call to cancel</a></div>
           </div>
         </div>
         </div>
       </div>
     </div>
+  </div>
   </div>
 
   <div *ngIf = "userAppointments.length <= 0">
@@ -79,4 +151,20 @@
     </div>
   </div>
 </div>
+</div>
+
+<div class="ui basic sp-approved-cancel-modal modal">
+
+    <div class="ui center aligned grid">
+        <div class="column">
+            <i class="trash huge circle icon"></i>
+            <h4 class="ui inverted center aligned header" id="mon3">Are you sure you want to cancel the appointment?
+            </h4>
+        </div>
+
+    </div>
+    <div class="actions">
+        <div class="ui negative approve button" (click)="deleteConfirm(apID, userID, spID, date, time, device, 'cancel')" id="mon3">Okay</div>
+        <div class="ui deny button" id="mon3" (click)="cancelModal()">Cancel</div>
+    </div>
 </div>

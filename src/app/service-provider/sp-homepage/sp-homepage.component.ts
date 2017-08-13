@@ -21,6 +21,13 @@ export class SpHomepageComponent implements OnInit {
   appointments = [];
   day: string;
   loading: boolean;
+
+   apID: string;
+  userID: string;
+  spID: string;
+  ap_date: string;
+  ap_time: string;
+  device: string;
   appointmentList: FirebaseListObservable<any[]>;
   constructor(public spFirebase: SpFirebaseDatabaseService, public afAuth: AngularFireAuth,
     public formbuilder: FormBuilder) {
@@ -71,17 +78,20 @@ export class SpHomepageComponent implements OnInit {
               this.spFirebase.getUserInfo(y.uid).map(z => {
                 if (z) {
                   let appointment = {
+                    "apid": y.$key,
                     "emergency": y.emergency,
                     "imgurl": z["imageUrl"],
                     "username": z["username"],
+                    "state": y.state,
                     "time": y.time,
                     "date": y.date,
-                    "userPh": z["ph"],
-                    "device": y.device,
-                    "userAddress": z["address"],
+                    "phone": z["ph"],
+                    "address": z["address"],
                     "description": y.description,
+                    "device": y.device,
                     "brand": y.brand,
-                    "userEmail": z["email"]
+                    "uid" : y.uid,
+                    "spid" : y.spid
                   }
 
                   return appointment;
@@ -164,17 +174,20 @@ export class SpHomepageComponent implements OnInit {
                 this.spFirebase.getUserInfo(y.uid).map(z => {
                   if (z) {
                     let appointment = {
+                      "apid": y.$key,
                       "emergency": y.emergency,
                       "imgurl": z["imageUrl"],
                       "username": z["username"],
+                      "state": y.state,
                       "time": y.time,
                       "date": y.date,
-                      "userPh": z["ph"],
-                      "device": y.device,
-                      "userAddress": z["address"],
+                      "phone": z["ph"],
+                      "address": z["address"],
                       "description": y.description,
+                      "device": y.device,
                       "brand": y.brand,
-                      "userEmail": z["email"]
+                      "uid" : y.uid,
+                      "spid" : y.spid
                     }
                     // this.appointments.push(appointment);
                     return appointment;
@@ -190,17 +203,20 @@ export class SpHomepageComponent implements OnInit {
                 this.spFirebase.getUserInfo(y.uid).map(z => {
                   if (z) {
                     let appointment = {
-                      "emergency": y.emergency,
-                      "imgurl": z["imageUrl"],
-                      "username": z["username"],
-                      "time": y.time,
-                      "date": y.date,
-                      "userPh": z["ph"],
-                      "device": y.device,
-                      "userAddress": z["address"],
-                      "description": y.description,
-                      "brand": y.brand,
-                      "userEmail": z["email"]
+                     "apid": y.$key,
+                    "emergency": y.emergency,
+                    "imgurl": z["imageUrl"],
+                    "username": z["username"],
+                    "state": y.state,
+                    "time": y.time,
+                    "date": y.date,
+                    "phone": z["ph"],
+                    "address": z["address"],
+                    "description": y.description,
+                    "device": y.device,
+                    "brand": y.brand,
+                    "uid" : y.uid,
+                    "spid" : y.spid
                     }
                     // this.appointments.push(appointment);
 
@@ -269,19 +285,21 @@ export class SpHomepageComponent implements OnInit {
               this.spFirebase.getUserInfo(y.uid).map(z => {
                 if (z) {
                   let appointment = {
+                    "apid": y.$key,
                     "emergency": y.emergency,
                     "imgurl": z["imageUrl"],
                     "username": z["username"],
+                    "state": y.state,
                     "time": y.time,
                     "date": y.date,
-                    "userPh": z["ph"],
-                    "device": y.device,
-                    "userAddress": z["address"],
+                    "phone": z["ph"],
+                    "address": z["address"],
                     "description": y.description,
+                    "device": y.device,
                     "brand": y.brand,
-                    "userEmail": z["email"]
+                    "uid" : y.uid,
+                    "spid" : y.spid
                   }
-                  // this.appointments.push(appointment);
                   return appointment;
                 }
               }).subscribe(data => {
@@ -291,11 +309,6 @@ export class SpHomepageComponent implements OnInit {
                 }
               });
 
-              // this.appointments.push(y);
-              // console.log(this.appointments);
-              // if (this.appointments.length > 0) {
-              //   this.loading = false;
-              // }
             }
           })
         }).subscribe(data => {
@@ -311,6 +324,42 @@ export class SpHomepageComponent implements OnInit {
       }
     });
 
+  }
+
+   cancelModal(){
+    $('.ui.modal').modal('hide');
+  }
+
+  appointmentAction(apID, userid, spid, ap_date, ap_time, device, action) {
+
+    var modal_id = apID;
+    $('.sp-home-cancel-modal').attr('id', modal_id);
+    console.log("APID",apID);
+    this.apID = apID;
+    this.userID = userid;
+    this.spID = spid;
+    this.ap_date = ap_date;
+    this.ap_time = ap_time;
+    this.device = device;
+
+    $('.sp-home-cancel-modal').modal({
+            closable: false
+          }).modal('show');
+
+  }
+
+  deleteConfirm(apID, userid, spid, date, time, device, state){
+
+    this.appointments = [];
+    this.spFirebase.changeAppointmentStatus(apID, "cancel");
+    this.sendNotification("cancel");
+
+  }
+
+  sendNotification(state) {
+
+    var currentTimestamp = Date.now();
+    this.spFirebase.sendNotification(this.apID, this.userID, this.spID, this.ap_time, this.ap_date, currentTimestamp, this.device, state);
   }
 
 }

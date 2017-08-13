@@ -46,6 +46,8 @@ import { SpAppointmentDetailComponent } from './service-provider/sp-appointment-
 import { UserAppointmentDetailComponent } from './user/user-appointment-detail/user-appointment-detail.component';
 import { UserSpProfileComponent } from './user/user-sp-profile/user-sp-profile.component';
 import { UserRequestedAppointmentDetailsComponent } from './user/user-requested-appointment-details/user-requested-appointment-details.component';
+import { SpCustomerSupportComponent } from './service-provider/sp-customer-support/sp-customer-support.component';
+import { UserCustomerSupportComponent } from './user/user-customer-support/user-customer-support.component';
 
 
 
@@ -69,6 +71,8 @@ export const routes:Routes = [
   {path : "User_Appointment_Detail/:id",component:UserAppointmentDetailComponent},
   {path : "User_Requested_Appointment_Detail/:id",component:UserRequestedAppointmentDetailsComponent},
   {path : "ServiceProvider_Profile/:id",component:UserSpProfileComponent},
+  {path : "Sp_Support",component:SpCustomerSupportComponent},
+  {path : "User_Support",component:UserCustomerSupportComponent},
   {path : "**", component:HomeComponent}
 ]
 
@@ -104,6 +108,8 @@ export const routes:Routes = [
     UserAppointmentDetailComponent,
     UserSpProfileComponent,
     UserRequestedAppointmentDetailsComponent,
+    SpCustomerSupportComponent,
+    UserCustomerSupportComponent,
     
   ],
   imports: [

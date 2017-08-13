@@ -1,6 +1,6 @@
 <div class="ui grid">
   <div class="computer only row">
-    <div class="ui inverted fixed menu navbar page grid">
+    <div class="ui small inverted fixed menu navbar page grid">
       <div href="#" class="header item">
         <img class="logo" src="assets/images/logo.png"> Repair Service
       </div>
@@ -11,7 +11,7 @@
 
         <!-- Notification -->
         <a class="custom item" id="mon3">
-          <i class="alarm outline icon"></i>Notification
+          <i class="alarm icon"></i>Notification
           <a class="ui red circular label" id="mon3">{{notiLength.length}}</a>
         </a>
 
@@ -24,6 +24,7 @@
           <i class="dropdown icon"></i>
           <div class="menu">
             <div class="item" [routerLink]="['Profile']" id="mon3">Profile</div>
+            <div class="item" [routerLink]="['User_Support']" id="mon3">Customer Support</div>
             <div class="item" (click)="logout()" id="mon3">Logout</div>
           </div>
         </a>
@@ -33,7 +34,7 @@
   </div>
   <!-- Mobile Navbar -->
   <div class="mobile only tablet only row">
-    <div class="ui fixed inverted navbar menu">
+    <div class="ui fixed small inverted navbar menu">
       <a class="menu item" (click)="side()">
             <i class="content icon"></i>
         </a>
@@ -43,30 +44,17 @@
 
       <div class="right floated item">
         <a class="item" [routerLink]="['Notifications']">
-        <div *ngIf="notiLength.length > 0">
-          <a class="ui red circular label" id="mon3">{{notiLength.length}}</a>
-        </div>
-          <i class="alarm outline icon"></i>
+          <a class="ui red circular label" *ngIf="notiLength.length > 0" id="mon3">{{notiLength.length}}</a>
+          <i class="large alarm icon"></i>
         </a>
       </div>
-
-      <!--<div class="right menu">
-
-        <a class="item" [routerLink]="['Notifications']">
-        <div *ngIf="notilength>0">
-          <a class="ui red circular label">{{notiLength}}</a>
-        </div>
-          <i class="alarm outline icon"></i>
-        </a>
-
-      </div>-->
     </div>
 
-    <div class="ui left usersidebar sidebar inverted labeled icon vertical menu">
+    <div class="ui left small usersidebar sidebar inverted labeled icon vertical menu">
       <a class="item" id="mon3">
             <i class="ui mini image">
               <img src="{{userimg}}">
-            </i><br>{{username}}
+            </i><br><br>{{username}}
           </a>
       <a class="item" [routerLink]="['User_Homepage']" id="mon3">
          <i class="home icon"></i>Home
@@ -79,19 +67,16 @@
           <i class="user icon"></i>
             Profile
       </a>
+      <a class="item" [routerLink]="['User_Support']" id="mon3">
+          <i class="help circle icon"></i>
+            Customer Support
+      </a>
       <a class="item" (click)="logout()" id="mon3">
           <i class="sign out icon"></i>
           Logout
       </a>
     </div>
 
-    <!-- Right Notification sidebar -->
-
-    <!--<div class="ui right usernotisidebar wide sidebar inverted vertical menu">
-      <app-notifications></app-notifications>
-    </div>-->
-
-    <!-- Right Notification sidebar -->
 
   </div>
 </div>

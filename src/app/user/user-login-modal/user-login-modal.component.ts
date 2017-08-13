@@ -63,7 +63,7 @@ export class UserLoginModalComponent implements OnInit {
 
     
     this.userUid = this.loginService.returnUser();
-    this.firebaseDatabase.writeUserData(this.userUid.uid,this.userUid.displayName,this.userUid.email,ph,address,this.userUid.photoURL);
+    // this.firebaseDatabase.writeUserData(this.userUid.uid,this.userUid.displayName,this.userUid.email,ph,address,this.userUid.photoURL);
     $('.ui.modal').modal('hide');
     this.router.navigate(['User_Homepage']);
 

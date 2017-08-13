@@ -5,7 +5,7 @@
 
 <div class="ui stackable center aligned page grid">
 
-  <div class="twelve wide computer sixteen wide mobile column">
+  <div class="sixteen wide computer sixteen wide mobile column">
     <div class="ui styled inverted fluid accordion">
       <div class="title ui header">
         <i class="dropdown icon"></i> How do we start?
@@ -54,14 +54,14 @@
 
 
   <!-- Choose Device -->
-  <div class="twelve wide computer sixteen wide mobile column">
+  <div class="sixteen wide computer sixteen wide mobile column">
     <div class="ui fluid message">
       <div class="ui center aligned header" id="mon3">Choose the device</div>
     </div>
   </div>
   <!--အိမ်သုံးပစ္စည်းကိုရွေးချယ်ပါ။-->
 
-  <div class="fourteen wide computer only sixteen wide tablet only column">
+  <div class="sixteen wide computer only sixteen wide tablet only column">
     <div class="ui basic segment device segment">
       <div class="ui vertical feature segment device-segment">
         <div class="ui centered page grid">
@@ -250,23 +250,25 @@
   </div>
 
   <!-- Upcoming Appointments -->
-  <div class="sixteen wide computer sixteen wide mobile column">
-    <h3 class="ui header">Upcoming Appointments
-      <div class="ui horizontal divider">
-        <i class="star icon"></i>
-      </div>
-    </h3>
-  </div>
+  <div *ngIf="user">
+    <br>
+    <div class="sixteen wide computer sixteen wide mobile column">
+      <h3 class="ui center aligned header">Upcoming Appointments
+        <div class="ui horizontal divider">
+          <i class="checked calendar large icon"></i>
+        </div>
+      </h3>
+    </div>
 
-  <div class="spinner" *ngIf="loading">
-    <div class="double-bounce1"></div>
-    <div class="double-bounce2"></div>
-  </div>
+    <div class="spinner" *ngIf="loading">
+      <div class="double-bounce1"></div>
+      <div class="double-bounce2"></div>
+    </div>
 
-  <div *ngIf="!loading">
+    <div *ngIf="!loading">
 
-    <div *ngIf="appointments">
-      <div class="center aligned four column row">
+      <div *ngIf="appointments">
+        <!--<div class="center aligned row">-->
         <div class="sixteen wide column">
           <div class="ui stackable two cards">
             <div class="card" *ngFor="let item of appointments" [ngClass]="{disabled : item.unavailable == 'true'}">
@@ -314,8 +316,9 @@
               </div>
               <div class="extra content">
                 <div *ngIf="item.state == 'pending' || item.state == 'completed'">
-                  <div class="ui button" (click)="cancelAppointment(item.apid,item.time,item.date,item.state,item.spid,
+                  <div class="ui red button" *ngIf="item.canCancel == true" (click)="cancelAppointment(item.apid,item.time,item.date,item.state,item.spid,
                                                             item.device,item.uid)" id="mon3">Cancel Appointment</div>
+                  <div class="ui button" *ngIf="item.canCancel == false">Please call Service Provider to cancel the appointment.</div>
                 </div>
                 <div *ngIf="item.state == 'rescheduled'">
                   <div class="ui positive button" (click)="rescheduledAppointment(item.apid,item.date,item.time,item.device,item.spid,
@@ -328,19 +331,20 @@
             </div>
           </div>
         </div>
+        <!--</div>-->
+        <!--</div>-->
       </div>
-      <!--</div>-->
-    </div>
-    <div *ngIf="appointments.length <= 0">
-      <div class="ui centered container">
-        <div class="ui page stackable column grid">
-          <div class="row"></div>
-          <div class="row"></div>
-          <div class="row"></div>
-          <div class="row">
-            <div class="column">
-              <div class="ui center aligned floating message">
-                <p id="mon3">No Requested Appointments</p>
+      <div *ngIf="appointments.length <= 0">
+        <div class="ui centered container">
+          <div class="ui page stackable column grid">
+            <div class="row"></div>
+            <div class="row"></div>
+            <div class="row"></div>
+            <div class="row">
+              <div class="column">
+                <div class="ui center aligned floating message">
+                  <p id="mon3">No Requested Appointments</p>
+                </div>
               </div>
             </div>
           </div>
@@ -389,3 +393,19 @@
 
 
 <br><br><br><br>
+
+<div class="ui basic home-cancel-modal modal">
+
+  <div class="ui center aligned grid">
+    <div class="column">
+      <i class="trash huge circle icon"></i>
+      <h4 class="ui inverted center aligned header" id="mon3">Are you sure you want to cancel the appointment?
+      </h4>
+    </div>
+
+  </div>
+  <div class="actions">
+    <div class="ui negative approve button" (click)="deleteConfirm(apID,time,date,state,spid,ap_device,uid)" id="mon3">Okay</div>
+    <div class="ui deny button" id="mon3">Cancel</div>
+  </div>
+</div>

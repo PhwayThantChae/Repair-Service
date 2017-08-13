@@ -62,7 +62,9 @@ export class SpFirebaseDatabaseService {
 
   changeAppointmentStatus(apID, state) {
     if (state == "cancel") {
-      this.db.object('/user-appointments/' + apID).remove();
+      this.db.object('/user-appointments/' + apID).update({
+        state: state
+      });
     }
     else {
       this.db.object('/user-appointments/' + apID).update({

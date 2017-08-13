@@ -90,17 +90,26 @@ export class UserProfileComponent implements OnInit {
             this.loading = false;
             y.filter(y => {
               if (y.uid == x.uid) {
-
-
-                //Check availability of the appointment
                 
-                var dateParts = y.date.split('/');
-                var d1 = new Date(Number(dateParts[2]), Number(dateParts[1]) - 1, Number(dateParts[0]));
+                var unavailable;
 
-                var d2 = new Date(Date.now());
-                d2.setHours(0,0,0,0);
-                var todayDate = Date.parse(d2.toLocaleDateString());
-                var unavailable = (d1 >= d2) ? "false" : "true";
+                if(y.state !== 'cancel'){
+
+                  //Check availability of the appointment
+                
+                  var dateParts = y.date.split('/');
+                  var d1 = new Date(Number(dateParts[2]), Number(dateParts[1]) - 1, Number(dateParts[0]));
+
+                  var d2 = new Date(Date.now());
+                  d2.setHours(0,0,0,0);
+                  var todayDate = Date.parse(d2.toLocaleDateString());
+                  unavailable = (d1 >= d2) ? "false" : "true";
+
+                }
+                else{
+                  unavailable = 'true';
+                }
+                
 
 
                 this.firebaseDatabase.getSpInfo(y.spid).map(z => {
@@ -223,6 +232,10 @@ export class UserProfileComponent implements OnInit {
       this.firebaseDatabase.updateUserProfile(this.ph.value, this.address.value, this.email.value,this.township.value, this.uid);
     }
 
+  }
+
+  deleteAppointment(apid){
+    this.firebaseDatabase.deleteAppointment(apid);
   }
 
   

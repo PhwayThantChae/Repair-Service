@@ -2,7 +2,7 @@
 <div *ngIf = "spname">
 <div class="ui grid">
   <div class="computer only row">
-    <div class="ui inverted fixed menu navbar page grid">
+    <div class="ui small inverted fixed menu navbar page grid">
       <div href="#" class="header item">
         <img class="logo" src="assets/images/logo.png"> Repair Service
       </div>
@@ -30,18 +30,19 @@
           Approved Request</a>
         <a class="item" [routerLink]="['QueuingRequest']"><i class="configure icon"></i>Queuing Request</a>-->
         <!-- Notification -->
-        <a class="spcustom item" id="mon3"><i class="alarm outline icon"></i>Notification
+        <a class="spcustom item" id="mon3"><i class="alarm icon"></i>Notification
         <a class="ui red circular label" id="mon3">{{notiLength.length}}</a></a>
          <app-sp-noti [spNoti] = "spNoti"></app-sp-noti>
 
         <!-- Notification -->
-        <a class="ui simple dropdown item wordwrap" >
+        <a id="mon3" class="ui simple dropdown item" >
           <div class="ui mini image">
             <img src="{{spimg}}">
-          </div><span class="wordwrap" id="mon3">{{spname}}</span>
+          </div>{{spname}}
           <i class="dropdown icon"></i>
           <div class="menu">
             <div class="item" [routerLink]="['Sp_Profile']" id="mon3">Profile</div>
+            <div class="item" [routerLink]="['Sp_Support']" id="mon3">Service Support</div>
             <div class="item" (click)="spLogout()" id="mon3">Logout</div>
           </div>
         </a>
@@ -51,7 +52,7 @@
   </div>
 
   <div class="mobile only tablet only row">
-    <div class="ui fixed inverted navbar menu">
+    <div class="ui small fixed inverted navbar menu">
       <a class="menu item" (click)="side()">
           <i class="content icon"></i>
       </a>
@@ -62,39 +63,33 @@
       </div>
 
       <div class="right menu open">
-        <!--<a class="item">
-          <div class="ui mini image">
-            <img src="">
-          </div>{{spname}}
-        </a>-->
-       
+     
         <a class="item" [routerLink]="['SpNotifications']">
-          <div *ngIf="notiLength.length > 0">
-            <a class="ui red circular label" id="mon3">{{notiLength.length}}</a>
-          </div>
-          <i class="alarm outline icon"></i>
+            <a class="ui red circular label" id="mon3" *ngIf="notiLength.length > 0">{{notiLength.length}}</a>
+          <i class="large alarm icon"></i>
         </a>
         
       </div>
     </div>
 
-    <div class="ui left spsidebar sidebar inverted labeled icon vertical menu">
+    <div class="ui small left spsidebar sidebar inverted labeled icon vertical menu">
       <a class="header item" id="mon3">
 
-         <i class="ui mini image">
+         <i class="ui tiny image">
               <img src="{{spimg}}">
-         </i><br>{{spname}}
+         </i><br><br>{{spname}}
        
       </a>
       <a class="item" [routerLink]="['Sp_Homepage']" id="mon3">
           <i class="home icon"></i>Home
       </a>
       <a class="item" [routerLink]="['ApprovedRequest']" id="mon3">
-          <i class="icon"><div class="ui  mini image"> 
+          <!--<i class="white icon"><div class="ui  mini image"> 
               <svg width="25" height="25">
               <image xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="./assets/icons/gears.svg" x="0" y="0" width="100%" height="100%"></image>
               </svg>
-          </div></i>
+          </div></i>-->
+          <i class="checked calendar icon"></i>
           Approved Request
       </a>
       <a class="item" [routerLink]="['QueuingRequest']" id="mon3">
@@ -104,6 +99,10 @@
       <a class="item" [routerLink]="['Sp_Profile']" id="mon3">
           <i class="user icon"></i>
             Profile
+      </a>
+      <a class="item" [routerLink]="['Sp_Support']" id="mon3">
+        <i class="help circle icon"></i>
+        Service Support
       </a>
       <a class="item" (click)="spLogout()" id="mon3">
             <i class="sign out icon"></i>
