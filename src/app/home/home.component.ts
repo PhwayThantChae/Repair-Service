@@ -29,12 +29,12 @@ export class HomeComponent implements OnInit {
       //     }
       //   }
       // });
-    console.log("User current user",this.loginService.currentUser());
-    console.log("SP current user",this.spLoginService.currentSp());
-     console.log("AuthState "+this.afAuth.authState);
-     if(this.afAuth.auth.currentUser){
-       this.afAuth.auth.signOut();
-     }
+    // console.log("User current user",this.loginService.currentUser());
+    // console.log("SP current user",this.spLoginService.currentSp());
+    //  console.log("AuthState "+this.afAuth.authState);
+    //  if(this.afAuth.auth.currentUser){
+    //    this.afAuth.auth.signOut();
+    //  }
     
 
   }

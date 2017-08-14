@@ -23,15 +23,16 @@ export class FirebaseDatabaseService {
   notificationDetail: FirebaseObjectObservable<any>;
   appointmentByUid : FirebaseListObservable<any[]>;
   getTownshipData : FirebaseListObservable<any[]>;
-  // addTownshipData  : FirebaseListObservable<any[]>;
   searchSubject: Subject<any>;
   searchSpData : FirebaseListObservable<any[]>;
+  feedbackData : FirebaseListObservable<any[]>;
+  getContactData : FirebaseListObservable<any[]>;
   profileInfo = [];
 
   constructor(public db: AngularFireDatabase, public loginService: LoginService, public router:Router) {
 
     this.searchSubject = new Subject();
-    
+    this.feedbackData = db.list('/feedbacks');
     this.appointmentData = db.list('/user-appointments');
     this.sendNotificationData = db.list('/sp-notifications');
 
@@ -291,6 +292,22 @@ export class FirebaseDatabaseService {
     }
 
     return date2;
+  }
+
+  sendFeedback(subject,description,id){
+
+      var feedback = {
+        'subject' : subject,
+        'description' : description,
+        'id' : id
+      }
+
+      this.feedbackData.push(feedback);
+  }
+
+  getContact(){
+    this.getContactData = this.db.list('/admin-contact');
+    return this.getContactData;
   }
 
 

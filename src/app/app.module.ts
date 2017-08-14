@@ -48,6 +48,7 @@ import { UserSpProfileComponent } from './user/user-sp-profile/user-sp-profile.c
 import { UserRequestedAppointmentDetailsComponent } from './user/user-requested-appointment-details/user-requested-appointment-details.component';
 import { SpCustomerSupportComponent } from './service-provider/sp-customer-support/sp-customer-support.component';
 import { UserCustomerSupportComponent } from './user/user-customer-support/user-customer-support.component';
+import { SpWeekAppointmentsComponent } from './service-provider/sp-week-appointments/sp-week-appointments.component';
 
 
 
@@ -110,6 +111,7 @@ export const routes:Routes = [
     UserRequestedAppointmentDetailsComponent,
     SpCustomerSupportComponent,
     UserCustomerSupportComponent,
+    SpWeekAppointmentsComponent,
     
   ],
   imports: [

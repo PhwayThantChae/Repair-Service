@@ -20,11 +20,11 @@ export class SpProfileComponent implements OnInit {
   spuser : any;
   spData: FirebaseObjectObservable<any>;
   spname : string;
-  oldemail : string[];
-  oldhotline : string[];
+  oldemail : string;
+  oldhotline : string;
   
   oldlogo = "";
-  oldph : string[];
+  oldph : string;
   oldaddress : string;
   selectedFile : any;
 
@@ -34,6 +34,10 @@ export class SpProfileComponent implements OnInit {
   hotline : FormControl;
   address : FormControl;
   userprofileForm : FormGroup;
+
+  emailArray = [];
+  phArray = [];
+  hotlineArray = [];
 
 
   constructor(public spLoginService: SpLoginServiceService, public spFirebaseDatabase: SpFirebaseDatabaseService,
@@ -48,15 +52,36 @@ export class SpProfileComponent implements OnInit {
         this.spData.subscribe(data => {
           this.spuser = data;
           if (data) {
+             if($.isArray(data['email'])){
+                this.emailArray = data['email'].toString().split(',');
+              }
+              else{
+                this.emailArray = data['email'].toString().split(',');
+              }
+
+              if($.isArray(data['ph'])){
+                this.phArray = data['ph'].toString().split(',');
+              }
+              else{
+                this.phArray = data['ph'].toString().split(',');
+              }
+
+              if($.isArray(data['hotline'])){
+                this.hotlineArray = data['hotline'].toString().split(',');
+              }
+              else{
+                this.hotlineArray = data['hotline'].toString().split(',');
+              }
             this.spname = data.company;
             this.imgurl = data.logo;
-            this.email.setValue(data.email);
-            this.oldemail = data.email;
-            this.hotline.setValue(data.hotline);
-            this.ph.setValue(data.ph);
+            this.email.setValue(this.emailArray.join(', '));
+            this.oldemail = this.emailArray.join(', ');
+            this.hotline.setValue(this.hotlineArray.join(', '));
+            this.ph.setValue(this.phArray.join(', '));
             this.address.setValue(data.address);
             this.oldaddress = data.address;
-            this.oldph = data.ph;
+            this.oldph = this.phArray.join(', ');
+            this.oldhotline = this.hotlineArray.join(', ')
           }
       });
   }

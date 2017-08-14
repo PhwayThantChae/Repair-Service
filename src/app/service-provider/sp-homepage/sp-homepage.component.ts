@@ -21,8 +21,9 @@ export class SpHomepageComponent implements OnInit {
   appointments = [];
   day: string;
   loading: boolean;
+  action : string;
 
-   apID: string;
+  apID: string;
   userID: string;
   spID: string;
   ap_date: string;
@@ -134,6 +135,7 @@ export class SpHomepageComponent implements OnInit {
 
     this.loading = true;
     this.appointments = [];
+    this.action = 'time';
     if (this.time.value == "none" || this.time.value == "undefined") {
       this.time.setValue("");
     }
@@ -248,7 +250,7 @@ export class SpHomepageComponent implements OnInit {
   todayAppointments(today) {
 
     console.log("TODAY", today);
-
+    this.action = 'today';
     this.loading = true;
     this.appointments = [];
     this.afAuth.authState.subscribe(x => {
@@ -360,6 +362,12 @@ export class SpHomepageComponent implements OnInit {
 
     var currentTimestamp = Date.now();
     this.spFirebase.sendNotification(this.apID, this.userID, this.spID, this.ap_time, this.ap_date, currentTimestamp, this.device, state);
+  }
+
+  weekAppointments(week){
+    this.action = week;
+    this.appointments = [];
+    
   }
 
 }

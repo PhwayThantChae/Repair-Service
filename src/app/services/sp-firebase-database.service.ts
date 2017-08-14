@@ -23,11 +23,14 @@ export class SpFirebaseDatabaseService {
   appointmentDetail : FirebaseObjectObservable<any>;
   notiIdDetail : FirebaseObjectObservable<any>;
   appointmentSpid : FirebaseListObservable<any[]>;
+  feedbackData : FirebaseListObservable<any[]>;
+  getContactData : FirebaseListObservable<any[]>;
 
 
   constructor(public db: AngularFireDatabase, public firebaseApp: FirebaseApp) {
 
     this.notificationData = db.list('/notifications');
+    this.feedbackData = db.list('/sp-feedbacks');
     this.searchSubject = new Subject();
     this.appointmentData = this.db.list('/user-appointments', {
       query: {
@@ -292,6 +295,32 @@ export class SpFirebaseDatabaseService {
     return this.notiIdDetail;
 
   }
+
+  spSendFeedback(subject,description,id){
+
+      var feedback = {
+        'subject' : subject,
+        'description' : description,
+        'id' : id
+      }
+
+      this.feedbackData.push(feedback);
+  }
+
+  getContact(){
+    this.getContactData = this.db.list('/admin-contact');
+    return this.getContactData;
+  }
+
+  // addContact(){
+  //   var contact = this.db.list('/admin-contact');
+  //   var c = {
+  //     'phone' : ['01504436','09795860618'],
+  //     'address' : "No(32), Ohnpin Street, Kyeemyindine Tsp, Yangon.",
+  //     'email' : 'phwaythantchel@zwenex.com'
+  //   }
+  //   contact.push(c);
+  // }
 
 
 }

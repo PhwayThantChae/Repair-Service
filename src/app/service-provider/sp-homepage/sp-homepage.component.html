@@ -1,54 +1,60 @@
 <br>
 <div class="ui segment spsegment">
-    <div class="ui vertical feature segment">
-        <div class="ui centered page grid ">
+  <div class="ui vertical feature segment">
+    <div class="ui centered page grid ">
 
-            <div class="row">
-                <div class="centered column">
-                    <h1 class="ui center aligned header" id="mon3">Today is {{day}} {{date2[0]}}</h1>
-                    <div class="ui horizontal divider"><i class="star icon"></i></div>
-                </div>
-            </div>
-            <form class="ui form" (ngSubmit)="onSubmit()" [formGroup]="spHome">
-                <div class="row">
-                    <div class="sixteen wide column">
-
-                        <div class="ui two column center aligned stackable divided grid">
-                            <div class="column column-feature">
-                                <div class="field">
-                                    <label id="mon3">Date</label>
-                                    <select class="ui dropdown" [formControl] = "date" name="date" id="mon3">
-                                        <option *ngFor="let d of date3" [value]="d" >{{d}}</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="column column-feature">
-                                <div class="field">
-                                    <label id="mon3">Time Slot</label>
-                                    <select class="ui dropdown" [formControl]="time" name="time" id="mon3">
-                                        <option>none</option>
-                                        <option>9am - 12pm</option>
-                                        <option>12pm - 3pm</option>
-                                        <option>3pm - 6pm</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row" style="margin-top:20px">
-                    <div class="center aligned sixteen wide column">
-                        <div class="ui buttons">
-                        <div class="ui teal left labeled icon button" id="mon3" (click)="todayAppointments('today')">Today<i class="checked calendar left icon"></i></div>
-                        <div class="or"></div>
-                        <button id="mon3" type="submit" class="ui blue right labeled icon button">Search<i class="search right icon"></i></button>
-                        </div>
-                    </div>
-                </div>
-            </form>
+      <div class="row">
+        <div class="centered column">
+          <h1 class="ui center aligned header" id="mon3">Today is {{day}} {{date2[0]}}</h1>
+          <div class="ui horizontal divider"><i class="star icon"></i></div>
         </div>
+      </div>
+      <form class="ui inline form" (ngSubmit)="onSubmit()" [formGroup]="spHome">
+        <div class="three column row">
+          <div class="sixteen wide column">
+
+            <div class="ui two column center aligned stackable grid">
+              <div class="column column-feature">
+                <div class=" field">
+                  <label id="mon3">Date</label>
+                  <select class="ui dropdown" [formControl]="date" name="date" id="mon3">
+                      <option *ngFor="let d of date3" [value]="d" >{{d}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="column column-feature">
+                <div class=" field">
+                  <label id="mon3">Time Slot</label>
+                  <select class="ui dropdown" [formControl]="time" name="time" id="mon3">
+                      <option>none</option>
+                      <option>9am - 12pm</option>
+                      <option>12pm - 3pm</option>
+                      <option>3pm - 6pm</option>
+                  </select>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <br>
+        <div class="four column row">
+          <button id="mon3" type="submit" class="ui fluid icon blue button"><i class="search right icon"></i>Search</button>
+        </div>
+      </form>
+
+      <div class="row" style="margin-top:20px">
+        <div class="center aligned sixteen wide column">
+
+          <div class="ui teal left labeled icon button" id="mon3" (click)="todayAppointments('today')">Today<i class="checked calendar left icon"></i></div>
+          <div class="ui green right labeled icon button" id="mon3" (click)="weekAppointments('week')">This Week<i class="calendar right icon"></i></div>
+
+        </div>
+      </div>
+
     </div>
+  </div>
 </div>
 
 <div class="spinner" *ngIf="loading">
@@ -57,131 +63,103 @@
 </div>
 
 <div *ngIf="!loading">
-  <div *ngIf = "appointments">
-    <!--<div class="ui page stackable two column grid">
-      <div class="sixteen wide column" >-->
+  <div *ngIf="appointments">
 
-        <div class="ui centered grid">
-        <div class="four column row">
-          <div class="fourteen wide column">
-        <div class="ui stackable two cards">
-          <div class="card" *ngFor="let item of appointments" [ngClass]="{disabled : item.unavailable == 'true'}">
-          
-          <div class="content">
+    <div class="ui centered grid">
+      <div class="four column row">
+        <div class="fourteen wide column">
+          <div class="ui stackable three cards">
+            <div class="card" *ngFor="let item of appointments" [ngClass]="{disabled : item.unavailable == 'true'}">
 
-            <!--<div class="ui items">
-              <div class="item">
-                
-                <div class="ui tiny image">
-                    <img class="image" src = "{{item.imgurl}}">
-                </div>
-                
-                <div class="middle aligned content">
-                   
-                  <a data-tooltip="Cancel Appointment" data-position="bottom center" 
-                  (click)="appointmentAction(item.apid,item.uid,item.spid,item.date,item.time,item.device,'cancel')"><i class="large right floated red trash icon"></i></a>
-                  <a class="header">{{item.username}}</a>
-                  <div class="meta">
-                    <span *ngIf="item.state == 'completed'">
-                        <span style="margin:10px;" class="ui small green tag label" id="mon3">{{item.state}}</span>
-                    </span>
-                    <span style="margin:10px;" class="ui small olive tag label" id="mon3">{{item.time}}</span>
-                    <span style="margin:10px;" class="ui small teal tag label" id="mon3">{{item.date}}</span>
-                    
-                  </div>
-                  <div class="extra">
-                    <button class="ui tiny inverted blue button" [routerLink]="['/User_Requested_Appointment_Detail', item.apid]">
-                      <i class="unordered list icon"></i>
-                      View Appointment Details
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>-->
-        
-            <a><i (click)="appointmentAction(item.apid,item.uid,item.spid,item.date,item.time,item.device,'cancel')" 
+              <div class="content">
+
+                <a><i (click)="appointmentAction(item.apid,item.uid,item.spid,item.date,item.time,item.device,'cancel')" 
             class="large right floated red trash icon"></i></a>
 
-            <img class="ui right floated tiny image" src = "{{item.imgurl}}">
-            <div class="header">
-              <span *ngIf="item.emergency == 'yes'">
+                <img class="ui right floated tiny image" src="{{item.imgurl}}">
+                <div class="header">
+                  <span *ngIf="item.emergency == 'yes'">
                 <a class="ui red ribbon label" id="mon3">emergency</a>
               </span>
-              <h3 id="mon3">{{item.username}}</h3>
-              <button class="ui tiny inverted blue button" [routerLink]="['/User_Requested_Appointment_Detail', item.apid]">
+                  <h3 id="mon3">{{item.username}}</h3>
+                  <button class="ui tiny inverted blue button" [routerLink]="['/User_Requested_Appointment_Detail', item.apid]">
                   <i class="unordered list icon"></i>
                   View Appointment Details
               </button>
-            </div>
-            <div class="meta">
-              <span style="margin:10px;" class="ui small olive tag label" id="mon3">{{item.time}}</span>
-              <span style="margin:10px;" class="ui small teal tag label" id="mon3">{{item.date}}</span>
-              <span *ngIf="item.state == 'completed'">
+                </div>
+                <div class="meta">
+                  <span style="margin:10px;" class="ui small olive tag label" id="mon3">{{item.time}}</span>
+                  <span style="margin:10px;" class="ui small teal tag label" id="mon3">{{item.date}}</span>
+                  <span *ngIf="item.state == 'completed'">
                 <span style="margin:10px;" class="ui small green tag label" id="mon3">{{item.state}}</span>
-              </span>
-            </div>
+                  </span>
+                </div>
 
-            <div class="description">
-              <table class="ui small definition unstackable table">
-                <tr>
-                  <td class="active" id="mon3"><b>Phone</b></td>
-                  <td id="mon3">{{item.phone}}</td>
-                </tr>
+                <div class="description">
+                  <table class="ui small definition unstackable table">
+                    <tr>
+                      <td class="active" id="mon3"><b>Phone</b></td>
+                      <td id="mon3">{{item.phone}}</td>
+                    </tr>
 
-                <tr>
-                  <td class="active" id="mon3"><b>Address</b></td>
-                  <td id="mon3">{{item.address}}</td>
-                </tr>
+                    <tr>
+                      <td class="active" id="mon3"><b>Address</b></td>
+                      <td id="mon3">{{item.address}}</td>
+                    </tr>
 
-                <tr>
-                  <td class="active" id="mon3"><b>Device</b></td>
-                  <td id="mon3">{{item.device}}</td>
-                </tr>
+                    <tr>
+                      <td class="active" id="mon3"><b>Device</b></td>
+                      <td id="mon3">{{item.device}}</td>
+                    </tr>
 
-              </table>
+                  </table>
+                </div>
+              </div>
+              <div class="extra content">
+                <div class="ui teal small button" id="mon3"><i class="phone icon"></i><a href="tel:{{item.phone}}">Call to cancel</a></div>
+              </div>
             </div>
           </div>
-          <div class="extra content">
-            <div class="ui teal small button" id="mon3"><i class="phone icon"></i><a href="tel:{{item.phone}}">Call to cancel</a></div>
-          </div>
-        </div>
         </div>
       </div>
     </div>
   </div>
-  </div>
 
-  <div *ngIf = "appointments.length <= 0">
+  <div *ngIf="appointments.length <= 0 && action !== 'week'">
     <div class="ui centered container">
       <div class="ui page stackable column grid">
         <div class="row"></div>
-            <div class="row"></div>
-            <div class="row"></div>
-            <div class="row">
-                <div class="column">
-                <div class="ui center aligned floating message">
-                    <p id="mon3">No Appointments</p>
-                </div>
-                </div>
+        <div class="row"></div>
+        <div class="row"></div>
+        <div class="row">
+          <div class="column">
+            <div class="ui center aligned floating message">
+              <p id="mon3">No Appointments</p>
             </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
+
+  <div *ngIf="action == 'week'">
+    <app-sp-week-appointments></app-sp-week-appointments>
+  </div>
 </div>
-<!--</div>-->
+
 
 <div class="ui basic sp-home-cancel-modal modal">
 
-    <div class="ui center aligned grid">
-        <div class="column">
-            <i class="trash huge circle icon"></i>
-            <h4 class="ui inverted center aligned header" id="mon3">Are you sure you want to cancel the appointment?
-            </h4>
-        </div>
+  <div class="ui center aligned grid">
+    <div class="column">
+      <i class="trash huge circle icon"></i>
+      <h4 class="ui inverted center aligned header" id="mon3">Are you sure you want to cancel the appointment?
+      </h4>
+    </div>
+  </div>
 
-    </div>
-    <div class="actions">
-        <div class="ui negative approve button" (click)="deleteConfirm(apID, userID, spID, ap_date, ap_time, device, 'cancel')" id="mon3">Okay</div>
-        <div class="ui deny button" id="mon3" (click)="cancelModal()">Cancel</div>
-    </div>
+  <div class="actions">
+    <div class="ui negative approve button" (click)="deleteConfirm(apID, userID, spID, ap_date, ap_time, device, 'cancel')" id="mon3">Okay</div>
+    <div class="ui deny button" id="mon3" (click)="cancelModal()">Cancel</div>
+  </div>
 </div>
