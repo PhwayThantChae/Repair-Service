@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router,ActivatedRoute } from '@angular/router';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database';
+import { FirebaseDatabaseService } from '../../services/firebase-database.service';
 
 @Component({
   selector: 'app-navbar',
@@ -12,21 +14,29 @@ export class NavbarComponent implements OnInit {
 
   currentURL: number;
   user: any;
+  userExist : FirebaseObjectObservable<any>;
 
-  constructor(public router: Router, public afAuth: AngularFireAuth, public route : ActivatedRoute) {
+  constructor(public router: Router, public afAuth: AngularFireAuth, public route : ActivatedRoute,
+              public firebaseDatabase : FirebaseDatabaseService,public db: AngularFireDatabase) {
 
-      // console.log(this.route.snapshot.firstChild.url[0].path);
+                
     
-      // console.log("2222222222222",this.route.snapshot.url[0].path); 
-    
-    this.afAuth.authState.subscribe(x => {
-      if (x) {
-        this.user = x;
-      }
-      else {
-        this.user = null;
-      }
-    });
+      this.afAuth.authState.subscribe(x => {
+        if (x) {
+          this.userExist = this.db.object('/users/'+x.uid);
+          this.userExist.subscribe(snapshot =>{
+            let exist = (snapshot.$value !== null);
+            console.log("exist",exist);
+            if (exist) {
+              this.user = snapshot;
+            }
+            else{
+              this.user = null;
+            }
+        });
+        }
+        
+      });
     // console.log(this.afAuth.auth.currentUser,"current user");
     // if(this.afAuth.auth.currentUser){
     //   this.user = this.afAuth.auth.currentUser;
@@ -56,7 +66,8 @@ export class NavbarComponent implements OnInit {
         case "ApprovedRequest": this.currentURL = 2; break;
         case "Sp_Profile": this.currentURL = 2; break;
         case "SpNotifications": this.currentURL = 2; break;
-        case "Sp_Appointment_Detail" : this.currentURL = 2; break;
+        case "Sp_Noti_Appointment_Detail" : this.currentURL = 2; break;
+        case "Sp_Appointment_Detail" : this.currentURL = 2;break;
         case "Sp_Support" : this.currentURL = 2 ; break;
         default: this.currentURL = 1; break;
       }

@@ -14,23 +14,23 @@
 
   <div class="three wide computer four wide tablet column">
     <div class="ui fluid floating labeled icon dropdown button">
-    <i class="filter icon"></i>
-    <span class="text">Filter Tags</span>
-    <div class="menu" >
-      <div class="header">
-        Filter by tag
+      <i class="filter icon"></i>
+      <span class="text">Filter Tags</span>
+      <div class="menu" >
+        <div class="header">
+          Filter by tag
+        </div>
+        <div class="divider"></div>
+        <div class="item" data-value="all" >
+          <span class="text">All</span>
+        </div>
+        <div class="item" data-value="pending">
+          <span class="text">Pending</span>
+        </div>
+        <div class="item" data-value="rescheduled">
+          <span class="text">Rescheduled</span>
+        </div>
       </div>
-      <div class="divider"></div>
-      <div class="item" data-value="all" >
-        <span class="text">All</span>
-      </div>
-      <div class="item" data-value="pending">
-        <span class="text">Pending</span>
-      </div>
-      <div class="item" data-value="rescheduled">
-        <span class="text">Rescheduled</span>
-      </div>
-    </div>
   </div>
 </div>
 <div class="three wide computer four wide tablet column">
@@ -58,7 +58,7 @@
         <div class="four column row">
           <div class="sixteen wide computer sixteen wide tablet column">
             <div class="ui stackable three cards">
-              <div class="ui fluid raised card" *ngFor="let item of userAppointments" [ngClass]="{disabled : item.unavailable == 'true'}">
+              <div class="ui fluid raised card" *ngFor="let item of userAppointments">
 
 
                 <div class="middle aligned content">
@@ -101,7 +101,7 @@
                   <img class="right floated ui tiny image" src="{{item.imgurl}}">
                   <div class="header">
                     <h3 id="mon3">{{item.username}}</h3>
-                    <button class="ui tiny inverted blue button" [routerLink]="['/User_Requested_Appointment_Detail', item.apid]">
+                    <button class="ui tiny inverted blue button" [routerLink]="['/Sp_Appointment_Detail', item.apid]">
                       <i class="unordered list icon"></i>
                       Appointment Details
               </button>

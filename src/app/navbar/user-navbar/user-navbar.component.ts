@@ -29,7 +29,7 @@ export class UserNavbarComponent implements OnInit {
 
 
   constructor(public loginService: LoginService, public router: Router, public afAuth: AngularFireAuth,
-    public firebaseDatabase: FirebaseDatabaseService, public db: AngularFireDatabase) {
+              public firebaseDatabase: FirebaseDatabaseService, public db: AngularFireDatabase) {
 
 
     this.afAuth.authState.subscribe(x => {

@@ -60,7 +60,7 @@
 
     <div class="ui middle aligned selection list" >
 
-      <div *ngFor="let noti of spNoti" class="item" [routerLink]="['/Sp_Appointment_Detail', noti.notiID]">
+      <div *ngFor="let noti of spNoti" class="item" [routerLink]="['/Sp_Noti_Appointment_Detail', noti.notiID]">
         <!--[ngClass] = "{read : noti.read == 'true' , unread : noti.read == 'false'}"-->
         <img class="ui avatar image" src="{{noti.userimg}}">
         <div class="content">

@@ -2,3 +2,8 @@
     padding-top : 50px;
     padding-bottom : 40px;
 }
+
+td{
+    word-wrap: break-word !important;
+    flex: inherit;
+}

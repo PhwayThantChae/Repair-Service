@@ -9,17 +9,17 @@
 </div>
 
 <div *ngIf="!loading">
-    <div *ngIf="appointment">
+    <div *ngIf="user && appointment">
         <div class="ui stackable page grid">
            <div class="column">
             <div class="ui raised segment">
                 <div class="content">
-                    <img class="right floated ui tiny image" src="{{appointment.userimg}}">
+                    <img class="right floated ui tiny image" src="{{user.userimg}}">
                     <div class="header">
                         <span *ngIf="appointment.emergency == 'yes'">
                                 <a class="ui small red ribbon label">emergency</a>
                             </span>
-                        <h3 id="mon3">{{appointment.username}}</h3>
+                        <h3 id="mon3">{{user.username}}</h3>
                     </div>
                     <span *ngIf="appointment.state == 'pending'">
                             <span style="margin:10px;" class="ui blue tag label" id="mon3">{{appointment.state}}</span>
@@ -75,11 +75,11 @@
                 <table class="ui small definition unstackable table">
                     <tr>
                         <td class="active" id="mon3"><b>Name</b></td>
-                        <td id="mon3">{{appointment.username}}</td>
+                        <td id="mon3">{{user.username}}</td>
                     </tr>
                     <tr>
                         <td class="active" id="mon3"><b>Phone</b></td>
-                        <td id="mon3">{{appointment.ph}}</td>
+                        <td id="mon3">{{user.ph}}</td>
                     </tr>
 
                     <!--<tr>
@@ -89,7 +89,7 @@
 
                     <tr>
                         <td class="active" id="mon3"><b>Email</b></td>
-                        <td id="mon3">{{appointment.email}}</td>
+                        <td id="mon3">{{user.email}}</td>
                     </tr>
 
                 </table>

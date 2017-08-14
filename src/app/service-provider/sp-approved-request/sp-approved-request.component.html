@@ -48,7 +48,7 @@
         <div class="four column row">
           <div class="fourteen wide column">
         <div class="ui stackable three cards">
-          <div class="card" *ngFor="let item of userAppointments" [ngClass]="{disabled : item.unavailable == 'true'}">
+          <div class="card" *ngFor="let item of userAppointments">
           
           <div class="middle aligned content">
 
@@ -91,7 +91,7 @@
                 <a class="ui red ribbon label" id="mon3">emergency</a>
               </span>
               <h3 id="mon3">{{item.username}}</h3>
-              <button class="ui tiny inverted blue button" [routerLink]="['/User_Requested_Appointment_Detail', item.apid]">
+              <button class="ui tiny inverted blue button" [routerLink]="['/Sp_Appointment_Detail', item.apid]">
                   <i class="unordered list icon"></i>
                   Appointment Details
               </button>

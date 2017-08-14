@@ -11,7 +11,7 @@
     <div *ngIf="spNoti">
       <div class="ui middle aligned celled selection list">
 
-        <div *ngFor="let noti of spNoti" class="item" [routerLink]="['/Sp_Appointment_Detail', noti.notiID]">
+        <div *ngFor="let noti of spNoti" class="item" [routerLink]="['/Sp_Noti_Appointment_Detail', noti.notiID]">
           <div *ngIf="noti.read == false" (click)="MarkAsRead(noti.notiID)" data-tooltip="Mark as read" data-position="top right"
           data-inverted="">
             <i class="right floated black circle icon"  id="{{noti.notiID}}" ></i>

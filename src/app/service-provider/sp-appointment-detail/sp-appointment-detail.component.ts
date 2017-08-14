@@ -10,77 +10,54 @@ import { SpFirebaseDatabaseService } from '../../services/sp-firebase-database.s
 })
 export class SpAppointmentDetailComponent implements OnInit {
 
-  notiID: string;
-  loading: boolean;
-  notiTimestamp: string;
-  appointment: any;
-  user: any;
+  apID : string;
+  appointment : any;
+  loading : boolean;
 
   constructor(public spFirebase: SpFirebaseDatabaseService, public afAuth: AngularFireAuth,public route:ActivatedRoute) { }
 
   ngOnInit() {
+    this.route.params.subscribe(params => {
+      if(params){
+        this.apID = params['id'];
+      }
+      this.loading = true;
 
-    this.route.params.subscribe(x => {
-      this.notiID = x["id"];
-      console.log(this.notiID,"NOTI ID");
       this.afAuth.authState.subscribe(x => {
-        this.user = null;
-        this.appointment = null;
-        this.loading = true;
-        if (x) {
+        if(x){
+          this.spFirebase.getAppointmentDetail(this.apID).map(y => {
 
-          this.spFirebase.getSpNotiID(this.notiID).map(y => {
-            this.notiTimestamp = new Date(y.timestamp).toLocaleDateString();
-            console.log("Timestamp", this.notiTimestamp);
-            this.spFirebase.getUserInfo(y.uid).map(user => {
-
-              if (user) {
-
-                let userObject = {
-                  "address": user["address"],
-                  "email": user["email"],
-                  "ph": user["ph"],
-                  "username": user["username"],
-                  "userimg": user["imageUrl"],
-                }
-                return userObject;
-              }
-            }).subscribe(userData => {
-              if (userData) {
-                this.user = null;
-                this.user = userData;
-                console.log(userData);
-              }
-            });
-
-            this.spFirebase.getAppointmentDetail(y.apid).map(appointment => {
-              if (appointment) {
-                let appointmentObject = {
-                  "date": appointment["date"],
-                  "emergency": appointment["emergency"],
-                  "time": appointment["time"],
-                  "brand": appointment["brand"],
-                  "description": appointment["description"],
-                  "device": appointment["device"],
-                  "state": appointment["state"],
+            if(y){
+            this.spFirebase.getUserInfo(y.uid).map(z => {
+              if(z){
+                let apObject = {
+                  "date": y["date"],
+                  "emergency": y["emergency"],
+                  "time": y["time"],
+                  "brand": y["brand"],
+                  "description": y["description"],
+                  "device": y["device"],
+                  "state": y["state"],
                   "apTimestamp": new Date(y["timestamp"]).toLocaleDateString(),
-                  "userAddress": appointment["userAddress"]
+                  "userAddress": y["userAddress"],
+                  "email": z["email"],
+                  "ph": z["ph"],
+                  "username": z["username"],
+                  "userimg": z["imageUrl"],
                 }
-                return appointmentObject;
+              return apObject;
               }
-            }).subscribe(apData => {
-              if (apData) {
-                this.appointment = null;
-                this.appointment = apData;
-                console.log(apData, "Appointment");
+              
+            }).subscribe(data => {
+              if(data){
+                this.loading = false;
+                this.appointment = data;
               }
             })
-            return this.notiTimestamp;
+          }
           }).subscribe(data => {
-            if (data) {
+            if(data){
               this.loading = false;
-              this.notiTimestamp = null;
-              this.notiTimestamp = data;
             }
           })
         }

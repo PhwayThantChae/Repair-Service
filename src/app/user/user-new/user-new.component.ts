@@ -18,6 +18,7 @@ export class UserNewComponent implements OnInit {
   userCheck: Observable<any>;
   userUid: any;
   township: FormControl;
+  name: FormControl;
   exists: boolean;
   phone : FormControl;
   address : FormControl;
@@ -45,8 +46,13 @@ export class UserNewComponent implements OnInit {
         }
       });    
 
-              
-                   
+      this.afAuth.authState.subscribe(x => {
+        if(x){
+          this.name.setValue(x.displayName);
+        }
+      })
+
+
     }
 
   ngOnInit() {
@@ -64,21 +70,28 @@ export class UserNewComponent implements OnInit {
       Validators.required,
       Validators.minLength(5)
     ]);
+    this.name = new FormControl('',[
+      Validators.required
+    ])
     this.buildForm();
   }
 
   buildForm():void{
     this.newUserForm = this.formbuilder.group({
       phone : this.phone,
-      address : this.address
+      address : this.address,
+      name : this.name
     }); 
   }
 
   onSubmit() {
 
-    
     if(knayi.fontDetect(this.phone.value) == "zawgyi"){
       this.phone.setValue(knayi.fontConvert(this.phone.value,'unicode'));
+    }
+
+    if(knayi.fontDetect(this.name.value) == "zawgyi"){
+      this.name.setValue(knayi.fontConvert(this.name.value,'unicode'));
     }
 
     if(knayi.fontDetect(this.address.value) == "zawgyi"){
@@ -88,7 +101,7 @@ export class UserNewComponent implements OnInit {
     
     this.userUid = this.afAuth.auth.currentUser;
     console.log(this.userUid.uid);
-    this.firebaseDatabase.writeUserData(this.userUid.uid, this.userUid.displayName, this.userUid.email, this.phone.value, this.address.value,this.township.value, this.userUid.photoURL);
+    this.firebaseDatabase.writeUserData(this.userUid.uid, this.name.value, this.userUid.email, this.phone.value, this.address.value,this.township.value, this.userUid.photoURL);
    
   }
 

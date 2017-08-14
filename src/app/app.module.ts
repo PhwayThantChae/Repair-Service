@@ -42,13 +42,14 @@ import { SpNotificationsComponent } from './noti/sp-notifications/sp-notificatio
 import { UserNewComponent } from './user/user-new/user-new.component';
 
 import {Knayi} from 'knayi-myscript';
-import { SpAppointmentDetailComponent } from './service-provider/sp-appointment-detail/sp-appointment-detail.component';
+import { SpNotiAppointmentDetailComponent } from './service-provider/sp-noti-appointment-detail/sp-noti-appointment-detail.component';
 import { UserAppointmentDetailComponent } from './user/user-appointment-detail/user-appointment-detail.component';
 import { UserSpProfileComponent } from './user/user-sp-profile/user-sp-profile.component';
 import { UserRequestedAppointmentDetailsComponent } from './user/user-requested-appointment-details/user-requested-appointment-details.component';
 import { SpCustomerSupportComponent } from './service-provider/sp-customer-support/sp-customer-support.component';
 import { UserCustomerSupportComponent } from './user/user-customer-support/user-customer-support.component';
 import { SpWeekAppointmentsComponent } from './service-provider/sp-week-appointments/sp-week-appointments.component';
+import { SpAppointmentDetailComponent } from './service-provider/sp-appointment-detail/sp-appointment-detail.component';
 
 
 
@@ -68,12 +69,13 @@ export const routes:Routes = [
   {path : "Notifications", component:NotificationsComponent},
   {path : "SpNotifications", component:SpNotificationsComponent},
   {path : "NewUser", component:UserNewComponent},
-  {path : "Sp_Appointment_Detail/:id",component:SpAppointmentDetailComponent},
+  {path : "Sp_Noti_Appointment_Detail/:id",component:SpNotiAppointmentDetailComponent},
   {path : "User_Appointment_Detail/:id",component:UserAppointmentDetailComponent},
   {path : "User_Requested_Appointment_Detail/:id",component:UserRequestedAppointmentDetailsComponent},
   {path : "ServiceProvider_Profile/:id",component:UserSpProfileComponent},
   {path : "Sp_Support",component:SpCustomerSupportComponent},
   {path : "User_Support",component:UserCustomerSupportComponent},
+  {path : "Sp_Appointment_Detail/:id",component:SpAppointmentDetailComponent},
   {path : "**", component:HomeComponent}
 ]
 
@@ -105,13 +107,14 @@ export const routes:Routes = [
     FooterComponent,
     SpNotificationsComponent,
     UserNewComponent,
-    SpAppointmentDetailComponent,
+    SpNotiAppointmentDetailComponent,
     UserAppointmentDetailComponent,
     UserSpProfileComponent,
     UserRequestedAppointmentDetailsComponent,
     SpCustomerSupportComponent,
     UserCustomerSupportComponent,
     SpWeekAppointmentsComponent,
+    SpAppointmentDetailComponent,
     
   ],
   imports: [

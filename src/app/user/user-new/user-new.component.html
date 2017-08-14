@@ -16,6 +16,18 @@
         <h4 class="ui dividing header" id="mon3">Contact Information</h4>
 
         <div class="ui red message" *ngIf = "phone.errors && (phone.touched || phone.dirty)" id="mon3">
+              Please enter your name
+        </div>
+        <div class="field">
+          <label id="mon3">Name</label>
+
+        <div class="field">
+            <input id="mon3" required type="text" name="name" placeholder="Name" [formControl]="name">
+        </div>
+
+        </div>
+
+        <div class="ui red message" *ngIf = "phone.errors && (phone.touched || phone.dirty)" id="mon3">
               Please enter your phone number
         </div>
         <div class="field">

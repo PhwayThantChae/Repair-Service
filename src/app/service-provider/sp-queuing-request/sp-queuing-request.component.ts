@@ -42,13 +42,10 @@ export class SpQueuingRequestComponent implements OnInit {
   constructor(public spLoginService: SpLoginServiceService, public spFirebaseDatabase: SpFirebaseDatabaseService,
     public afAuth: AngularFireAuth,private el: ElementRef) {
     
-    $(".ui.dropdown").dropdown();
+    $(".ui.labeled.icon.dropdown").dropdown();
     this.userAppointments = [];
     this.afAuth.authState.subscribe(x => {
       if (x) {
-
-           
-           
         this.dateArray = this.spFirebaseDatabase.getNextSevenDays();
         this.uid = x.uid;
         
@@ -60,7 +57,7 @@ export class SpQueuingRequestComponent implements OnInit {
 
   ngOnInit() {
 
-    $(".ui.dropdown").dropdown();
+    $(".ui.labeled.icon.dropdown").dropdown();
     this.userAppointments = [];
   }
 
@@ -197,6 +194,8 @@ export class SpQueuingRequestComponent implements OnInit {
               console.log(d2);
               var unavailable = (d1 >= d2) ? "false" : "true";
 
+              if(unavailable == 'false'){
+
               this.userinfo = this.spFirebaseDatabase.getUserInfo(y.uid).map(z => {
 
                 if (z) {
@@ -218,8 +217,7 @@ export class SpQueuingRequestComponent implements OnInit {
                       "address": z["address"],
                       "description": y.description,
                       "device": y.device,
-                      "brand": y.brand,
-                      "unavailable": unavailable
+                      "brand": y.brand
                     }
                     console.log(userinfo);
                     return userinfo;
@@ -240,8 +238,7 @@ export class SpQueuingRequestComponent implements OnInit {
                       "address": z["address"],
                       "description": y.description,
                       "device": y.device,
-                      "brand": y.brand,
-                      "unavailable": unavailable
+                      "brand": y.brand
                     }
                     
                     return userinfo;
@@ -251,10 +248,12 @@ export class SpQueuingRequestComponent implements OnInit {
 
               }).subscribe(a => {
                 if (a) {
-                  this.userAppointments.push(a);
+                    this.userAppointments.push(a);
+               
                 }
 
               })
+            }
           }
           })
         }).subscribe(data => {
@@ -311,7 +310,8 @@ export class SpQueuingRequestComponent implements OnInit {
               var todayDate = Date.parse(d2.toLocaleDateString());
               console.log(d2);
               var unavailable = (d1 >= d2) ? "false" : "true";
-
+              
+              if(unavailable == 'false'){
               this.userinfo = this.spFirebaseDatabase.getUserInfo(y.uid).map(z => {
 
               //    this.spFirebaseDatabase.getAppointmentBySpid(y.spid).$ref.on("child_changed", snapshot => {
@@ -389,7 +389,7 @@ export class SpQueuingRequestComponent implements OnInit {
                 }
 
               })
-            // }
+            }
           }
 
             // }

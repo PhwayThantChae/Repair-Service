@@ -33,7 +33,7 @@ export class LoginService {
           let exist = (snapshot.$value !== null);
           console.log("exist",exist);
           if (exist) {
-            this.router.navigate(['User_Homepage']);
+            // this.router.navigate(['User_Homepage']);
           }
           else{
             this.router.navigate(['NewUser']);
