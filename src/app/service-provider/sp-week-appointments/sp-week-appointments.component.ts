@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SpFirebaseDatabaseService } from '../../services/sp-firebase-database.service';
 import { FirebaseListObservable } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
+declare var $:any;
 
 @Component({
   selector: 'app-sp-week-appointments',
@@ -15,10 +16,17 @@ export class SpWeekAppointmentsComponent implements OnInit {
   appointmentList: FirebaseListObservable<any[]>;
   appointments = [];
 
+  apID: string;
+  userID: string;
+  spID: string;
+  ap_date: string;
+  ap_time: string;
+  device: string;
+
   constructor(public spFirebase: SpFirebaseDatabaseService, public afAuth: AngularFireAuth) { }
 
   ngOnInit() {
-     
+
     this.date2 = this.spFirebase.getNextSevenDays();
     this.afAuth.authState.subscribe(x => {
       if (x) {
@@ -54,20 +62,20 @@ export class SpWeekAppointmentsComponent implements OnInit {
 
               //Check availability of the appointment within one week
               var dateParts = y.date.split('/');  // Appointment Date
-              var d1 = new Date(dateParts[2], dateParts[1] - 1, dateParts[0]); 
-                
-              var lastdayParts = this.spFirebase.getNextSevenDays();
-              lastdayParts = lastdayParts[lastdayParts.length-1].split('/');
-              var lastDay = new Date(Number(lastdayParts[2]),Number(lastdayParts[1])-1,Number(lastdayParts[0]));
+              var d1 = new Date(dateParts[2], dateParts[1] - 1, dateParts[0]);
 
-              console.log("Last Day",lastDay);
+              var lastdayParts = this.spFirebase.getNextSevenDays();
+              lastdayParts = lastdayParts[lastdayParts.length - 1].split('/');
+              var lastDay = new Date(Number(lastdayParts[2]), Number(lastdayParts[1]) - 1, Number(lastdayParts[0]));
+
+              console.log("Last Day", lastDay);
 
               var d2 = new Date(Date.now());  // Current Date
-              d2.setHours(0,0,0,0);
+              d2.setHours(0, 0, 0, 0);
               var todayDate = Date.parse(d2.toLocaleDateString());
               var unavailable = (d1 >= d2 && d1 <= lastDay) ? "false" : "true";
 
-              if(unavailable == 'false'){
+              if (unavailable == 'false') {
 
                 this.spFirebase.getUserInfo(y.uid).map(z => {
                   if (z) {
@@ -84,8 +92,8 @@ export class SpWeekAppointmentsComponent implements OnInit {
                       "description": y.description,
                       "device": y.device,
                       "brand": y.brand,
-                      "uid" : y.uid,
-                      "spid" : y.spid,
+                      "uid": y.uid,
+                      "spid": y.spid,
                     }
 
                     this.appointments.push(appointment);
@@ -94,11 +102,11 @@ export class SpWeekAppointmentsComponent implements OnInit {
                   if (data) {
                     this.appointments = [];
                     this.appointments.push(data);
-                    console.log("week appointments",this.appointments);
+                    console.log("week appointments", this.appointments);
                   }
                 });
 
-            }
+              }
 
             }
           })
@@ -114,6 +122,42 @@ export class SpWeekAppointmentsComponent implements OnInit {
         });
       }
     });
+  }
+
+  cancelModal() {
+    $('.ui.modal').modal('hide');
+  }
+
+  appointmentAction(apID, userid, spid, ap_date, ap_time, device, action) {
+
+    var modal_id = apID;
+    $('.sp-home-week-cancel-modal').attr('id', modal_id);
+    console.log("APID", apID);
+    this.apID = apID;
+    this.userID = userid;
+    this.spID = spid;
+    this.ap_date = ap_date;
+    this.ap_time = ap_time;
+    this.device = device;
+
+    $('.sp-home-week-cancel-modal').modal({
+      closable: false
+    }).modal('show');
+
+  }
+
+  deleteConfirm(apID, userid, spid, date, time, device, state) {
+
+    this.appointments = [];
+    this.spFirebase.changeAppointmentStatus(apID, "cancel");
+    this.sendNotification("cancel");
+
+  }
+
+  sendNotification(state) {
+
+    var currentTimestamp = Date.now();
+    this.spFirebase.sendNotification(this.apID, this.userID, this.spID, this.ap_time, this.ap_date, currentTimestamp, this.device, state);
   }
 
 }

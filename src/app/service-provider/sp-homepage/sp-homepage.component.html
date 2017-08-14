@@ -1,7 +1,7 @@
 <br>
 <div class="ui segment spsegment">
   <div class="ui vertical feature segment">
-    <div class="ui centered page grid ">
+    <div class="ui centered page grid">
 
       <div class="row">
         <div class="centered column">
@@ -26,6 +26,7 @@
                 <div class=" field">
                   <label id="mon3">Time Slot</label>
                   <select class="ui dropdown" [formControl]="time" name="time" id="mon3">
+                      <option></option>
                       <option>none</option>
                       <option>9am - 12pm</option>
                       <option>12pm - 3pm</option>
@@ -63,18 +64,27 @@
 </div>
 
 <div *ngIf="!loading">
-  <div *ngIf="appointments">
+  <div *ngIf="appointments && action !== 'week'">
 
     <div class="ui centered grid">
+
+      <div class="row">
+        <div class="fourteen wide column">
+          <div class="ui horizontal divider">
+            <h4 *ngIf="dayString !== ''">{{dayString}} <span *ngIf="timeString !== ''">({{timeString}})</span></h4>
+          </div>
+        </div>
+      </div>
+
       <div class="four column row">
         <div class="fourteen wide column">
           <div class="ui stackable three cards">
-            <div class="card" *ngFor="let item of appointments" [ngClass]="{disabled : item.unavailable == 'true'}">
+            <div class="card" *ngFor="let item of appointments">
 
               <div class="content">
 
                 <a><i (click)="appointmentAction(item.apid,item.uid,item.spid,item.date,item.time,item.device,'cancel')" 
-            class="large right floated red trash icon"></i></a>
+                    class="large right floated red trash icon"></i></a>
 
                 <img class="ui right floated tiny image" src="{{item.imgurl}}">
                 <div class="header">
@@ -146,6 +156,7 @@
     <app-sp-week-appointments></app-sp-week-appointments>
   </div>
 </div>
+<br><br>
 
 
 <div class="ui basic sp-home-cancel-modal modal">

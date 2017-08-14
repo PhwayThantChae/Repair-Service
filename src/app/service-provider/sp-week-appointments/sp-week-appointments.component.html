@@ -8,9 +8,11 @@
     <div *ngFor="let weekDate of date2">
     
           <div class="ui centered grid">
-            <div class="four column row">
-              <div class="ui horizontal divider">
-                <h3>{{weekDate}}</h3>
+            <div class="row">
+              <div class="fourteen wide column">
+                <div class="ui horizontal divider">
+                  <h4>{{weekDate}}</h4>
+                </div>
               </div>
             </div>
             <div class="four column row">
@@ -76,7 +78,7 @@
   </div>
 
 
-  <!--<div *ngIf="appointments.length <= 0">
+  <div *ngIf="appointments.length <= 0">
     <div class="ui centered container">
       <div class="ui page stackable column grid">
         <div class="row"></div>
@@ -90,5 +92,22 @@
           </div>
         </div>
       </div>
-    </div>-->
+    </div>
   </div>
+
+
+<div class="ui basic sp-home-week-cancel-modal modal">
+
+  <div class="ui center aligned grid">
+    <div class="column">
+      <i class="trash huge circle icon"></i>
+      <h4 class="ui inverted center aligned header" id="mon3">Are you sure you want to cancel the appointment?
+      </h4>
+    </div>
+  </div>
+
+  <div class="actions">
+    <div class="ui negative approve button" (click)="deleteConfirm(apID, userID, spID, ap_date, ap_time, device, 'cancel')" id="mon3">Okay</div>
+    <div class="ui deny button" id="mon3" (click)="cancelModal()">Cancel</div>
+  </div>
+</div>

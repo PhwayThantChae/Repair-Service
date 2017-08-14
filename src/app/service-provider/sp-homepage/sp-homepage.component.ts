@@ -15,6 +15,8 @@ export class SpHomepageComponent implements OnInit {
 
   date2 = [];
   date3 = [];
+  dayString : string;
+  timeString : string;
   date: FormControl;
   time: FormControl;
   spHome: FormGroup;
@@ -48,6 +50,7 @@ export class SpHomepageComponent implements OnInit {
         this.loading = true;
         console.log(x.uid);
         this.appointmentList = this.spFirebase.getAppointmentsSPHome();
+        this.dayString = this.date2[0];
         this.appointmentList.map(y => {
           this.spFirebase.getUserInfo(y.uid).$ref.on("child_changed", snapshot => {
             console.log("SNAPSHOT", snapshot.val());
@@ -73,9 +76,10 @@ export class SpHomepageComponent implements OnInit {
           });
 
           y.filter(y => {
-            console.log(y.imgurl);
+          
             if (y.spid == x.uid && y.state == "completed" && y.date == this.date2[0]) {
-
+             
+              this.timeString = "";
               this.spFirebase.getUserInfo(y.uid).map(z => {
                 if (z) {
                   let appointment = {
@@ -108,8 +112,7 @@ export class SpHomepageComponent implements OnInit {
           })
         }).subscribe(data => {
           if (data) {
-            console.log("data win tal");
-            console.log(this.appointments);
+
             this.loading = false;
           }
           else {
@@ -132,18 +135,25 @@ export class SpHomepageComponent implements OnInit {
   }
 
   onSubmit() {
-
-    this.loading = true;
-    this.appointments = [];
-    this.action = 'time';
-    if (this.time.value == "none" || this.time.value == "undefined") {
-      this.time.setValue("");
-    }
-    if (this.date.value == "undefined") {
-      this.date.setValue("");
-    }
+ 
     this.afAuth.authState.subscribe(x => {
       if (x) {
+         this.loading = true;
+         this.appointments = [];
+        
+         this.action = 'time';
+         this.dayString = this.date.value;
+         this.timeString = this.time.value;
+
+         if(this.time.value == "undefined" || this.time.value == 'none'){
+           this.timeString = '';
+         }
+        //  if (this.time.value == "undefined") {
+        //   this.time.setValue("");
+        //  }
+         if (this.date.value == "undefined") {
+          this.date.setValue("");
+         }
         this.appointmentList = this.spFirebase.getAppointmentsSPFiltered(x.uid);
         this.appointmentList.map(y => {
           this.spFirebase.getUserInfo(y.uid).$ref.on("child_changed", snapshot => {
@@ -171,7 +181,11 @@ export class SpHomepageComponent implements OnInit {
 
           y.filter(y => {
             if (y.state == "completed" && y.date == this.date.value) {
-              if (y.time !== "" && y.time == this.time.value) {
+              if (this.time.value !== "" && y.time == this.time.value) {
+
+                console.log(this.time.value,"TIME");
+                console.log(this.date.value,"DATE");
+                console.log(y.time,"Y TIME");
 
                 this.spFirebase.getUserInfo(y.uid).map(z => {
                   if (z) {
@@ -201,11 +215,12 @@ export class SpHomepageComponent implements OnInit {
                   }
                 });
               }
-              else {
+              if(this.time.value== 'none' || this.time.value == ''){
+                console.log("NONT",this.time.value);
                 this.spFirebase.getUserInfo(y.uid).map(z => {
                   if (z) {
                     let appointment = {
-                     "apid": y.$key,
+                    "apid": y.$key,
                     "emergency": y.emergency,
                     "imgurl": z["imageUrl"],
                     "username": z["username"],
@@ -220,8 +235,6 @@ export class SpHomepageComponent implements OnInit {
                     "uid" : y.uid,
                     "spid" : y.spid
                     }
-                    // this.appointments.push(appointment);
-
                     return appointment;
                   }
                 }).subscribe(data => {
@@ -231,6 +244,7 @@ export class SpHomepageComponent implements OnInit {
                     console.log("APODSS", this.appointments);
                   }
                 });
+              
               }
             }
           })
@@ -249,6 +263,7 @@ export class SpHomepageComponent implements OnInit {
 
   todayAppointments(today) {
 
+    this.dayString = this.date2[0];
     console.log("TODAY", today);
     this.action = 'today';
     this.loading = true;
@@ -365,9 +380,11 @@ export class SpHomepageComponent implements OnInit {
   }
 
   weekAppointments(week){
+    this.timeString = '';
+    this.dayString = '';
     this.action = week;
     this.appointments = [];
-    
+
   }
 
 }
