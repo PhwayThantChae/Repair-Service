@@ -5,6 +5,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database';
 import { FirebaseDatabaseService } from '../../services/firebase-database.service';
 
+
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -14,12 +15,14 @@ export class NavbarComponent implements OnInit {
 
   currentURL: number;
   user: any;
+  sp : any;
   userExist : FirebaseObjectObservable<any>;
+  spExist : FirebaseObjectObservable<any>;
 
   constructor(public router: Router, public afAuth: AngularFireAuth, public route : ActivatedRoute,
               public firebaseDatabase : FirebaseDatabaseService,public db: AngularFireDatabase) {
 
-                
+             
     
       this.afAuth.authState.subscribe(x => {
         if (x) {
@@ -28,12 +31,28 @@ export class NavbarComponent implements OnInit {
             let exist = (snapshot.$value !== null);
             console.log("exist",exist);
             if (exist) {
+              Notification.requestPermission().then(function(result) {
+                console.log(result);
+              });  
+               var notification = new Notification("Hi there!");
               this.user = snapshot;
             }
             else{
               this.user = null;
             }
         });
+
+        this.spExist = this.db.object('/sp/'+x.uid);
+        this.spExist.subscribe(spsnapshot => {
+          let spexist = (spsnapshot.$value !== null);
+          if(spexist){
+            this.sp = spsnapshot;
+          }
+          else{
+            this.sp = null;
+          }
+        })
+
         }
         
       });
@@ -78,5 +97,8 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit() {
   }
+
+ 
+
 
 }

@@ -65,9 +65,9 @@ export class NotificationsComponent implements OnInit {
                 }
 
               }).subscribe(data => {
-                    // data = null;
-                    if (data) {
-                       this.firebaseDatabase.getSpInfo(y.spid).$ref.on("child_changed", snapshot => {
+                   
+                if (data) {
+                  this.firebaseDatabase.getSpInfo(y.spid).$ref.on("child_changed", snapshot => {
                   console.log("SNAPSHOT", snapshot.val());
                   if (snapshot) {
                     this.userNoti = [];
@@ -92,7 +92,7 @@ export class NotificationsComponent implements OnInit {
                       this.userNoti = [];
                       console.log("data here", data);
                       this.userNoti = data;
-                      this.userNoti.reverse();
+                      // this.userNoti.reverse();
                       console.log(this.userNoti, 'hey appoitm');
                     }
                   });
